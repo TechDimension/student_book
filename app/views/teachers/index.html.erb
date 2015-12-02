@@ -1,0 +1,12 @@
+<h1> THIS IS THE Teachers PAGE</h1>
+
+ <% if logged_in? %>
+ 			<% if user_type == 1 %>
+
+            	<%= link_to "Profile", user_path(current_user) %>
+            <% else %>
+            		<p>You are not a teacher..</p>
+            <% end %>
+        <% else %>
+            <%= link_to "Log in", login_path %> | 
+        <% end %>
