@@ -8,7 +8,8 @@ Rails.application.routes.draw do
   resources :students
   resources :teachers
   resources :parents
-  root 'welcome#index'
+  resources :dashboard
+  root 'dashboard#login'
 
   resources :users
   # The priority is based upon order of creation: first created -> highest priority.
