@@ -1,40 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>StudentBook</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 
-
-</head>
-<body>
-        <% if logged_in? %>
-            <%= link_to "Log out", logout_path, method: "delete"  %>
-        <% end %>
-
-
-       <div class="container">
-        <ul class= "nav nav-tabs">
-            <% flash.each do |name, msg| -%>
-              <%= content_tag :div, msg, class: name %>
-            <% end -%>
-
-          </ul>
-            <%= yield %>
-        </div>
-
-
-<!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
-<html>
-  <head>
-    <meta charset="utf-8">
+          <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 2 | Starter</title>
+    <title>Student Book</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -78,18 +51,56 @@ scratch. This page gets rid of all links and provides the needed markup only.
   |               | sidebar-mini                            |
   |---------------------------------------------------------|
   -->
-  <body class="hold-transition skin-blue sidebar-mini">
+  
+
+
+</head>
+<!-- <body>
+        # <% if logged_in? %>
+            <%= link_to "Log out", logout_path, method: "delete"  %>
+        # <% end %>
+
+
+       <div class="container">
+        <ul class= "nav nav-tabs">
+            # <% flash.each do |name, msg| -%>
+              <%= content_tag :div, msg, class: name %>
+            # <% end -%>
+
+          </ul>
+            # <%= yield %>
+        </div> -->
+
+
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+
+  <head>
+        <ul class= "nav nav-tabs">
+            <% flash.each do |name, msg| -%>
+              <%= content_tag :div, msg, class: name %>
+            <% end -%>
+
+          </ul>
+
+            <% if logged_in? == false %>
+                <%= render 'sessions/new' %>
+            <% else %>
+            <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
 
       <!-- Main Header -->
       <header class="main-header">
 
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="/dashboard" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>A</b>LT</span>
+          <span class="logo-mini"><b>S</b>Bk</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Admin</b>LTE</span>
+          <span class="logo-lg"><b>Student</b>Book</span>
         </a>
 
         <!-- Header Navbar -->
@@ -121,11 +132,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                           </div>
                           <!-- Message title and timestamp -->
                           <h4>
-                            Support Team
+                            Tech City
                             <small><i class="fa fa-clock-o"></i> 5 mins</small>
                           </h4>
                           <!-- The message -->
-                          <p>Why not buy a new awesome theme?</p>
+                          <p>Please update Students grades.</p>
                         </a>
                       </li><!-- end message -->
                     </ul><!-- /.menu -->
@@ -196,17 +207,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <!-- Menu Toggle Button -->
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <!-- The user image in the navbar-->
-                  <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                  <img src="/assets/Katia.png" class="user-image" alt="User Image">
                   <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                  <span class="hidden-xs">Alexander Pierce</span>
+                  <span class="hidden-xs">Katia Punter</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- The user image in the menu -->
                   <li class="user-header">
-                    <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    <img src="/assets/Katia.png" class="img-circle" alt="User Image">
                     <p>
-                      Alexander Pierce - Web Developer
-                      <small>Member since Nov. 2012</small>
+                      Katia Punter - CEO
+                      <small>Member since DEC. 2012</small>
                     </p>
                   </li>
                   <!-- Menu Body -->
@@ -224,10 +235,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-left">
-                      <a href="#" class="btn btn-default btn-flat">Profile</a>
+                      <a href="#" class="btn btn-default btn-flat"><i class="fa fa-user fa-fw"></i>Profile</a>
                     </div>
                     <div class="pull-right">
-                      <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"> User Profile</a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="login.html"> Logout</a>
+                        </li>
+                    </ul>
+                      <a rel="nofollow" data-method="delete" href="/logout" class="btn btn-default btn-flat" ><i class="fa fa-sign-out fa-fw"> </i> Log out</a>
+                    
                     </div>
                   </li>
                 </ul>
@@ -241,6 +262,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </nav>
       </header>
       <!-- Left side column. contains the logo and sidebar -->
+      
+
       <aside class="main-sidebar">
 
         <!-- sidebar: style can be found in sidebar.less -->
@@ -249,10 +272,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- Sidebar user panel (optional) -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+              <img src="/assets/Katia" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-              <p>Alexander Pierce</p>
+              <p>Katia Punter</p>
               <!-- Status -->
               <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
@@ -286,15 +309,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </section>
         <!-- /.sidebar -->
       </aside>
+    
 
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-          <h1>
-            Page Header
-            <small>Optional description</small>
-          </h1>
+  
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
             <li class="active">Here</li>
@@ -305,6 +326,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <section class="content">
 
           <!-- Your Page Content Here -->
+          <%= yield %>
 
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
@@ -313,10 +335,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <footer class="main-footer">
         <!-- To the right -->
         <div class="pull-right hidden-xs">
-          Anything you want
+          
         </div>
         <!-- Default to the left -->
-        <strong>Copyright &copy; 2015 <a href="#">Company</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; 2016 <a href="#">StudentBook Inc.</a>.</strong> All rights reserved.
       </footer>
 
       <!-- Control Sidebar -->
@@ -336,8 +358,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <a href="javascript::;">
                   <i class="menu-icon fa fa-birthday-cake bg-red"></i>
                   <div class="menu-info">
-                    <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-                    <p>Will be 23 on April 24th</p>
+                    <h4 class="control-sidebar-subheading">Matthew Coursework</h4>
+                    <p>Submitted 2 hours ago.</p>
                   </div>
                 </a>
               </li>
@@ -348,11 +370,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <li>
                 <a href="javascript::;">
                   <h4 class="control-sidebar-subheading">
-                    Custom Template Design
-                    <span class="label label-danger pull-right">70%</span>
+                    Homework Marking
+                    <span class="label label-danger pull-right">90%</span>
                   </h4>
                   <div class="progress progress-xxs">
-                    <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                    <div class="progress-bar progress-bar-danger" style="width: 90%"></div>
                   </div>
                 </a>
               </li>
@@ -396,9 +418,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
          Both of these plugins are recommended to enhance the
          user experience. Slimscroll is required when using the
          fixed layout. -->
-  </body>
-</html>
+
 
 
 </body>
-</html>
+  
+             <% end %>
+
