@@ -1,5 +1,5 @@
 {
-  "name": "startbootstrap-sb-admin-2",
+  "name": "Matt",
   "version": "1.0.7",
   "homepage": "http://startbootstrap.com/template-overviews/sb-admin-2/",
   "authors": [
@@ -19,7 +19,8 @@
     "tests",
     "pages",
     "index.html",
-    "/js"
+    "/js",
+    "vendor/assets/components"
   ],
   "main": [
     "dist/css/sb-admin-2.css",
@@ -37,5 +38,6 @@
     "datatables-responsive": "~1.0.3",
     "bootstrap-social": "~4.8.0",
     "flot.tooltip": "~0.8.4"
-  }
+  },
+  "moduleType": []
 }
