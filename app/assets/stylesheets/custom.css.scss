@@ -3,3 +3,22 @@
 @import "font-awesome-sprockets";
 @import "font-awesome";
 
+
+
+.panel-purple {
+    border-color: #CC33FF;
+}
+
+.panel-purple .panel-heading {
+    border-color: #CC33FF;
+    color: #fff;
+    background-color: #CC33FF;
+}
+
+.panel-purple a {
+    color: #CC33FF;
+}
+
+.panel-purple a:hover {
+    color: #9900FF;
+}
