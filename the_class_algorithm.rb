@@ -36,8 +36,6 @@ class Classes
 	private 
 	def func1
 	end
-
-
 end
 
 class Students << Classes

@@ -5,9 +5,7 @@ Rails.application.routes.draw do
   post   'login'   => 'sessions#create'
   delete 'logout'  => 'sessions#destroy'
 
-  resources :students
-  resources :teachers
-  resources :parents
+  resources :classes
   resources :dashboard
   root 'dashboard#login'
 
