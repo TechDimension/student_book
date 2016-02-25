@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   delete 'logout'  => 'sessions#destroy'
 
   resources :classes
+  resources :students
   resources :dashboard
   root 'dashboard#login'
 
