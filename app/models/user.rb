@@ -1,5 +1,6 @@
 require_dependency 'validators/email_validator.rb'
 class User < ActiveRecord::Base
+    
     before_save :downcase_email
 
     validates :name,  presence: true, length: { maximum: 50 }

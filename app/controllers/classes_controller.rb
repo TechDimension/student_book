@@ -1,4 +1,5 @@
 class ClassesController < ApplicationController
+	
 	def show
 		@student = Student.new
 		@group = Group.find(params[:id])
@@ -12,6 +13,11 @@ class ClassesController < ApplicationController
 	    else
 	      render  "/classes/show"
 	    end
+	  end
+	  def destroy
+	    student = Student.find(params[:id])
+	    student.destroy
+	    redirect_to "/classes/1"
 	  end
 
 	 private
