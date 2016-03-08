@@ -11,14 +11,14 @@ $(document).ready(function(){
 </script>
 
 <div class = 'col-xs-12 navbar-brand' style = 'background:orange; color:black; ' role = 'button' id="button">Open/Close New Student</div>
-
+<% students = Student.new %>
 
   <%= form_for @student do |f| %>
   <div class = "row">
   <% if  false %>
     <div class = "col-xs-12" id = "newStudentDiv">
   <% else %>
-    <div class = "col-xs-12" id = "NewStudentDiv" style = "display:none;">
+    <div class = "col-xs-12" id = "NewStudentDiv" style = "display:visible;">
     <% end %>
   <!-- <div class = "modal" > -->
 
@@ -31,14 +31,17 @@ $(document).ready(function(){
                     </div>
                     <div class="panel-body">
                    
-                 <p><%= f.text_field (:forename) , class: "form-control", placeholder:"Forename", name:"forename"  %></p>
-                </h4>
+                 <p><%= f.text_field (:forename) , class: "form-control", placeholder:"Forename" %></p>
+                
             </div>
             <div class="modal-body">
-                <p><%= f.text_field :surname,  class: "form-control", placeholder:"Surname", name:"surname"%></p>
+                <p><%= f.text_field :surname,  class: "form-control", placeholder:"Surname"%></p>
             </div>
             <div class="modal-body">
-                <p><%= f.text_field :grade_predicted,  class: "form-control", placeholder:"Enter Predicted Grade", name:"predicted_grade"%></p>
+                <p><%= f.text_field :grade_predicted,  class: "form-control", placeholder:"Enter Predicted Grade"%></p>
+            </div>
+             <div class="modal-title">
+                <%= f.hidden_field :classes_id, cols: 10, rows: 1 , :value => classes_id ,:readonly => true %>
             </div>
 
             <div  class = "modal-title">
@@ -62,6 +65,7 @@ $(document).ready(function(){
 
 
     <% end %>
+
 
 
 

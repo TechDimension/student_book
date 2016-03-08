@@ -22,6 +22,7 @@
         
 
 
-<%= render 'student_form' %>
+
+<%= render partial: '/classes/student_form' , :locals => {:classes_id => params[:id]} %>
 
 
