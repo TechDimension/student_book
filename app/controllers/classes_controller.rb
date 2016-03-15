@@ -1,27 +1,29 @@
 class ClassesController < ApplicationController
-	
+	def new
+			@classes = Group.new
+		end
 	def show
-		@student = Student.new
+		@classes = Group.new
 		@group = Group.find(params[:id])
 	end
 
 	  def create
-	    @student = Student.new(student_params)
+	    @classes = Group.new(student_params)
 	
-	      if (@student.save)
-	        redirect_to "/classes/1"
+	      if (@classes.save)
+	        redirect_to "/dashboard"
 	    else
-	      render  "/classes/show"
+	      render  "/dashboard"
 	    end
 	  end
 	  def destroy
-	    student = Student.find(params[:id])
-	    student.destroy
-	    redirect_to "/classes/1"
+	    classes = Group.find(params[:id])
+	    classes.destroy
+	    redirect_to "/dashboard"
 	  end
 
 	 private
 	   def student_params
-	    params.require(:student).permit(:forename, :surname, :grade_predicted)
+	    params.require(:classes).permit(:title)
 	  end
 end

@@ -71,7 +71,7 @@
         </a>
     </div>
 </div>
-
+<a id="button" href="#">
 <div class="col-lg-4 col-md-6 col-xs-12">
     <div class="panel panel-purple">
         <div class="panel-heading">
@@ -93,5 +93,16 @@
         </a>
     </div>
 </div>
+</a>
 </div>
+
+
+<div id="item" visibility="hidden"><%= render "new_class" %></div>
+
+<script>
+
+$( "#button" ).click(function() {
+$( "#item" ).toggle();
+});
+</script>
 

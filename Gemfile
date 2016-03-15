@@ -32,6 +32,7 @@ gem 'autoprefixer-rails'
 gem 'less-rails-bootstrap'
 gem 'therubyracer'
 
+gem 'carrierwave', '~> 0.9'
 
 gem 'bootstrap-sass',       '3.2.0.0'
 gem 'jquery-rails',         '4.0.3'
