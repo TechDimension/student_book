@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
 
+
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
   delete 'logout'  => 'sessions#destroy'
@@ -10,6 +11,8 @@ Rails.application.routes.draw do
   resources :students
   resources :dashboard
   root 'dashboard#login'
+
+  resources :user_files, only: [:index, :new, :create, :destroy]
 
   resources :users
   # The priority is based upon order of creation: first created -> highest priority.
