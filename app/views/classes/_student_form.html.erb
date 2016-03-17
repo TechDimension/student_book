@@ -12,7 +12,8 @@ $(document).ready(function(){
 
 <div class = 'col-xs-12 navbar-brand' style = 'background:orange; color:black; ' role = 'button' id="button">Open/Close New Student</div>
 
-<%= student = Student.all%>
+
+<%= student = Student.new%>
   <%= form_for @student do |f| %>
   <div class = "row">
   <% if  false %>
@@ -41,7 +42,7 @@ $(document).ready(function(){
                 <p><%= f.text_field :grade_predicted,  class: "form-control", placeholder:"Enter Predicted Grade"%></p>
             </div>
              <div class="modal-title">
-                <%= f.hidden_field :classes_id, cols: 10, rows: 1 , :value => classes_id ,:readonly => true %>
+                <%= f.hidden_field :classes_id, cols: 10, rows: 1 , :value => @group.id ,:readonly => true %>
             </div>
 
             <div  class = "modal-title">
