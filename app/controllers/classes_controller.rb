@@ -9,7 +9,7 @@ class ClassesController < ApplicationController
 	end
 
 	  def create
-	    @classes = Group.new(student_params)
+	    @classes = Group.new(class_params)
 	
 	      if (@classes.save)
 	        redirect_to "/dashboard"
@@ -24,7 +24,7 @@ class ClassesController < ApplicationController
 	  end
 
 	 private
-	   def student_params
-	    params.require(:classes).permit(:title)
+	   def class_params
+	    params.require(:group).permit(:title)
 	  end
 end

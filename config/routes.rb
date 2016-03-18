@@ -6,12 +6,11 @@ Rails.application.routes.draw do
   post   'login'   => 'sessions#create'
   delete 'logout'  => 'sessions#destroy'
 
-  resources :classes
-  resources :groups
+
   resources :students
   resources :dashboard
   root 'dashboard#login'
-
+  resources :groups, :controller => "classes"
   resources :user_files, only: [:index, :new, :create, :destroy]
 
   resources :users

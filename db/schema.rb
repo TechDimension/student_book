@@ -25,10 +25,10 @@ ActiveRecord::Schema.define(version: 20160315193850) do
     t.string   "grade_predicted"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.integer  "classes_id"
+    t.integer  "group_id"
   end
 
-  add_index "students", ["classes_id"], name: "index_students_on_classes_id"
+  add_index "students", ["group_id"], name: "index_students_on_group_id"
 
   create_table "user_files", force: :cascade do |t|
     t.string   "name"

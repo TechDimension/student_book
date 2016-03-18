@@ -11,10 +11,8 @@ $(document).ready(function(){
 </script>
 
 <div class = 'col-xs-12 navbar-brand' style = 'background:orange; color:black; ' role = 'button' id="button">Open/Close New Student</div>
-
-<% @classes = Group.new %>
-
-  <%= form_for @classes do |f| %>
+<%= @classes %>
+  <%= form_for @classes , :url => groups_path do |f| %>
   <div class = "row">
   <% if  true %>
     <div class = "col-xs-12" id = "reviewDiv">
@@ -32,7 +30,7 @@ $(document).ready(function(){
                     </div>
                     <div class="panel-body">
                    
-                 <p><%= f.text_field (:title) , class: "form-control", placeholder:"Enter Class Name: ", name:"forename"  %></p>
+                 <p><%= f.text_field (:title) , class: "form-control", placeholder:"Enter Class Name: "  %></p>
                 </h4>
             </div>
      

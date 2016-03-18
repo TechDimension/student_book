@@ -1,6 +1,7 @@
 class UserFilesController < ApplicationController
    def index
       @user_files = UserFile.all
+      @user_file = UserFile.new
    end
    
    def new

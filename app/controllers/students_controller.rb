@@ -5,22 +5,23 @@ class StudentsController < ApplicationController
 		end
 	  def create
 	    @student = Student.new(student_params)
-	
+		id = @student.group_id
 	      if (@student.save)
-	        redirect_to "/classes/#{@student.classes_id}"
+	        redirect_to "/groups/#{id}"
 	    else
-	      render  "/classes/show"
+	      render  "/dashboard"
 	    end
 	  end
 	   def destroy
-	    student = Student.find(params[:id])
+	   	param_id = params[:id]
+	    student = Student.find(param_id)
 	    student.destroy
-	    redirect_to "/classes/1"
+	    redirect_to "/groups/#{param_id}"
 	  end
 
 	 private
 	   def student_params
-	    params.require(:student).permit(:forename, :surname, :grade_predicted, :classes_id)
+	    params.require(:student).permit(:id,:forename, :surname, :grade_predicted, :group_id)
 	  end
 
 	  def ensure_log_in

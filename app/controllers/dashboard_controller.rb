@@ -6,6 +6,9 @@ class DashboardController < ApplicationController
 		@classes = Group.new
 		@group = Group.find(params[:id])
 	end
+	def index
+		@classes = Group.new
+	end
 
 	  def create
 	    @classes = Group.new(student_params)
@@ -24,6 +27,6 @@ class DashboardController < ApplicationController
 
 	 private
 	   def student_params
-	    params.require(:classes).permit(:title)
+	    params.require(:groups).permit(:title)
 	  end
 end

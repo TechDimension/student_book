@@ -9,12 +9,13 @@ $(document).ready(function(){
     });
 });
 </script>
+<%= params[:id] %>
 
 <div class = 'col-xs-12 navbar-brand' style = 'background:orange; color:black; ' role = 'button' id="button">Open/Close New Student</div>
 
 
-<%= student = Student.new%>
-  <%= form_for @student do |f| %>
+
+  <%=form_for @student do |f| %>
   <div class = "row">
   <% if  false %>
     <div class = "col-xs-12" id = "newStudentDiv">
@@ -36,13 +37,13 @@ $(document).ready(function(){
                 
             </div>
             <div class="modal-body">
-                <p><%= f.text_field :surname,  class: "form-control", placeholder:"Surname"%></p>
+                <p><%= f.text_field (:surname),  class: "form-control", placeholder:"Surname"%></p>
             </div>
             <div class="modal-body">
                 <p><%= f.text_field :grade_predicted,  class: "form-control", placeholder:"Enter Predicted Grade"%></p>
             </div>
              <div class="modal-title">
-                <%= f.hidden_field :classes_id, cols: 10, rows: 1 , :value => @group.id ,:readonly => true %>
+                <%= f.hidden_field :group_id, cols: 10, rows: 1 , :value => params[:id] ,:readonly => true %>
             </div>
 
             <div  class = "modal-title">

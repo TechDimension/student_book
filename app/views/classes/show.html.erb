@@ -1,6 +1,6 @@
 <div> <h1> Welcome to Show page of "<%= @group.title %>"</h1> </div>
 <h3>Current Students: </h3>
-<% students = Student.all %>
+<% students = Student.where(group_id: "#{params[:id]}") %>
 
 <% students.reverse_each do |student| %>
         <div class="panel panel-default">
