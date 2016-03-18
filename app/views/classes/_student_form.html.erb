@@ -1,72 +1,32 @@
-<script>
-
-$(document).ready(function(){
-    $("#button").click(function(){
-        $("#newStudentDiv").toggle(10);
-        $('html, body').animate({
-            scrollTop: $("#newStudentDiv").offset().top
-        }, 1000);
-    });
-});
-</script>
-<%= params[:id] %>
-
-<div class = 'col-xs-12 navbar-brand' style = 'background:orange; color:black; ' role = 'button' id="button">Open/Close New Student</div>
-
-
-
-  <%=form_for @student do |f| %>
-  <div class = "row">
-  <% if  false %>
-    <div class = "col-xs-12" id = "newStudentDiv">
-  <% else %>
-    <div class = "col-xs-12" id = "NewStudentDiv" style = "display:visible;">
-    <% end %>
-  <!-- <div class = "modal" > -->
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-                <div class="login-panel panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Enter Student Details</h3>
-                    </div>
-                    <div class="panel-body">
-                   
-                 <p><%= f.text_field (:forename) , class: "form-control", placeholder:"Forename" %></p>
-                
-            </div>
-            <div class="modal-body">
-                <p><%= f.text_field (:surname),  class: "form-control", placeholder:"Surname"%></p>
-            </div>
-            <div class="modal-body">
-                <p><%= f.text_field :grade_predicted,  class: "form-control", placeholder:"Enter Predicted Grade"%></p>
-            </div>
-             <div class="modal-title">
-                <%= f.hidden_field :group_id, cols: 10, rows: 1 , :value => params[:id] ,:readonly => true %>
-            </div>
-
-            <div  class = "modal-title">
-
-            </div>
-            <div class="modal-footer">
-            <div class="modal-title">
-   
-            </div>
-     
-                 <span><%=  link_to "Close", "#" , :class => 'btn btn-default' %></span>
-                <span><%= f.submit nil, :class => "btn btn-success" %></span>
+<%=form_for @student do |f| %>
+    <div class = "row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <div class="login-panel panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Enter Student Details</h3>
+                        </div>
+                    <div class="panel-body">   
+                    <p><%= f.text_field (:forename) , class: "form-control", placeholder:"Forename" %></p>
+                </div>
+                <div class="modal-body">
+                    <p><%= f.text_field (:surname),  class: "form-control", placeholder:"Surname"%></p>
+                </div>
+                <div class="modal-body">
+                    <p><%= f.text_field :grade_predicted,  class: "form-control", placeholder:"Enter Predicted Grade"%></p>
+                </div>
+                <div class="modal-title">
+                    <%= f.hidden_field :group_id, cols: 10, rows: 1 , :value => params[:id] ,:readonly => true %>
+                </div>
+                <div class="modal-footer">
+                    <span><%=  link_to "Close", "#" , :class => 'btn btn-default' %></span>
+                    <span><%= f.submit nil, :class => "btn btn-success" %></span>
+                </div>
             </div>
         </div>
     </div>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-
-    <% end %>
+<% end %>
 
 
 

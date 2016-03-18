@@ -12,9 +12,13 @@ class StudentsController < ApplicationController
 	      render  "/dashboard"
 	    end
 	  end
+
+	  def show
+	  	@student = Student.find(params[:id])
+	  end
 	   def destroy
-	   	param_id = params[:id]
-	    student = Student.find(param_id)
+	    student = Student.find(params[:id])
+	    param_id = student.group_id
 	    student.destroy
 	    redirect_to "/groups/#{param_id}"
 	  end
