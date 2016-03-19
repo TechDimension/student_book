@@ -3,14 +3,14 @@
 
 <% classes = Group.all%>
 <% classes.each do |classes| %>
-    <div class="col-lg-4 col-md-6 col-xs-12 " >
-        <div class="panel panel-green">
+    <div class="col-lg-4 col-sm-6 col-xs-12 " >
+        <div class="panel panel-<%=classes.color_t%>">
             <div class="panel-heading" onclick="location.href='/groups/<%=classes.id%>';" style="cursor: pointer;">
                 <div class="row">
                     <div class="col-xs-3">
                         <i class="fa fa-tasks fa-5x"></i>
                     </div>
-                    <div class="col-xs-9 text-right">
+                    <div class="col-xs-9 text-left">
                         <div class="panel-heading"><%= classes.title %></div>
                     </div>
                 </div>
@@ -23,11 +23,10 @@
                 </footer>
                 <div class="clearfix"></div>
             </div>
-  
         </div>
     </div>       
 <% end %>
-
+</div>
 <div id="item" visibility="hidden"><%= render "new_class" %></div>
 
 <script>

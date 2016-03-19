@@ -11,12 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160315193850) do
+ActiveRecord::Schema.define(version: 20160318232500) do
 
   create_table "groups", force: :cascade do |t|
     t.string   "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "color_t"
   end
 
   create_table "students", force: :cascade do |t|
@@ -33,8 +34,9 @@ ActiveRecord::Schema.define(version: 20160315193850) do
   create_table "user_files", force: :cascade do |t|
     t.string   "name"
     t.string   "attachment"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.string   "student_name"
   end
 
   create_table "users", force: :cascade do |t|

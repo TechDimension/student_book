@@ -3,6 +3,10 @@ class StudentsController < ApplicationController
 		def new
 			@student = Student.new
 		end
+		def index
+			@students = Student.all
+			@group = Group.all
+		end
 	  def create
 	    @student = Student.new(student_params)
 		id = @student.group_id
@@ -14,7 +18,9 @@ class StudentsController < ApplicationController
 	  end
 
 	  def show
+
 	  	@student = Student.find(params[:id])
+
 	  end
 	   def destroy
 	    student = Student.find(params[:id])

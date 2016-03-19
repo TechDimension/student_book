@@ -25,6 +25,6 @@ class ClassesController < ApplicationController
 
 	 private
 	   def class_params
-	    params.require(:group).permit(:title)
+	    params.require(:group).permit(:title, :color_t)
 	  end
 end

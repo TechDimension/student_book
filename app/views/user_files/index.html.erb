@@ -1,13 +1,11 @@
-
-<%= link_to "New file", new_user_file_path, class: "btn btn-primary" %>
-
-<table class = "table table-bordered table-striped">
-   <thead>.
+<div class = "container">
+<table class = "table table-bordered" style= "background-color: #D9E0E8;">
+   <thead>
       <tr>
-         <th>Name</th>
+         <th>Task Name</th>
+         <th>Student Name</th>
          <th>Download Link</th>
          <th> Image Preview <th>
-         <th> </th>
       </tr>
    </thead>
    
@@ -16,8 +14,9 @@
          
          <tr>
             <td><%= user_file.name %></td>
+            <td><%= user_file.student_name %></td>
             <td><%= link_to "Download File", user_file.attachment_url %></td>
-            <td><img src= '<%=user_file.attachment_url %>' style= "width: 100px;"/> </td>
+             <td><%= link_to image_tag(user_file.attachment_url, :width => '100px') , user_file.attachment_url %></td>
             <td><%= button_to "Delete",  user_file, method: :delete, class: "btn btn-danger", confirm: "Are you sure that you wish to delete #{user_file.name}?" %></td>
          </tr>
          
@@ -25,6 +24,7 @@
    </tbody>
    
 </table>
+</div>
 
 <div class="container">
     <div class="row">
@@ -36,7 +36,7 @@
                 <div class="panel-body">
                   <%= form_for @user_file, html: { multipart: true } do |f| %> 
                  <p><%= f.text_field (:name) , class: "form-control", placeholder:"Enter File Name: " %></p>
-           <p><%= f.text_field (:name) , class: "form-control", placeholder:"Enter Class/Student Name: " %></p>
+           <p><%= f.text_field (:student_name) , class: "form-control", placeholder:"Enter Class/Student Name: " %></p>
            <p><%= f.file_field (:attachment) %></p>
             </div>
             <div class="modal-footer">
@@ -50,3 +50,4 @@
     </div>
   </div>
 </div
+

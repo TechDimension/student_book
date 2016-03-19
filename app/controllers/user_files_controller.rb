@@ -12,7 +12,7 @@ class UserFilesController < ApplicationController
       @user_file = UserFile.new(user_file_params)
       
       if @user_file.save
-         redirect_to dashboard_index_path, notice: "The file #{@user_file.name} has been uploaded."
+         redirect_to user_files_path, notice: "The file #{@user_file.name} has been uploaded."
       else
          render "new"
       end
@@ -27,6 +27,6 @@ class UserFilesController < ApplicationController
    
    private
       def user_file_params
-      params.require(:user_file).permit(:name, :attachment)
+      params.require(:user_file).permit(:name, :attachment , :student_name)
    end
 end
