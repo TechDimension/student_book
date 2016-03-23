@@ -7,10 +7,11 @@ class Seating
 		puts "Enter array Height of seats"
 		@seats_y = gets.strip.to_i
 		puts 'Enter number of available seats'
-		if @available_seats > @seats_x * @seats_y
+		@available_seats = gets.strip.to_i
+		if @available_seats >= @seats_x * @seats_y
 			"error"
 		else
-			@available_seats = gets.strip.to_i
+			"continue"
 		end
 	end
 
@@ -34,22 +35,22 @@ class Seating
 		new_layout = class_layout
 		for i in 0..(@available_seats-1)
 			puts "Enter seat layout"
-			puts "#{i+1}: Enter Position for an available seat Example: 5B"
+			puts "#{i+1}: Enter Position for an available seat Example: B5"
 			position = gets.strip
 			if position.length == 2 
-				x_pos = ( position[0].to_i - 1 )
-				y_pos = letter_to_num(position[1])
+				x_pos = ( position[1].to_i - 1 )
+				y_pos = letter_to_num(position[0])
 				if new_layout[x_pos][y_pos] == 1
 					puts "Already used please do again"
 					i -= 1
 				else
-					new_layout[x_pos][y_pos] = 1
+					new_layout[y_pos][x_pos] = 1
 				end
 			else
 				"incorrect Info"
 			end
+			print_layout(new_layout)
 		end
-		print_layout(new_layout)
 		new_layout
 	end
 
@@ -72,6 +73,9 @@ class Seating
 			end
 			#if seat layout has no more spaces, then allow to be put in the first available empty space. 
 		end
+
+		new_layout = seat_layout
+		s_list = student_list_data
 	end
 
 	def manual_list
@@ -80,21 +84,23 @@ class Seating
 		print s_list
 		puts
 		puts
+
 		
 		s_list.each do  |key, value|
-			print value
-			puts
+			print_layout(new_layout)
 			puts "Enter Position for Name: #{value["name"]} Example: B5"
 			position = gets.strip
 			if position.length == 2 
-				x_pos = ( position[0].to_i - 1 )
-				y_pos = letter_to_num(position[1])
-				new_layout[x_pos][y_pos] = 2
+				x_pos = ( position[1].to_i - 1 )
+				y_pos = letter_to_num(position[0])
+				new_layout[y_pos][x_pos] = 2
+				print_layout(new_layout)
 			else 
 				"incorrect Info"
 			end
 
 		end
+		puts "FINAL LAYOUT"
 		print_layout(new_layout) 
 		
 
@@ -202,9 +208,8 @@ end
 seats = Seating.new
 #seat_layout_for_user = seats.manual_list
 
-print(seats.manual_list)
+seats.manual_list
 
-puts
 
 
 
