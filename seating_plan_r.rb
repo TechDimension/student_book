@@ -10,7 +10,7 @@ class Seating
 		@available_seats = gets.strip.to_i
 	end
 
-	def seat_layout
+	def class_layout
 		row_array = []
 		seat_array =  []
 		index_row = []
@@ -19,17 +19,42 @@ class Seating
 		    	index_row << x + 1     
 		        row_array << 0
 		    end
-		    if y == 0
-		    	print("|#{index_row}|")
-		    	puts
-		    end
-		    letter = num_to_letter(y)
+
 		    seat_array << row_array
-		    print(letter,row_array,letter)
+	
 		    row_array = []
-		    puts
+
 		end
+		print_layout(seat_array)
 		seat_array
+	end
+
+	def seat_layout
+		new_layout = class_layout
+		for i in 0..@available_seats
+			puts "Enter Position for Name: #{value["name"]} Example: 5B"
+			position = gets.strip
+			if position.length == 2 
+				x_pos = ( position[0].to_i - 1 )
+				y_pos = letter_to_num(position[1])
+				new_layout[x_pos][y_pos] = 2
+			else 
+				"incorrect Info"
+			end
+		end
+	end
+
+	def print_layout(seat_array)
+		for row in 0..@seats_y-1
+			if row == 0 
+				print ("#{seat_array[row].length}")
+			end
+			row_array = seat_array[row]
+			print(num_to_letter(row),row_array,num_to_letter(row))
+			puts
+		end
+		puts 
+
 	end
 
 	def algorithm
@@ -53,19 +78,28 @@ class Seating
 
 	def manual_list
 		s_list = student_list_data
+		print s_list
+		puts
 		new_layout = seat_layout
 		print(new_layout)
 		puts
 		puts
 		
-		s_list.each |id, value| do 
-			puts "Enter position for #{value[:name]}. Example 5A"
+		s_list.each do  |key, value|
+			print value
+			puts
+			puts "Enter Position for Name: #{value["name"]} Example: 5B"
 			position = gets.strip
-			if postion.length == 2 
-				x_pos = letter_to_num(position[0])
-				y_pos = posiiton[1]
+			if position.length == 2 
+				x_pos = ( position[0].to_i - 1 )
+				y_pos = letter_to_num(position[1])
+				new_layout[x_pos][y_pos] = 2
+			else 
+				"incorrect Info"
 			end
+
 		end
+		print_layout(new_layout) 
 		
 
 	end
@@ -95,14 +129,14 @@ class Seating
 			else
 				puts 'Continuing..'
 			end
-			student_list.merge!("#{id}"  => [{:name => "#{name}"}, {:gender => "#{gender}"}, {:level => "#{level_learning}"}, {:whitelist => "#{whitelist}"}, {:noise => "#{noise}"}])
+			student_list.merge!("#{id}"  => {"name" => "#{name}", "gender" => "#{gender}", "level" => "#{level_learning}", "whitelist" => "#{whitelist}", "noise" => "#{noise}"})
 			id +=1
 		end
 		student_list
 	end
 	private 
 		def num_to_letter(x)
-			x.upcase!
+			x
 		    if x == 0
 		        l = "A"
 		    elsif x == 1
