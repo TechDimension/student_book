@@ -1,5 +1,16 @@
 class Seating
 
+
+	#implementation in the website
+	# All inputs would be done by forms
+	# This page would be a helper
+	# all functions can be called by the view
+	#implement a saving strategy
+	# backup student details to a file 
+	# Create a flow chart of this program before implementing to website
+
+
+
 	def initialize
 		# 0 are available seats.
 		puts "Enter the max width of seats, as in max amount of seats in one plane"
@@ -8,6 +19,9 @@ class Seating
 		@seats_y = gets.strip.to_i
 		puts 'Enter number of available seats'
 		@available_seats = gets.strip.to_i
+
+		@no_seat = "\u25CB"
+		@yes_seat = "\u25C9"
 		if @available_seats >= @seats_x * @seats_y
 			"error"
 		else
@@ -22,7 +36,7 @@ class Seating
 	    for y in (0..@seats_y-1)
 		    for x in  (0..@seats_x-1)
 		    	index_row << x + 1     
-		        row_array << 0
+		        row_array << @no_seat
 		    end
 		    seat_array << row_array
 		    row_array = []
@@ -40,11 +54,11 @@ class Seating
 			if position.length == 2 
 				x_pos = ( position[1].to_i - 1 )
 				y_pos = letter_to_num(position[0])
-				if new_layout[x_pos][y_pos] == 1
+				if new_layout[x_pos][y_pos] == @yes_seat
 					puts "Already used please do again"
 					i -= 1
 				else
-					new_layout[y_pos][x_pos] = 1
+					new_layout[y_pos][x_pos] = @yes_seat
 				end
 			else
 				"incorrect Info"
@@ -54,28 +68,57 @@ class Seating
 		new_layout
 	end
 
-
-
 	def algorithm
 		#loud students to not be put next to another loud student, / put closer to the front.
 		# needing students put on the front.
 		# student cannot sit next to their problem partner
 		# Everything else fills up the other rows.
 		# Fill up so that the back should not be filled.
-		student_list = student_list_data
-		new_list = student_list.sort_by(level_learning)
-		new_list = student_list.map{|student| student.level_learning == 1}
-		student_list.sort_by(noise)
-		student_list.each do |student|
-			if student.noise == 3
-				#do not put directly next to a studentnoise level of 2/3
-				#and put minimum of 3 spaces away from another noise 3 student
-			end
-			#if seat layout has no more spaces, then allow to be put in the first available empty space. 
-		end
+			# student_list = student_list_data
+			# new_list = student_list.sort_by(level_learning)
+			# new_list = student_list.map{|student| student.level_learning == 1}
+			# student_list.sort_by(noise)
+			# student_list.each do |student|
+			# 	if student.noise == 3
+			# 		#do not put directly next to a studentnoise level of 2/3
+			# 		#and put minimum of 3 spaces away from another noise 3 student
+			# 	end
+			# 	#if seat layout has no more spaces, then allow to be put in the first available empty space. 
+			# end
 
 		new_layout = seat_layout
 		s_list = student_list_data
+		s_list.each do  |key, value|
+				id = key
+				name = value["name"]
+				gender = value["gender"]
+				level = value["level"]
+				whitelist = value["whitelist"]
+				noise = value["noise"]
+				
+				#pre requesite questions 
+				puts "Do you want the seating plan to have boy girl layout?  y/n"
+				male_female = gets.strip.upcase
+				puts "Does noise level of students matter? y/n"
+				noise_question = gets.strip.upcase
+
+				#make it so that to the right, to the left, to the up, to the down are all checked, and are in 1 space.
+				#diagonal counts as 2 grid spaces
+				#sort so that level is #1 priority
+				#then arranges that into gender
+				# then arranges that into whitelists
+				#then arranges by noise
+				#continue this for the level 2 
+				# then with 4
+				#any spaces left over, allows for a level 2 to go then a level 3
+				# row from A is where priority should go
+				#then all the way to Z
+
+
+
+				new_layout[y_pos][x_pos] = id
+	
+		end
 	end
 
 	def manual_list
@@ -83,11 +126,9 @@ class Seating
 		s_list = student_list_data
 		print s_list
 		puts
-		puts
-
-		
+		print_layout(new_layout)
 		s_list.each do  |key, value|
-			print_layout(new_layout)
+			
 			puts "Enter Position for Name: #{value["name"]} Example: B5"
 			position = gets.strip
 			if position.length == 2 
@@ -98,17 +139,14 @@ class Seating
 			else 
 				"incorrect Info"
 			end
-
 		end
 		puts "FINAL LAYOUT"
 		print_layout(new_layout) 
-		
-
 	end
+
 	def student_list_data
 		puts 'Enter Class name'
 		classname = gets.strip
-
 		student_list = Hash.new
 		id = 1
 		loopy = true 
@@ -136,7 +174,9 @@ class Seating
 		end
 		student_list
 	end
+
 	private 
+
 		def num_to_letter(x)
 			x
 		    if x == 0
@@ -187,14 +227,15 @@ class Seating
 		    end
 		    l
 		end
+
 		def print_layout(seat_array)
 			for row in 0..@seats_y-1
 				if row == 0 
-					index_row = []
-					for i in 0..(seat_array[row].length-1)
-						index_row << i + 1
+					print "|"
+					for i in 0..(seat_array[row].length-1)	
+						print "  #{i+1}  "
 					end
-					print("|",index_row,"|")
+					print "|"
 					puts
 				end
 				row_array = seat_array[row]
@@ -207,7 +248,6 @@ end
 
 seats = Seating.new
 #seat_layout_for_user = seats.manual_list
-
 seats.manual_list
 
 
