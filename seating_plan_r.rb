@@ -7,7 +7,11 @@ class Seating
 		puts "Enter array Height of seats"
 		@seats_y = gets.strip.to_i
 		puts 'Enter number of available seats'
-		@available_seats = gets.strip.to_i
+		if @available_seats > @seats_x * @seats_y
+			"error"
+		else
+			@available_seats = gets.strip.to_i
+		end
 	end
 
 	def class_layout
@@ -19,11 +23,8 @@ class Seating
 		    	index_row << x + 1     
 		        row_array << 0
 		    end
-
 		    seat_array << row_array
-	
 		    row_array = []
-
 		end
 		print_layout(seat_array)
 		seat_array
@@ -31,31 +32,28 @@ class Seating
 
 	def seat_layout
 		new_layout = class_layout
-		for i in 0..@available_seats
-			puts "Enter Position for Name: #{value["name"]} Example: 5B"
+		for i in 0..(@available_seats-1)
+			puts "Enter seat layout"
+			puts "#{i+1}: Enter Position for an available seat Example: 5B"
 			position = gets.strip
 			if position.length == 2 
 				x_pos = ( position[0].to_i - 1 )
 				y_pos = letter_to_num(position[1])
-				new_layout[x_pos][y_pos] = 2
-			else 
+				if new_layout[x_pos][y_pos] == 1
+					puts "Already used please do again"
+					i -= 1
+				else
+					new_layout[x_pos][y_pos] = 1
+				end
+			else
 				"incorrect Info"
 			end
 		end
+		print_layout(new_layout)
+		new_layout
 	end
 
-	def print_layout(seat_array)
-		for row in 0..@seats_y-1
-			if row == 0 
-				print ("#{seat_array[row].length}")
-			end
-			row_array = seat_array[row]
-			print(num_to_letter(row),row_array,num_to_letter(row))
-			puts
-		end
-		puts 
 
-	end
 
 	def algorithm
 		#loud students to not be put next to another loud student, / put closer to the front.
@@ -77,18 +75,16 @@ class Seating
 	end
 
 	def manual_list
+		new_layout = seat_layout
 		s_list = student_list_data
 		print s_list
-		puts
-		new_layout = seat_layout
-		print(new_layout)
 		puts
 		puts
 		
 		s_list.each do  |key, value|
 			print value
 			puts
-			puts "Enter Position for Name: #{value["name"]} Example: 5B"
+			puts "Enter Position for Name: #{value["name"]} Example: B5"
 			position = gets.strip
 			if position.length == 2 
 				x_pos = ( position[0].to_i - 1 )
@@ -184,6 +180,22 @@ class Seating
 		        l = 9
 		    end
 		    l
+		end
+		def print_layout(seat_array)
+			for row in 0..@seats_y-1
+				if row == 0 
+					index_row = []
+					for i in 0..(seat_array[row].length-1)
+						index_row << i + 1
+					end
+					print("|",index_row,"|")
+					puts
+				end
+				row_array = seat_array[row]
+				print(num_to_letter(row),row_array,num_to_letter(row))
+				puts
+			end
+			puts 
 		end
 end
 
