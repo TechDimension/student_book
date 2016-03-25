@@ -53,7 +53,7 @@ class Seating
 			position = gets.strip
 			if position.length == 2 
 				x_pos = ( position[1].to_i - 1 )
-				y_pos = letter_to_num(position[0])
+				y_pos = letter_to_num(position[0].upcase)
 				if new_layout[x_pos][y_pos] == @yes_seat
 					puts "Already used please do again"
 					i -= 1
@@ -88,8 +88,11 @@ class Seating
 
 		new_layout = seat_layout.dup
 		s_list = student_list_data
-		s_list_copy = student_list_data.dup
-		s_list_copy.sort_by{|k,v| v["level"]}
+		s_list_copy = s_list.dup
+		s_list_copy = s_list_copy.sort_by{|k,v| v["level"]}
+
+		print(s_list_copy)
+		puts
 
 		# Alternating to boy girl
 		#pre requesite questions 
@@ -101,29 +104,62 @@ class Seating
 			loopy = true
 			gender_loop = "M"
 			new_s_list = []
-			while loopy 
-				if gender_loop == "M"
-					for i in 1..new_s_list
-						if new_s_list[i]["gender"] == "M"
-							new_s_list1 << s_list_copy[i]
-							s_list_copy.delete[i]
-							gender_loop = "F"
+	
+			
+			while loopy == true
+				i = 0
+				puts i 
+				loopy2 = true
+				while loopy2 == true
+
+					puts i == i.to_i
+					puts i
+					print s_list_copy
+					puts
+
+					puts s_list_copy[i][1]["gender"]
+					if gender_loop == "M"
+
+						if s_list_copy[i][1]["gender"] == "M"
+							new_s_list << s_list_copy[i]
+							print new_s_list
+							puts
+							s_list_copy.delete_at(i)
+					
+							loopy2 = false
+						else
+							i += 1
 						end
-					end
-				else
-					for i in 1..new_s_list
-						if new_s_list[i]["gender"] == "F"
-							new_s_list1 << s_list_copy[i]
-							s_list_copy.delete[i]
-							gender_loop = "M"
+					else
+						if s_list_copy[i][1]["gender"] == "F"
+							new_s_list << s_list_copy[i]
+							print new_s_list
+							puts
+							s_list_copy.delete_at(i)
+					
+							loopy2 = false
+						else
+							i += 1
 						end
 					end
 				end
-				if new_s_list.empty? == true 
+				puts 'conditioner'
+				if gender_loop == "M"
+					gender_loop = "F"
+				else 
+					gender_loop = "M"
+				end
+		
+				if s_list_copy.empty? == true 
+					loopy2 = false
 					loopy = false
 				end
 			end
 		end
+
+		print(new_s_list)
+		puts
+
 		# check for first available seats, row by row, then column by column
 		coord = []
 		
@@ -164,8 +200,6 @@ class Seating
 
 
 				if whitelist.empty? == false
-	
-
 					if new_s_list[x_pos - 1]["name"] == whitelist|| new_s_list[x_pos + 1]["name"] == whitelist || new_s_list[y_pos + 1]["name"] == whitelist || new_s_list[y_pos - 1]["name"] == whitelist
 						"Do Not place"
 					else
@@ -223,7 +257,7 @@ class Seating
 			puts 'Enter Student Name'
 			name = gets.strip
 			puts "Student male or female m/f"
-			gender = gets.strip
+			gender = gets.strip.upcase
 			puts 'Enter noise level of student'
 			
 
