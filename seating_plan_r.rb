@@ -86,8 +86,55 @@ class Seating
 			# 	#if seat layout has no more spaces, then allow to be put in the first available empty space. 
 			# end
 
-		new_layout = seat_layout
+		new_layout = seat_layout.dup
 		s_list = student_list_data
+		s_list_copy = student_list_data.dup
+		s_list_copy.sort_by{|k,v| v["level"]}
+
+		# Alternating to boy girl
+		#pre requesite questions 
+		puts "Do you want the seating plan to have boy girl layout?  y/n"
+		male_female = gets.strip.upcase
+		puts "Does noise level of students matter? y/n"
+		noise_question = gets.strip.upcase
+		if male_female == "Y"
+			loopy = true
+			gender_loop = "M"
+			new_s_list = []
+			while loopy 
+				if gender_loop == "M"
+					for i in 1..new_s_list
+						if new_s_list[i]["gender"] == "M"
+							new_s_list1 << s_list_copy[i]
+							s_list_copy.delete[i]
+							gender_loop = "F"
+						end
+					end
+				else
+					for i in 1..new_s_list
+						if new_s_list[i]["gender"] == "F"
+							new_s_list1 << s_list_copy[i]
+							s_list_copy.delete[i]
+							gender_loop = "M"
+						end
+					end
+				end
+				if new_s_list.empty? == true 
+					loopy = false
+				end
+			end
+		end
+		# check for first available seats, row by row, then column by column
+		coord = []
+		
+		for y in 0..@seats_y-1
+			for x in 0..@seats_x -1
+				if new_layout[y][x] == @yes_seat
+					coord << [y,x]
+				end
+			end
+		end
+
 		s_list.each do  |key, value|
 				id = key
 				name = value["name"]
@@ -95,12 +142,10 @@ class Seating
 				level = value["level"]
 				whitelist = value["whitelist"]
 				noise = value["noise"]
+			
+				x_pos = coord[0][1]
+				y_pos = coord[0][0]
 				
-				#pre requesite questions 
-				puts "Do you want the seating plan to have boy girl layout?  y/n"
-				male_female = gets.strip.upcase
-				puts "Does noise level of students matter? y/n"
-				noise_question = gets.strip.upcase
 
 				#make it so that to the right, to the left, to the up, to the down are all checked, and are in 1 space.
 				#diagonal counts as 2 grid spaces
@@ -114,11 +159,35 @@ class Seating
 				# row from A is where priority should go
 				#then all the way to Z
 
+				
+				 
 
 
+				if whitelist.empty? == false
+	
+
+					if new_s_list[x_pos - 1]["name"] == whitelist|| new_s_list[x_pos + 1]["name"] == whitelist || new_s_list[y_pos + 1]["name"] == whitelist || new_s_list[y_pos - 1]["name"] == whitelist
+						"Do Not place"
+					else
+						new_layout[y_pos][x_pos] = id
+						coord.delete_at(0)
+					end
+				end
+
+
+
+				if noise == 3 || noise == 2
+					if new_s_list[x_pos - 1]["noise"] == 3|| new_s_list[x_pos + 1]["noise"] == 3 || new_s_list[y_pos + 1]["noise"] == 3 || new_s_list[y_pos - 1]["noise"] == 3
+						"Do Not place"
+					else
+						new_layout[y_pos][x_pos] = id
+						coord.delete_at(0)
+					end
+				end
 				new_layout[y_pos][x_pos] = id
 	
 		end
+		print_layout(new_layout)
 	end
 
 	def manual_list
@@ -248,8 +317,9 @@ end
 
 seats = Seating.new
 #seat_layout_for_user = seats.manual_list
-seats.manual_list
+seats.algorithm
 
+a= {"1"=>{"name"=>"Matthew", "gender"=>"M", "level"=>"3", "whitelist"=>"Ishak Ik", "noise"=>"2"}, "2"=>{"name"=>"Oliver", "gender"=>"M", "level"=>"2", "whitelist"=>"Matthew", "noise"=>"1" }, "3"=>{"name"=>"Oliver", "gender"=>"F", "level"=>"2", "whitelist"=>"Matthew", "noise"=>"1"}, "4"=>{"name"=>"Oliver", "gender"=>"F", "level"=>"2", "whitelist"=>"Matthew", "noise"=>"1"}}
 
 
 
