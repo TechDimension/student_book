@@ -105,56 +105,42 @@ class Seating
 			gender_loop = "M"
 			new_s_list = []
 	
-			
 			while loopy == true
 				i = 0
-				puts i 
 				loopy2 = true
 				while loopy2 == true
-
-					puts i == i.to_i
-					puts i
-					print s_list_copy
-					puts
-
-					puts s_list_copy[i][1]["gender"]
 					if gender_loop == "M"
-
 						if s_list_copy[i][1]["gender"] == "M"
 							new_s_list << s_list_copy[i]
-							print new_s_list
-							puts
 							s_list_copy.delete_at(i)
-					
 							loopy2 = false
 						else
 							i += 1
+							gender_loop = "F"
 						end
 					else
 						if s_list_copy[i][1]["gender"] == "F"
 							new_s_list << s_list_copy[i]
-							print new_s_list
-							puts
-							s_list_copy.delete_at(i)
-					
+							s_list_copy.delete_at(i)		
 							loopy2 = false
 						else
 							i += 1
+							gender_loop = "M"
 						end
 					end
 				end
-				puts 'conditioner'
 				if gender_loop == "M"
 					gender_loop = "F"
 				else 
 					gender_loop = "M"
 				end
-		
 				if s_list_copy.empty? == true 
 					loopy2 = false
 					loopy = false
 				end
 			end
+		else
+			new_s_list = s_list_copy
 		end
 
 		print(new_s_list)
@@ -171,55 +157,68 @@ class Seating
 			end
 		end
 
-		s_list.each do  |key, value|
-				id = key
-				name = value["name"]
-				gender = value["gender"]
-				level = value["level"]
-				whitelist = value["whitelist"]
-				noise = value["noise"]
+		print coord 
+		puts 
+		student_num = 1
+		new_s_list.each do  |key, value|
+			id = key
+			name = value["name"]
+			gender = value["gender"]
+			level = value["level"]
+			whitelist = value["whitelist"]
+			noise = value["noise"]
+		
+			x_pos = coord[0][0]
+			y_pos = coord[0][1]
 			
-				x_pos = coord[0][1]
-				y_pos = coord[0][0]
-				
 
-				#make it so that to the right, to the left, to the up, to the down are all checked, and are in 1 space.
-				#diagonal counts as 2 grid spaces
-				#sort so that level is #1 priority
-				#then arranges that into gender
-				# then arranges that into whitelists
-				#then arranges by noise
-				#continue this for the level 2 
-				# then with 4
-				#any spaces left over, allows for a level 2 to go then a level 3
-				# row from A is where priority should go
-				#then all the way to Z
+			#make it so that to the right, to the left, to the up, to the down are all checked, and are in 1 space.
+			#diagonal counts as 2 grid spaces
+			#sort so that level is #1 priority
+			#then arranges that into gender
+			# then arranges that into whitelists
+			#then arranges by noise
+			#continue this for the level 2 
+			# then with 4
+			#any spaces left over, allows for a level 2 to go then a level 3
+			# row from A is where priority should go
+			#then all the way to Z
+			if new_layout[x_pos][y_pos+1].is_number?
+				up_student = new_layout[x_pos][y_pos+1]
+				name=new_s_list
+			else
+				up_student 
+			down_student
+			left_student
+			right_student
 
-				
-				 
 
-
+			if student_num > 1
 				if whitelist.empty? == false
 					if new_s_list[x_pos - 1]["name"] == whitelist|| new_s_list[x_pos + 1]["name"] == whitelist || new_s_list[y_pos + 1]["name"] == whitelist || new_s_list[y_pos - 1]["name"] == whitelist
-						"Do Not place"
+						puts "Do Not place"
 					else
 						new_layout[y_pos][x_pos] = id
 						coord.delete_at(0)
 					end
 				end
-
-
-
 				if noise == 3 || noise == 2
 					if new_s_list[x_pos - 1]["noise"] == 3|| new_s_list[x_pos + 1]["noise"] == 3 || new_s_list[y_pos + 1]["noise"] == 3 || new_s_list[y_pos - 1]["noise"] == 3
-						"Do Not place"
+						puts "Do Not place"
 					else
 						new_layout[y_pos][x_pos] = id
 						coord.delete_at(0)
 					end
-				end
-				new_layout[y_pos][x_pos] = id
-	
+				end	
+			elsif student_num == new_s_list.length
+
+
+			end
+
+			
+
+			new_layout[y_pos][x_pos] = id
+			student_num += 1
 		end
 		print_layout(new_layout)
 	end
@@ -346,6 +345,10 @@ class Seating
 				puts
 			end
 			puts 
+		end
+
+		def is_number?
+		  self.to_f == self
 		end
 end
 
