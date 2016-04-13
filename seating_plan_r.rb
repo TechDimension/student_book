@@ -166,6 +166,7 @@ class Seating
 			gender = value["gender"]
 			level = value["level"]
 			whitelist = value["whitelist"]
+			# should iterate through a whitelist array
 			noise = value["noise"]
 		
 			x_pos = coord[0][0]
@@ -183,37 +184,84 @@ class Seating
 			#any spaces left over, allows for a level 2 to go then a level 3
 			# row from A is where priority should go
 			#then all the way to Z
-			if new_layout[x_pos][y_pos+1].is_number?
-				up_student = new_layout[x_pos][y_pos+1]
-				name=new_s_list
-			else
-				up_student 
-			down_student
-			left_student
-			right_student
+		
 
 
-			if student_num > 1
-				if whitelist.empty? == false
-					if new_s_list[x_pos - 1]["name"] == whitelist|| new_s_list[x_pos + 1]["name"] == whitelist || new_s_list[y_pos + 1]["name"] == whitelist || new_s_list[y_pos - 1]["name"] == whitelist
-						puts "Do Not place"
-					else
-						new_layout[y_pos][x_pos] = id
-						coord.delete_at(0)
+			if x_pos == 0
+				if y_pos == 0
+					if new_layout[x_pos+1][y_pos] != @yes_seat && new_layout[x_pos+1][y_pos] != @no_seat || new_s_list[x_pos][y_pos+1] != @yes_seat && new_s_list[x_pos][y_pos+1]
+						if new_s_list[new_layout[x_pos+1][y_pos]]["name"] != whitelist || new_s_list[new_layout[x_pos][y_pos+1]]["name"] != whitelist
+							new_layout[y_pos][x_pos] = key
+							print_layout(new_layout)
+						else
+							print 'Do not place, bad students nearby '
+						end
+					end
+				elsif y_pos == @seats_y
+					if new_s_list[x_pos+1][y_pos] == @yes_seat || new_s_list[x_pos][y_pos-1] == @yes_seat
+
+					end
+				else 
+					if new_s_list[x_pos+1][y_pos] == @yes_seat || new_s_list[x_pos][y_pos-1] == @yes_seat || new_s_list[x_pos][y_pos+1] == @yes_seat
 					end
 				end
-				if noise == 3 || noise == 2
-					if new_s_list[x_pos - 1]["noise"] == 3|| new_s_list[x_pos + 1]["noise"] == 3 || new_s_list[y_pos + 1]["noise"] == 3 || new_s_list[y_pos - 1]["noise"] == 3
-						puts "Do Not place"
-					else
-						new_layout[y_pos][x_pos] = id
-						coord.delete_at(0)
+			elsif x_pos == @seats_x
+				if y_pos == 0
+					if new_s_list[x_pos-1][y_pos] == @yes_seat || new_s_list[x_pos][y_pos+1] == @yes_seat
+
 					end
-				end	
-			elsif student_num == new_s_list.length
+				elsif y_pos == @seats_y
+					if new_s_list[x_pos-1][y_pos] == @yes_seat || new_s_list[x_pos][y_pos-1] == @yes_seat
 
+					end
+				else 
+					if new_s_list[x_pos-1][y_pos] == @yes_seat || new_s_list[x_pos][y_pos-1] == @yes_seat || new_s_list[x_pos][y_pos+1] == @yes_seat
+					end
+				end
+			else 
+				if y_pos == 0
+					if new_s_list[x_pos-1][y_pos] == @yes_seat || new_s_list[x_pos][y_pos+1] == @yes_seat
 
+					end
+				elsif y_pos == @seats_y
+					if new_s_list[x_pos-1][y_pos] == @yes_seat || new_s_list[x_pos][y_pos-1] == @yes_seat
+
+					end
+				else 
+					if new_s_list[x_pos+1][y_pos] == @yes_seat || new_s_list[x_pos-1][y_pos] == @yes_seat || new_s_list[x_pos][y_pos-1] == @yes_seat || new_s_list[x_pos][y_pos+1] == @yes_seat
+					end
+				end
 			end
+
+
+			# if new_layout[x_pos][y_pos+1].is_number?
+			# 	up_student = new_layout[x_pos][y_pos+1]
+			# 	name=new_s_list
+			# else
+			# end
+
+
+			# if student_num > 1
+			# 	if whitelist.empty? == false
+			# 		if new_s_list[x_pos - 1]["name"] == whitelist|| new_s_list[x_pos + 1]["name"] == whitelist || new_s_list[y_pos + 1]["name"] == whitelist || new_s_list[y_pos - 1]["name"] == whitelist
+			# 			puts "Do Not place"
+			# 		else
+			# 			new_layout[y_pos][x_pos] = id
+			# 			coord.delete_at(0)
+			# 		end
+			# 	end
+			# 	if noise == 3 || noise == 2
+			# 		if new_s_list[x_pos - 1]["noise"] == 3|| new_s_list[x_pos + 1]["noise"] == 3 || new_s_list[y_pos + 1]["noise"] == 3 || new_s_list[y_pos - 1]["noise"] == 3
+			# 			puts "Do Not place"
+			# 		else
+			# 			new_layout[y_pos][x_pos] = id
+			# 			coord.delete_at(0)
+			# 		end
+			# 	end	
+			# elsif student_num == new_s_list.length
+
+
+			# end
 
 			
 
@@ -231,15 +279,22 @@ class Seating
 		print_layout(new_layout)
 		s_list.each do  |key, value|
 			
-			puts "Enter Position for Name: #{value["name"]} Example: B5"
+			puts "Enter Position for Name: #{value["name"]}: Must be Available seat (Black) Example: B5"
 			position = gets.strip
+
 			if position.length == 2 
 				x_pos = ( position[1].to_i - 1 )
 				y_pos = letter_to_num(position[0])
-				new_layout[y_pos][x_pos] = 2
-				print_layout(new_layout)
+				if new_layout[y_pos][x_pos] == @yes_seat
+					new_layout[y_pos][x_pos] = key
+					print_layout(new_layout)
+				else
+					puts "Already taken, or Unavailable Seat."
+				end
+				
+				
 			else 
-				"incorrect Info"
+				puts "Must be 2 characters"
 			end
 		end
 		puts "FINAL LAYOUT"
@@ -354,7 +409,7 @@ end
 
 seats = Seating.new
 #seat_layout_for_user = seats.manual_list
-seats.algorithm
+seats.manual_list
 
 a= {"1"=>{"name"=>"Matthew", "gender"=>"M", "level"=>"3", "whitelist"=>"Ishak Ik", "noise"=>"2"}, "2"=>{"name"=>"Oliver", "gender"=>"M", "level"=>"2", "whitelist"=>"Matthew", "noise"=>"1" }, "3"=>{"name"=>"Oliver", "gender"=>"F", "level"=>"2", "whitelist"=>"Matthew", "noise"=>"1"}, "4"=>{"name"=>"Oliver", "gender"=>"F", "level"=>"2", "whitelist"=>"Matthew", "noise"=>"1"}}
 
