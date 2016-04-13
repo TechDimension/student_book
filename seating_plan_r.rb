@@ -45,8 +45,8 @@ class Seating
 		seat_array
 	end
 
-	def seat_layout
-		new_layout = class_layout
+	def seat_layout(new_layout)
+		
 		for i in 0..(@available_seats-1)
 			puts "Enter seat layout"
 			puts "#{i+1}: Enter Position for an available seat Example: B5"
@@ -65,10 +65,12 @@ class Seating
 			end
 			print_layout(new_layout)
 		end
+		print(new_layout)
+		puts
 		new_layout
 	end
 
-	def algorithm
+	def algorithm(new_layout, s_list_copy)
 		#loud students to not be put next to another loud student, / put closer to the front.
 		# needing students put on the front.
 		# student cannot sit next to their problem partner
@@ -152,7 +154,7 @@ class Seating
 		for y in 0..@seats_y-1
 			for x in 0..@seats_x -1
 				if new_layout[y][x] == @yes_seat
-					coord << [y,x]
+					coord << [x,y]
 				end
 			end
 		end
@@ -186,61 +188,118 @@ class Seating
 			#then all the way to Z
 		
 
+			#positional data for array
+			pos_right =new_layout[x_pos+1][y_pos]
+			pos_left = new_layout[x_pos-1][y_pos]
+			pos_up = new_layout[x_pos][y_pos+1]
+			pos_down = new_layout[x_pos][y_pos-1]
+			pos_ne = new_layout[x_pos+1][y_pos+1]
+			pos_nw = new_layout[x_pos-1][y_pos+1]
+			pos_sw = new_layout[x_pos-1][y_pos-1]
+			pos_se = new_layout[x_pos+1][y_pos]
 
-			if x_pos == 0
-				if y_pos == 0
-					if (new_layout[x_pos+1][y_pos] != @yes_seat && new_layout[x_pos+1][y_pos] != @no_seat) || (new_s_list[x_pos][y_pos+1] != @yes_seat && new_s_list[x_pos][y_pos+1] != @no_seat)
-						if new_s_list[new_layout[x_pos+1][y_pos]]["name"] != whitelist || new_s_list[new_layout[x_pos][y_pos+1]]["name"] != whitelist
-							new_layout[y_pos][x_pos] = key
-							print_layout(new_layout)
-						else
-							print 'Do not place, bad students nearby '
+			#starting condition
+			to_place = false
+
+			if x_pos != 0 && x_pos != @seats_x && y_pos != 0 && y_pos != @seats_y
+				if new_s_list[pos_left] == nil && new_s_list[pos_right] == nil && new_s_list[pos_down] == nil && new_s_list[pos_up] == nil && new_s_list[pos_nw] == nil && new_s_list[pos_ne] == nil && new_s_list[pos_se] == nil && new_s_list[pos_sw] == nil 
+					to_place = true
+				elsif
+					if new_s_list[pos_right] != nil
+						if new_s_list[pos_right]["name"] != whitelist
+							to_place = true
 						end
-					end
-				elsif y_pos == @seats_y
-					if (new_layout[x_pos+1][y_pos] != @yes_seat && new_layout[x_pos+1][y_pos] != @no_seat )|| (new_s_list[x_pos][y_pos-1] != @yes_seat && new_s_list[x_pos][y_pos-1] != @no_seat)
-						if new_s_list[new_layout[x_pos+1][y_pos]]["name"] != whitelist || new_s_list[new_layout[x_pos][y_pos-1]]["name"] != whitelist
-							new_layout[y_pos][x_pos] = key
-							print_layout(new_layout)
-						else
-							print 'Do not place, bad students nearby '
-						end
-					end
-				else 
-					if (new_s_list[x_pos+1][y_pos] != @yes_seat && new_s_list[x_pos+1][y_pos] == @no_seat) || (new_s_list[x_pos][y_pos+1] == @yes_seat && new_s_list[x_pos][y_pos+1]) != @no_seat) || (new_s_list[x_pos][y_pos-1] == @yes_seat && new_s_list[x_pos][y_pos-1]) != @no_seat)
-						if new_s_list[new_layout[x_pos+1][y_pos]]["name"] != whitelist || new_s_list[new_layout[x_pos][y_pos-1]]["name"] != whitelist || new_s_list[new_layout[x_pos][y_pos+1]]["name"] != whitelist
-							new_layout[y_pos][x_pos] = key
-							print_layout(new_layout)
+					elsif new_s_list[pos_left] != nil
+						if new_s_list[pos_left]["name"] != whitelist
+							to_place = true
 						end
 					end
 				end
-			elsif x_pos == @seats_x
-				if y_pos == 0
-					if new_s_list[x_pos-1][y_pos] == @yes_seat || new_s_list[x_pos][y_pos+1] == @yes_seat
-
+			elsif x_pos == 0
+				if y_pos == 0 
+					if new_s_list[pos_left] == nil && new_s_list[pos_right] == nil && new_s_list[pos_down] == nil && new_s_list[pos_up] == nil && new_s_list[pos_nw] == nil && new_s_list[pos_ne] == nil && new_s_list[pos_se] == nil && new_s_list[pos_sw] == nil 
+						to_place = true
+					else
+						if new_s_list[pos_right] != nil
+							if new_s_list[pos_right]["name"] != whitelist
+								to_place = true
+							end
+						elsif 
+								puts"no place"
+							end
+						else
+							puts"no place"
+						end
 					end
+					
 				elsif y_pos == @seats_y
-					if new_s_list[x_pos-1][y_pos] == @yes_seat || new_s_list[x_pos][y_pos-1] == @yes_seat
 
-					end
-				else 
-					if new_s_list[x_pos-1][y_pos] == @yes_seat || new_s_list[x_pos][y_pos-1] == @yes_seat || new_s_list[x_pos][y_pos+1] == @yes_seat
-					end
 				end
-			else 
-				if y_pos == 0
-					if new_s_list[x_pos-1][y_pos] == @yes_seat || new_s_list[x_pos][y_pos+1] == @yes_seat
-
-					end
+			elsif x_pos = @seats_x
+				if y_pos == 0 
 				elsif y_pos == @seats_y
-					if new_s_list[x_pos-1][y_pos] == @yes_seat || new_s_list[x_pos][y_pos-1] == @yes_seat
-
-					end
-				else 
-					if new_s_list[x_pos+1][y_pos] == @yes_seat || new_s_list[x_pos-1][y_pos] == @yes_seat || new_s_list[x_pos][y_pos-1] == @yes_seat || new_s_list[x_pos][y_pos+1] == @yes_seat
-					end
 				end
 			end
+
+			# if x_pos == 0
+			# 	if y_pos == 0
+			# 		print((new_layout[x_pos+1][y_pos] != @yes_seat && new_layout[x_pos+1][y_pos] != @no_seat) || (new_s_list[x_pos][y_pos+1] != @yes_seat && new_s_list[x_pos][y_pos+1] != @no_seat))
+			# 		puts
+			# 		if (new_layout[x_pos+1][y_pos] != @yes_seat && new_layout[x_pos+1][y_pos] != @no_seat) || (new_s_list[x_pos][y_pos+1] != @yes_seat && new_s_list[x_pos][y_pos+1] != @no_seat)
+			# 			if new_s_list[new_layout[x_pos+1][y_pos]]["name"] != whitelist || new_s_list[new_layout[x_pos][y_pos+1]]["name"] != whitelist
+			# 				new_layout[y_pos][x_pos] = key
+			# 				print_layout(new_layout)
+			# 			else
+			# 				print 'Do not place, bad students nearby '
+			# 			end
+
+			# 		end
+			# 	elsif y_pos == @seats_y
+			# 		if (new_layout[x_pos+1][y_pos] != @yes_seat && new_layout[x_pos+1][y_pos] != @no_seat )|| (new_s_list[x_pos][y_pos-1] != @yes_seat && new_s_list[x_pos][y_pos-1] != @no_seat)
+			# 			if new_s_list[new_layout[x_pos+1][y_pos]]["name"] != whitelist || new_s_list[new_layout[x_pos][y_pos-1]]["name"] != whitelist
+			# 				new_layout[y_pos][x_pos] = key
+			# 				print_layout(new_layout)
+			# 			else
+			# 				print 'Do not place, bad students nearby '
+			# 			end
+			# 		end
+			# 	else 
+			# 		if (new_s_list[x_pos+1][y_pos] != @yes_seat && new_s_list[x_pos+1][y_pos] == @no_seat )||( new_s_list[x_pos][y_pos+1] == @yes_seat && new_s_list[x_pos][y_pos+1] != @no_seat) || (new_s_list[x_pos][y_pos-1] == @yes_seat && new_s_list[x_pos][y_pos-1] != @no_seat)
+			# 			if new_s_list[new_layout[x_pos+1][y_pos]]["name"] != whitelist || new_s_list[new_layout[x_pos][y_pos-1]]["name"] != whitelist || new_s_list[new_layout[x_pos][y_pos+1]]["name"] != whitelist
+			# 				new_layout[y_pos][x_pos] = key
+			# 				print_layout(new_layout)
+			# 			else 
+			# 				print 'Do not place, bad students nearby'
+			# 			end
+			# 		end
+			# 	end
+			# elsif x_pos == @seats_x
+			# 	if y_pos == 0
+			# 		if new_s_list[x_pos-1][y_pos] == @yes_seat || new_s_list[x_pos][y_pos+1] == @yes_seat
+
+			# 		end
+			# 	elsif y_pos == @seats_y
+			# 		if new_s_list[x_pos-1][y_pos] == @yes_seat || new_s_list[x_pos][y_pos-1] == @yes_seat
+
+			# 		end
+			# 	else 
+			# 		if new_s_list[x_pos-1][y_pos] == @yes_seat || new_s_list[x_pos][y_pos-1] == @yes_seat || new_s_list[x_pos][y_pos+1] == @yes_seat
+			# 		end
+			# 	end
+			# else 
+			# 	if y_pos == 0
+			# 		if new_s_list[x_pos-1][y_pos] == @yes_seat || new_s_list[x_pos][y_pos+1] == @yes_seat
+
+			# 		end
+			# 	elsif y_pos == @seats_y
+			# 		if new_s_list[x_pos-1][y_pos] == @yes_seat || new_s_list[x_pos][y_pos-1] == @yes_seat
+
+			# 		end
+			# 	else 
+			# 		if new_s_list[x_pos+1][y_pos] == @yes_seat || new_s_list[x_pos-1][y_pos] == @yes_seat || new_s_list[x_pos][y_pos-1] == @yes_seat || new_s_list[x_pos][y_pos+1] == @yes_seat
+			# 		end
+			# 	end
+			# end
 
 
 			# if new_layout[x_pos][y_pos+1].is_number?
@@ -272,14 +331,13 @@ class Seating
 
 			# end
 
+			#coords delete first item
 			student_num += 1
 		end
 		print_layout(new_layout)
 	end
 
-	def manual_list
-		new_layout = seat_layout
-		s_list = student_list_data
+	def manual_list(new_layout,s_list)
 		print s_list
 		puts
 		print_layout(new_layout)
@@ -313,6 +371,9 @@ class Seating
 		student_list = Hash.new
 		id = 1
 		loopy = true 
+
+
+		# warn user if student list > available seats
 		while loopy == true
 			puts 'Enter Student Name'
 			name = gets.strip
@@ -415,7 +476,21 @@ end
 
 seats = Seating.new
 #seat_layout_for_user = seats.manual_list
-seats.algorithm
+seat_layout = seat_layout(class_layout)
+seat_dup = seat_layout.dup
+s_list = student_list_data.dup
+
+while true
+puts "Enter Data Manually or Automatic with smart algorithm (m/a)"
+if gets.strip.upcase == 'M'
+	seats.manual_list(seat_layout, s_list)
+	break
+elsif gets.strip.upcase == "A"
+	seats.algorithm(s_dup, s_list)
+	break
+else
+	puts "Did not understand, Do again."
+end
 
 a= {"1"=>{"name"=>"Matthew", "gender"=>"M", "level"=>"3", "whitelist"=>"Ishak Ik", "noise"=>"2"}, "2"=>{"name"=>"Oliver", "gender"=>"M", "level"=>"2", "whitelist"=>"Matthew", "noise"=>"1" }, "3"=>{"name"=>"Oliver", "gender"=>"F", "level"=>"2", "whitelist"=>"Matthew", "noise"=>"1"}, "4"=>{"name"=>"Oliver", "gender"=>"F", "level"=>"2", "whitelist"=>"Matthew", "noise"=>"1"}}
 
