@@ -189,7 +189,7 @@ class Seating
 
 			if x_pos == 0
 				if y_pos == 0
-					if new_layout[x_pos+1][y_pos] != @yes_seat && new_layout[x_pos+1][y_pos] != @no_seat || new_s_list[x_pos][y_pos+1] != @yes_seat && new_s_list[x_pos][y_pos+1]
+					if (new_layout[x_pos+1][y_pos] != @yes_seat && new_layout[x_pos+1][y_pos] != @no_seat) || (new_s_list[x_pos][y_pos+1] != @yes_seat && new_s_list[x_pos][y_pos+1] != @no_seat)
 						if new_s_list[new_layout[x_pos+1][y_pos]]["name"] != whitelist || new_s_list[new_layout[x_pos][y_pos+1]]["name"] != whitelist
 							new_layout[y_pos][x_pos] = key
 							print_layout(new_layout)
@@ -198,11 +198,20 @@ class Seating
 						end
 					end
 				elsif y_pos == @seats_y
-					if new_s_list[x_pos+1][y_pos] == @yes_seat || new_s_list[x_pos][y_pos-1] == @yes_seat
-
+					if (new_layout[x_pos+1][y_pos] != @yes_seat && new_layout[x_pos+1][y_pos] != @no_seat )|| (new_s_list[x_pos][y_pos-1] != @yes_seat && new_s_list[x_pos][y_pos-1] != @no_seat)
+						if new_s_list[new_layout[x_pos+1][y_pos]]["name"] != whitelist || new_s_list[new_layout[x_pos][y_pos-1]]["name"] != whitelist
+							new_layout[y_pos][x_pos] = key
+							print_layout(new_layout)
+						else
+							print 'Do not place, bad students nearby '
+						end
 					end
 				else 
-					if new_s_list[x_pos+1][y_pos] == @yes_seat || new_s_list[x_pos][y_pos-1] == @yes_seat || new_s_list[x_pos][y_pos+1] == @yes_seat
+					if (new_s_list[x_pos+1][y_pos] != @yes_seat && new_s_list[x_pos+1][y_pos] == @no_seat) || (new_s_list[x_pos][y_pos+1] == @yes_seat && new_s_list[x_pos][y_pos+1]) != @no_seat) || (new_s_list[x_pos][y_pos-1] == @yes_seat && new_s_list[x_pos][y_pos-1]) != @no_seat)
+						if new_s_list[new_layout[x_pos+1][y_pos]]["name"] != whitelist || new_s_list[new_layout[x_pos][y_pos-1]]["name"] != whitelist || new_s_list[new_layout[x_pos][y_pos+1]]["name"] != whitelist
+							new_layout[y_pos][x_pos] = key
+							print_layout(new_layout)
+						end
 					end
 				end
 			elsif x_pos == @seats_x
@@ -263,9 +272,6 @@ class Seating
 
 			# end
 
-			
-
-			new_layout[y_pos][x_pos] = id
 			student_num += 1
 		end
 		print_layout(new_layout)
@@ -409,7 +415,7 @@ end
 
 seats = Seating.new
 #seat_layout_for_user = seats.manual_list
-seats.manual_list
+seats.algorithm
 
 a= {"1"=>{"name"=>"Matthew", "gender"=>"M", "level"=>"3", "whitelist"=>"Ishak Ik", "noise"=>"2"}, "2"=>{"name"=>"Oliver", "gender"=>"M", "level"=>"2", "whitelist"=>"Matthew", "noise"=>"1" }, "3"=>{"name"=>"Oliver", "gender"=>"F", "level"=>"2", "whitelist"=>"Matthew", "noise"=>"1"}, "4"=>{"name"=>"Oliver", "gender"=>"F", "level"=>"2", "whitelist"=>"Matthew", "noise"=>"1"}}
 
