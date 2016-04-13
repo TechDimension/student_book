@@ -209,11 +209,43 @@ class Seating
 						if new_s_list[pos_right]["name"] != whitelist
 							to_place = true
 						end
-					elsif new_s_list[pos_left] != nil
+					end
+					if new_s_list[pos_left] != nil
 						if new_s_list[pos_left]["name"] != whitelist
 							to_place = true
 						end
 					end
+					if new_s_list[pos_up] != nil
+						if new_s_list[pos_up]["name"] != whitelist
+							to_place = true
+						end
+					end
+					if new_s_list[pos_down] != nil
+						if new_s_list[pos_down]["name"] != whitelist
+							to_place = true
+						end
+					end
+					if new_s_list[pos_nw] != nil
+						if new_s_list[pos_nw]["name"] != whitelist
+							to_place = true
+						end
+					end
+					if new_s_list[pos_ne] != nil
+						if new_s_list[pos_ne]["name"] != whitelist
+							to_place = true
+						end
+					end
+					if new_s_list[pos_se] != nil
+						if new_s_list[pos_se]["name"] != whitelist
+							to_place = true
+						end
+					end
+					if new_s_list[pos_sw] != nil
+						if new_s_list[pos_sw]["name"] != whitelist
+							to_place = true
+						end
+					end
+
 				end
 			elsif x_pos == 0
 				if y_pos == 0 
@@ -225,8 +257,8 @@ class Seating
 								to_place = true
 							end
 						elsif 
-								puts"no place"
-							end
+							puts"no place"
+							
 						else
 							puts"no place"
 						end
@@ -476,20 +508,21 @@ end
 
 seats = Seating.new
 #seat_layout_for_user = seats.manual_list
-seat_layout = seat_layout(class_layout)
+seat_layout = seats.seat_layout(seats.class_layout)
 seat_dup = seat_layout.dup
-s_list = student_list_data.dup
+s_list = seats.student_list_data.dup
 
 while true
-puts "Enter Data Manually or Automatic with smart algorithm (m/a)"
-if gets.strip.upcase == 'M'
-	seats.manual_list(seat_layout, s_list)
-	break
-elsif gets.strip.upcase == "A"
-	seats.algorithm(s_dup, s_list)
-	break
-else
-	puts "Did not understand, Do again."
+	puts "Enter Data Manually or Automatic with smart algorithm (m/a)"
+	if gets.strip.upcase == 'M'
+		seats.manual_list(seat_layout, s_list)
+		break
+	elsif gets.strip.upcase == "A"
+		seats.algorithm(s_dup, s_list)
+		break
+	else
+		puts "Did not understand, Do again."
+	end
 end
 
 a= {"1"=>{"name"=>"Matthew", "gender"=>"M", "level"=>"3", "whitelist"=>"Ishak Ik", "noise"=>"2"}, "2"=>{"name"=>"Oliver", "gender"=>"M", "level"=>"2", "whitelist"=>"Matthew", "noise"=>"1" }, "3"=>{"name"=>"Oliver", "gender"=>"F", "level"=>"2", "whitelist"=>"Matthew", "noise"=>"1"}, "4"=>{"name"=>"Oliver", "gender"=>"F", "level"=>"2", "whitelist"=>"Matthew", "noise"=>"1"}}

@@ -4,11 +4,18 @@ require "test/unit"
 class TestSeatingPlan < Test::Unit::TestCase
 
     def test_class_size()
-        gold = Room.new("GoldRoom",
+        seats = Seats.new("GoldRoom",
                     """This room has gold in it you can grab. There's a
                 door to the north.""")
         assert_equal("GoldRoom", gold.name)
         assert_equal({}, gold.paths)
+    end
+
+    def test_class_layout()
+    end
+
+    def test_student_list_data()
+    	
     end
 
     def test_manual_make()
