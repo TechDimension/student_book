@@ -16,7 +16,8 @@ class SeatingPlanController < ApplicationController
 		else
 			"continue"
 		end
-		seat_layout = seat_layout(class_layout)
+
+		@seat_layout = seat_layout(class_layout)
 		@printed_layout = print_layout(seat_layout)
 	end
 end

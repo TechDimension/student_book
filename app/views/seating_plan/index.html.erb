@@ -26,9 +26,38 @@
 		      	<th align="right">Row</th>
 	        
 	      	</tr>
-	   </thead>
+	    </thead>
 	   
-	   <tbody>
+	   
+
+   		<thread>
+			<tr>
+			   <%for row in 1..(@seats_y-2) %>
+					<%if row == 1 %>
+						
+						<th>Row</th>
+						<%for i in 0..(@seat_layout[row].length-3)	%>
+							<th><% i + 1 %> </th>
+						<%end%>
+						<th>Row</th>
+			
+					<%end%>
+			</tr>
+		</thread>
+		<tbody>
+			<td>num_to_letter(row)</td>
+			<% row_array = @seat_layout[row].dup %>
+			<% row_array.pop; row_array.shift; %>
+			<% row_array.each do |col|%>
+				<td><%= col %> </td>
+			<% end %>
+			<th>num_to_letter(row)</th>
+				<% end %>
+
+
+	   
+
+
 	   	<% for row in 1..@seats_y %>
 	   	<tr>
 	        <td><%= row %></td>
@@ -65,14 +94,13 @@
 	
 </div>
 
-<% if not(@printed_layout.nil?) %>
-	<%= params.inspect %>
+
 	<%= @printed_layout %>
 	<%  @printed_layout.each do |row| %>
 	<div><%= row%></div>
-	<% end %>
 
-<% end %>
+
+	<% end %>
 
 
 
