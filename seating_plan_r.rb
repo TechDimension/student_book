@@ -14,9 +14,9 @@ class Seating
 	def initialize()
 		# 0 are available seats.
 		puts "Enter the max width of seats, as in max amount of seats in one plane"
-		@seats_x = gets.strip.to_i
+		@seats_x = gets.strip.to_i +1
 		puts "Enter array Height of seats"
-		@seats_y = gets.strip.to_i
+		@seats_y = gets.strip.to_i + 1
 		puts 'Enter number of available seats'
 		@available_seats = gets.strip.to_i
 
@@ -152,36 +152,31 @@ class Seating
 		puts
 
 		# check for first available seats, row by row, then column by column
-		coord = []
+		@coord = []
 		
 		for y in 0..@seats_y-1
 			for x in 0..@seats_x -1
 				if new_layout[y][x] == @yes_seat
-					coord << [x,y]
+					@coord << [x,y]
 				end
 			end
 		end
 
-		print coord 
+		print @coord 
 		puts 
 		student_num = 1
 		new_array_s_list = new_s_list.to_a.dup
-		while new_array_s_list.length != 0
-			id = student_num.to_s
-			whitelist = new_s_list["whitelist"]
+		while (not(new_array_s_list.length <= 0) && @coord.length >= 0 )
 
+			id = new_array_s_list[0][0]
+			whitelist = new_s_list[id]["whitelist"]
+			puts whitelist
 
-		new_s_list.each do  |key, value|
-			id = key
-			name = value["name"]
-			gender = value["gender"]
-			level = value["level"]
-			whitelist = value["whitelist"]
-			# should iterate through a whitelist array
-			noise = value["noise"]
+			name = new_s_list[id]["name"]
+			puts name
 		
-			x_pos = coord[0][0]
-			y_pos = coord[0][1]
+			x_pos = @coord[0][0]
+			y_pos = @coord[0][1]
 			
 
 			#make it so that to the right, to the left, to the up, to the down are all checked, and are in 1 space.
@@ -198,139 +193,133 @@ class Seating
 		
 
 			#positional data for array
-			pos_right =new_layout[x_pos+1][y_pos]
-			pos_left = new_layout[x_pos-1][y_pos]
-			pos_up = new_layout[x_pos][y_pos+1]
-			pos_down = new_layout[x_pos][y_pos-1]
-			pos_ne = new_layout[x_pos+1][y_pos+1]
-			pos_nw = new_layout[x_pos-1][y_pos+1]
-			pos_sw = new_layout[x_pos-1][y_pos-1]
-			pos_se = new_layout[x_pos+1][y_pos]
+			pos_right =new_layout[y_pos][x_pos+1].to_s
+			pos_left = new_layout[y_pos][x_pos-1].to_s
+			pos_up = new_layout[y_pos-1][x_pos].to_s
+			pos_down = new_layout[y_pos+1][x_pos].to_s
+			pos_ne = new_layout[y_pos-1][x_pos+1].to_s
+			pos_nw = new_layout[y_pos-1][x_pos-1].to_s
+			pos_sw = new_layout[y_pos+1][x_pos-1].to_s
+			pos_se = new_layout[y_pos+1][x_pos+1].to_s
 
 			#starting condition
-			to_place = false
+			to_place = [true]
 
 			# puts ("#{pos_right},#{pos_left},#{pos_up},#{pos_down},#{pos_ne},#{pos_nw},#{pos_sw}, #{pos_se}")
-
-			if x_pos != 0 && x_pos != @seats_x && y_pos != 0 && y_pos != @seats_y
+			puts 'up!!!'
+			puts pos_up 
+			puts "s list up"
+			puts new_s_list[pos_up]
+			if (x_pos != 0 && x_pos != @seats_x && y_pos != 0 && y_pos != @seats_y)
 				if new_s_list[pos_left] == nil && new_s_list[pos_right] == nil && new_s_list[pos_down] == nil && new_s_list[pos_up] == nil && new_s_list[pos_nw] == nil && new_s_list[pos_ne] == nil && new_s_list[pos_se] == nil && new_s_list[pos_sw] == nil 
+					puts "nothing around"
 					to_place = true
-				elsif
+				else
 					if new_s_list[pos_right] != nil
-						if new_s_list[pos_right]["name"] != whitelist
-							to_place << true
+						puts "r"
+						if new_s_list[pos_right]["name"] == whitelist || new_s_list[pos_right]["whitelist"] == name
 							puts "right"
+							to_place << false
+							
 						end
 					end
 					if new_s_list[pos_left] != nil
-						if new_s_list[pos_left]["name"] != whitelist
-							to_place << true
+						puts "l"
+						if new_s_list[pos_left]["name"] == whitelist || new_s_list[pos_left]["whitelist"] == name
 							puts "left"
+							to_place << false
+							
 						end
 					end
 					if new_s_list[pos_up] != nil
-						if new_s_list[pos_up]["name"] != whitelist
-							to_place << true
+						puts "u"
+						if new_s_list[pos_up]["name"] == whitelist || new_s_list[pos_up]["whitelist"] == name
 							puts "up"
+							to_place << false
+							
 						end
 					end
 					if new_s_list[pos_down] != nil
-						if new_s_list[pos_down]["name"] != whitelist
-							to_place << true
+						puts "d"
+						if new_s_list[pos_down]["name"] == whitelist || new_s_list[pos_down]["whitelist"] == name
 							puts "down"
+							to_place << false
+							
 						end
 					end
 					if new_s_list[pos_nw] != nil
-						if new_s_list[pos_nw]["name"] != whitelist
-							to_place << true
+						puts "nw"
+						if new_s_list[pos_nw]["name"] == whitelist || new_s_list[pos_nw]["whitelist"] == name
 							puts "nw"
+							to_place << false
+							
 						end
 					end
 					if new_s_list[pos_ne] != nil
-						if new_s_list[pos_ne]["name"] != whitelist
-							to_place << true
+						puts "ne"
+						if new_s_list[pos_ne]["name"] == whitelist || new_s_list[pos_ne]["whitelist"] == name
 							puts "ne"
+							to_place << false
+							
 						end
 					end
 					if new_s_list[pos_se] != nil
-						if new_s_list[pos_se]["name"] != whitelist
-							to_place << true
+						puts "se"
+						if new_s_list[pos_se]["name"] == whitelist || new_s_list[pos_se]["whitelist"] == name
 							puts "se"
+							to_place << false
+							
 						end
 					end
 					if new_s_list[pos_sw] != nil
-						if new_s_list[pos_sw]["name"] != whitelist
-							to_place << true
+						puts "sw"
+						if new_s_list[pos_sw]["name"] == whitelist || new_s_list[pos_sw]["whitelist"] == name
 							puts "sw"
+							to_place << false
+							
 						end
 					end
-					to_place = (to_place.include? true)
+			
+					to_place = not(to_place.include? false)
 
 				end
 			elsif x_pos == 0
+				puts 'x_pos = 0'
 				if y_pos == 0 
-					if new_s_list[pos_left] == nil && new_s_list[pos_right] == nil && new_s_list[pos_down] == nil && new_s_list[pos_up] == nil && new_s_list[pos_nw] == nil && new_s_list[pos_ne] == nil && new_s_list[pos_se] == nil && new_s_list[pos_sw] == nil 
-						to_place = true
-					else
-						if new_s_list[pos_right] != nil
-							if new_s_list[pos_right]["name"] != whitelist
-								to_place = true
-							end
-						elsif 
-							puts"no place"
-							
-						else
-							puts"no place"
-						end
-					end
+					
 					
 				elsif y_pos == @seats_y
 
 				end
 			elsif x_pos = @seats_x
+				puts 'what!'
 				if y_pos == 0 
 				elsif y_pos == @seats_y
 				end
 			end
 
-			# if student_num > 1
-			# 	if whitelist.empty? == false
-			# 		if new_s_list[x_pos - 1]["name"] == whitelist|| new_s_list[x_pos + 1]["name"] == whitelist || new_s_list[y_pos + 1]["name"] == whitelist || new_s_list[y_pos - 1]["name"] == whitelist
-			# 			puts "Do Not place"
-			# 		else
-			# 			new_layout[y_pos][x_pos] = id
-			# 			coord.delete_at(0)
-			# 		end
-			# 	end
-			# 	if noise == 3 || noise == 2
-			# 		if new_s_list[x_pos - 1]["noise"] == 3|| new_s_list[x_pos + 1]["noise"] == 3 || new_s_list[y_pos + 1]["noise"] == 3 || new_s_list[y_pos - 1]["noise"] == 3
-			# 			puts "Do Not place"
-			# 		else
-			# 			new_layout[y_pos][x_pos] = id
-			# 			coord.delete_at(0)
-			# 		end
-			# 	end	
-			# elsif student_num == new_s_list.length
-
-
-			# end
+			#noise
 
 			#coords delete first item
 
-			print coord
+			print @coord
 			puts
 
 			if to_place == true
 				puts "Placed"
 				new_layout[y_pos][x_pos] = id
-				coord.shift
+				@coord.shift
+				new_array_s_list.shift
+				@coord = @coord.sort{|a,b|b[1]<=>a[1]}.reverse
 			else
 				puts "Cannot place here"
-				coord = coord.rotate
+				@coord = @coord.rotate
 			end
 			student_num += 1
 
 			print_layout(new_layout)
+
+			puts new_array_s_list
 		
 		end
 		print_layout(new_layout)
