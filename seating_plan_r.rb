@@ -14,7 +14,7 @@ class Seating
 	def initialize()
 		# 0 are available seats.
 		puts "Enter the max width of seats, as in max amount of seats in one plane"
-		@seats_x = gets.strip.to_i +1
+		@seats_x = (gets.strip.to_i) + 1
 		puts "Enter array Height of seats"
 		@seats_y = gets.strip.to_i + 1
 		puts 'Enter number of available seats'
@@ -154,8 +154,8 @@ class Seating
 		# check for first available seats, row by row, then column by column
 		@coord = []
 		
-		for y in 0..@seats_y-1
-			for x in 0..@seats_x -1
+		for y in 1..@seats_y-1
+			for x in 1..@seats_x -1
 				if new_layout[y][x] == @yes_seat
 					@coord << [x,y]
 				end
@@ -328,25 +328,36 @@ class Seating
 	def manual_list(new_layout,s_list)
 		print s_list
 		puts
+		print new_layout
+		puts
+		
 		print_layout(new_layout)
 		s_list.each do  |key, value|
-			
-			puts "Enter Position for Name: #{value["name"]}: Must be Available seat (Black) Example: B5"
-			position = gets.strip
+			print key
+			puts
+			manual_loop = true
+			while manual_loop
+				puts "Enter Position for Name: #{value["name"]}: Must be Available seat (Black) Example: B5"
+				position = gets.strip
+				if position.length == 2 
+					x_pos = ( position[1].to_i)
+					puts x_pos
+					y_pos = letter_to_num(position[0].upcase)
+					puts y_pos
+					if new_layout[y_pos][x_pos] == @yes_seat
 
-			if position.length == 2 
-				x_pos = ( position[1].to_i - 1 )
-				y_pos = letter_to_num(position[0])
-				if new_layout[y_pos][x_pos] == @yes_seat
-					new_layout[y_pos][x_pos] = key
-					print_layout(new_layout)
-				else
-					puts "Already taken, or Unavailable Seat."
+						new_layout[y_pos][x_pos] = key
+						print new_layout
+						puts
+						print_layout(new_layout)
+						manual_loop = false
+					else
+						puts "Already taken, or Unavailable Seat."
+
+					end
+				else 
+					puts "Must be 2 characters"
 				end
-				
-				
-			else 
-				puts "Must be 2 characters"
 			end
 		end
 		puts "FINAL LAYOUT"
@@ -391,25 +402,25 @@ class Seating
 
 		def num_to_letter(x)
 			x
-		    if x == 0
+		    if x == 1
 		        l = "A"
-		    elsif x == 1
-		        l = "B"
 		    elsif x == 2
-		        l = "C"
+		        l = "B"
 		    elsif x == 3
-		        l = "D"
+		        l = "C"
 		    elsif x == 4
-		        l = "E"
+		        l = "D"
 		    elsif x == 5
-		        l = "F"
+		        l = "E"
 		    elsif x == 6
-		        l = "G"
+		        l = "F"
 		    elsif x == 7
-		        l = "H"
+		        l = "G"
 		    elsif x == 8
-		        l = "I"
+		        l = "H"
 		    elsif x == 9
+		        l = "I"
+		    elsif x == 10
 		        l = "J"
 		    end
 		    l
@@ -417,40 +428,42 @@ class Seating
 
 		def letter_to_num(x)
 		    if x == "A"
-		        l = 0
-		    elsif x == "B"
 		        l = 1
-		    elsif x == "C"
+		    elsif x == "B"
 		        l = 2
-		    elsif x == "D"
+		    elsif x == "C"
 		        l = 3
-		    elsif x == "E"
+		    elsif x == "D"
 		        l = 4
-		    elsif x == "F"
+		    elsif x == "E"
 		        l = 5
-		    elsif x == "G"
+		    elsif x == "F"
 		        l = 6
-		    elsif x == "H"
+		    elsif x == "G"
 		        l = 7
-		    elsif x == "I"
+		    elsif x == "H"
 		        l = 8
-		    elsif x == "J"
+		    elsif x == "I"
 		        l = 9
+		    elsif x == "J"
+		        l = 10
 		    end
 		    l
 		end
 
 		def print_layout(seat_array)
-			for row in 0..@seats_y-1
-				if row == 0 
+			seat_array = seat_array.dup
+			for row in 1..(@seats_y-3)
+				if row == 1 
 					print "|"
-					for i in 0..(seat_array[row].length-1)	
+					for i in 0..(seat_array[row].length-3)	
 						print "  #{i+1}  "
 					end
 					print "|"
 					puts
 				end
-				row_array = seat_array[row]
+				row_array = seat_array[row].dup
+				row_array.pop; row_array.shift;
 				print(num_to_letter(row),row_array,num_to_letter(row))
 				puts
 			end
