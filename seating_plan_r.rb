@@ -14,9 +14,9 @@ class Seating
 	def initialize()
 		# 0 are available seats.
 		puts "Enter the max width of seats, as in max amount of seats in one plane"
-		@seats_x = (gets.strip.to_i) + 1
+		@seats_x = (gets.strip.to_i) + 2
 		puts "Enter array Height of seats"
-		@seats_y = gets.strip.to_i + 1
+		@seats_y = gets.strip.to_i + 2
 		puts 'Enter number of available seats'
 		@available_seats = gets.strip.to_i
 
@@ -46,22 +46,30 @@ class Seating
 	end
 
 	def seat_layout(new_layout)
-		
+	
+		seat_layout_loop = true
+		puts "Enter seat layout"
 		for i in 0..(@available_seats-1)
-			puts "Enter seat layout"
-			puts "#{i+1}: Enter Position for an available seat Example: B5"
-			position = gets.strip
-			if position.length == 2 
-				x_pos = ( position[1].to_i - 1 )
-				y_pos = letter_to_num(position[0].upcase)
-				if new_layout[y_pos][x_pos] == @yes_seat
-					puts "Already used please do again"
-					i -= 1
+			seat_layout_loop = true
+			while seat_layout_loop
+			
+			
+				puts "#{i+1}: Enter Position for an available seat Example: B5"
+				position = gets.strip
+				if position.length == 2 
+					x_pos = ( position[1].to_i)
+					y_pos = letter_to_num(position[0].upcase)
+					if y_pos <= 0 || y_pos >= @seats_y-1 || x_pos <= 0 || x_pos >= @seats_x-1
+						puts "Outside boundaries, please do again"
+					elsif new_layout[y_pos][x_pos] == @yes_seat
+						puts "Already used please do again"	
+					else
+						new_layout[y_pos][x_pos] = @yes_seat
+						seat_layout_loop = false
+					end
 				else
-					new_layout[y_pos][x_pos] = @yes_seat
+					"incorrect Info"
 				end
-			else
-				"incorrect Info"
 			end
 			print_layout(new_layout)
 		end
@@ -71,26 +79,6 @@ class Seating
 	end
 
 	def algorithm(new_layout, s_list_copy)
-		#loud students to not be put next to another loud student, / put closer to the front.
-		# needing students put on the front.
-		# student cannot sit next to their problem partner
-		# Everything else fills up the other rows.
-		# Fill up so that the back should not be filled.
-			# student_list = student_list_data
-			# new_list = student_list.sort_by(level_learning)
-			# new_list = student_list.map{|student| student.level_learning == 1}
-			# student_list.sort_by(noise)
-			# student_list.each do |student|
-			# 	if student.noise == 3
-			# 		#do not put directly next to a studentnoise level of 2/3
-			# 		#and put minimum of 3 spaces away from another noise 3 student
-			# 	end
-			# 	#if seat layout has no more spaces, then allow to be put in the first available empty space. 
-			# end
-
-		# new_layout = seat_layout.dup
-		# s_list = student_list_data
-		# s_list_copy = s_list.dup
 		print(s_list_copy)
 		puts
 
@@ -103,58 +91,17 @@ class Seating
 		#pre requesite questions 
 		puts "Do you want the seating plan to have boy girl layout?  y/n"
 		male_female = gets.strip.upcase
-		puts "Does noise level of students matter? y/n"
-		noise_question = gets.strip.upcase
+
 		if male_female == "Y"
-			loopy = true
-			gender_loop = "M"
-			new_s_list = []
-	
-			while loopy == true
-				i = 0
-				loopy2 = true
-				while loopy2 == true
-					if gender_loop == "M"
-						if s_list_copy[i][1]["gender"] == "M"
-							new_s_list << s_list_copy[i]
-							s_list_copy.delete_at(i)
-							loopy2 = false
-						else
-							i += 1
-							gender_loop = "F"
-						end
-					else
-						if s_list_copy[i][1]["gender"] == "F"
-							new_s_list << s_list_copy[i]
-							s_list_copy.delete_at(i)		
-							loopy2 = false
-						else
-							i += 1
-							gender_loop = "M"
-						end
-					end
-				end
-				if gender_loop == "M"
-					gender_loop = "F"
-				else 
-					gender_loop = "M"
-				end
-				if s_list_copy.empty? == true 
-					loopy2 = false
-					loopy = false
-				end
-			end
+			boy_girl_sort(s_list_copy)
 		else
 			new_s_list = s_list_copy
 		end
-		new_s_list = new_s_list.to_h
-		print(new_s_list)
-		puts
 
 		# check for first available seats, row by row, then column by column
 		@coord = []
 		
-		for y in 1..@seats_y-1
+		for y in 1..@seats_y-2
 			for x in 1..@seats_x -1
 				if new_layout[y][x] == @yes_seat
 					@coord << [x,y]
@@ -165,13 +112,18 @@ class Seating
 		print @coord 
 		puts 
 		student_num = 1
-		new_array_s_list = new_s_list.to_a.dup
+		new_s_list = new_s_list.to_h
+		new_array_s_list = new_s_list.dup.to_a
 		while (not(new_array_s_list.length <= 0) && @coord.length >= 0 )
-
+			print new_s_list
+			puts 
 			id = new_array_s_list[0][0]
+			print id
+			puts
+			print new_s_list[id]
+			puts
 			whitelist = new_s_list[id]["whitelist"]
 			puts whitelist
-
 			name = new_s_list[id]["name"]
 			puts name
 		
@@ -330,6 +282,15 @@ class Seating
 		puts
 		print new_layout
 		puts
+
+		puts "Do you want the seating plan to have boy girl layout?  y/n"
+		male_female = gets.strip.upcase
+
+		if male_female == "Y"
+			boy_girl_sort(s_list)
+		else
+			s_list = s_list
+		end
 		
 		print_layout(new_layout)
 		s_list.each do  |key, value|
@@ -378,10 +339,6 @@ class Seating
 			name = gets.strip
 			puts "Student male or female m/f"
 			gender = gets.strip.upcase
-			puts 'Enter noise level of student'
-			
-
-			noise = gets.strip
 			puts 'Enter name of student/s to not sit next to'
 			whitelist = gets.strip
 			puts 'Enter priority of learning (if whether needs to be close to front)'
@@ -392,7 +349,7 @@ class Seating
 			else
 				puts 'Continuing..'
 			end
-			student_list.merge!("#{id}"  => {"name" => "#{name}", "gender" => "#{gender}", "level" => "#{level_learning}", "whitelist" => "#{whitelist}", "noise" => "#{noise}"})
+			student_list.merge!("#{id}"  => {"name" => "#{name}", "gender" => "#{gender}", "level" => "#{level_learning}", "whitelist" => "#{whitelist}"})
 			id +=1
 		end
 		student_list
@@ -453,7 +410,7 @@ class Seating
 
 		def print_layout(seat_array)
 			seat_array = seat_array.dup
-			for row in 1..(@seats_y-3)
+			for row in 1..(@seats_y-2)
 				if row == 1 
 					print "|"
 					for i in 0..(seat_array[row].length-3)	
@@ -475,6 +432,54 @@ class Seating
 		end
 end
 
+def boy_girl_sort(s_list_copy)
+	
+	loopy = true
+	gender_loop = "M"
+	new_s_list = []
+
+	while loopy == true
+		i = 0
+		loopy2 = true
+
+		while loopy2 == true
+			if gender_loop == "M"
+				if s_list_copy[i][1]["gender"] == "M"
+					new_s_list << s_list_copy[i]
+					s_list_copy.delete_at(i)
+					loopy2 = false
+				else
+					i += 1
+					gender_loop = "F"
+				end
+			else
+				if s_list_copy[i][1]["gender"] == "F"
+					new_s_list << s_list_copy[i]
+					s_list_copy.delete_at(i)		
+					loopy2 = false
+				else
+					i += 1
+					gender_loop = "M"
+				end
+			end
+		end
+		if gender_loop == "M"
+			gender_loop = "F"
+		else 
+			gender_loop = "M"
+		end
+		if s_list_copy.empty? == true 
+			loopy2 = false
+			loopy = false
+		end
+	end
+
+	new_s_list = new_s_list.to_h
+	print(new_s_list)
+	puts
+	new_s_list
+end
+
 seats = Seating.new
 # seat_layout = seats.seat_layout(seats.class_layout)
 # seat_layout_dup = seat_layout.dup
@@ -482,8 +487,8 @@ seats = Seating.new
 
 
 seat_layout = [["○", "○", "○", "○", "○", "○"], ["○", "◉", "◉", "◉", "◉", "○"], ["○", "◉", "○", "○", "◉", "○"], ["○", "◉", "○", "○", "◉", "○"], ["○", "◉", "◉", "◉", "◉", "○"], ["○", "○", "○", "○", "○", "○"]]
-s_list = {"1"=>{"name"=>"Matthew", "gender"=>"M", "level"=>"3", "whitelist"=>"Oliver", "noise"=>"3"}, "2"=>{"name"=>"Oliver", "gender"=>"M", "level"=>"2", "whitelist"=>"Ishak", "noise"=>"2"}, "3"=>{"name"=>"Ishak", "gender"=>"M", "level"=>"1", "whitelist"=>"Zak", "noise"=>"3"}, "4"=>{"name"=>"Sultan", "gender"=>"F", "level"=>"3", "whitelist"=>"Zineb", "noise"=>"1"}, "5"=>{"name"=>"Zineb", "gender"=>"F", "level"=>"3", "whitelist"=>"Hindz", "noise"=>"3"}, "6"=>{"name"=>"Jess", "gender"=>"F", "level"=>"3", "whitelist"=>"Kony", "noise"=>"1"}}
 seat_layout_dup = seat_layout.dup
+s_list = {"1"=>{"name"=>"Matthew", "gender"=>"M", "level"=>"3", "whitelist"=>"Oliver", "noise"=>"3"}, "2"=>{"name"=>"Oliver", "gender"=>"M", "level"=>"2", "whitelist"=>"Ishak", "noise"=>"2"}, "3"=>{"name"=>"Ishak", "gender"=>"M", "level"=>"1", "whitelist"=>"Zak", "noise"=>"3"}, "4"=>{"name"=>"Sultan", "gender"=>"F", "level"=>"3", "whitelist"=>"Zineb", "noise"=>"1"}, "5"=>{"name"=>"Zineb", "gender"=>"F", "level"=>"3", "whitelist"=>"Hindz", "noise"=>"3"}, "6"=>{"name"=>"Jess", "gender"=>"F", "level"=>"3", "whitelist"=>"Kony", "noise"=>"1"}}
 s_list_dup = s_list.dup
 
 # seats.algorithm(seat_layout_dup, s_list_dup)
