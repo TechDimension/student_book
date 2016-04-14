@@ -1,4 +1,4 @@
-class Seating
+	class Seating
 
 
 	#implementation in the website
@@ -341,28 +341,6 @@ class Seating
 		end
 		student_list
 	end
-	def print_layout(seat_array)
-			seat_array = seat_array.dup
-			printed = []
-			for row in 1..(@seats_y-2)
-				if row == 1 
-					# print "|"
-					for i in 0..(seat_array[row].length-3)	
-						# print "  #{i+1}  "
-						printed << " #{i+1} "
-						printed = printed.join("").split
-					end
-					# print "|"
-				
-				end
-				row_array = seat_array[row].dup
-				row_array.pop; row_array.shift;
-				# print(num_to_letter(row),row_array,num_to_letter(row))
-			
-				printed << num_to_letter(row)+(row_array.join(" "))+num_to_letter(row)
-			end
-			print printed
-		end
 
 	private 
 
@@ -417,7 +395,24 @@ class Seating
 		    l
 		end
 
-		
+		def print_layout(seat_array)
+			seat_array = seat_array.dup
+			for row in 1..(@seats_y-2)
+				if row == 1 
+					print "|"
+					for i in 0..(seat_array[row].length-3)	
+						print "  #{i+1}  "
+					end
+					print "|"
+					puts
+				end
+				row_array = seat_array[row].dup
+				row_array.pop; row_array.shift;
+				print(num_to_letter(row),row_array,num_to_letter(row))
+				puts
+			end
+			puts 
+		end
 
 		def is_number?
 		  self.to_f == self
@@ -472,48 +467,3 @@ def boy_girl_sort(s_list_copy)
 	puts
 	new_s_list
 end
-
-seats = Seating.new
-seat_layout = seats.seat_layout(seats.class_layout)
-seat_layout_dup = seat_layout.dup
-s_list_dup = seats.student_list_data.dup
-
-
-seat_layout = [["○", "○", "○", "○", "○", "○"], ["○", "◉", "◉", "◉", "◉", "○"], ["○", "◉", "○", "○", "◉", "○"], ["○", "◉", "○", "○", "◉", "○"], ["○", "◉", "◉", "◉", "◉", "○"], ["○", "○", "○", "○", "○", "○"]]
-print_layout(seat_layout)
-# seat_layout_dup = seat_layout.dup
-# s_list = {"1"=>{"name"=>"Matthew", "gender"=>"M", "level"=>"3", "whitelist"=>"Oliver", "noise"=>"3"}, "2"=>{"name"=>"Oliver", "gender"=>"M", "level"=>"2", "whitelist"=>"Ishak", "noise"=>"2"}, "3"=>{"name"=>"Ishak", "gender"=>"M", "level"=>"1", "whitelist"=>"Zak", "noise"=>"3"}, "4"=>{"name"=>"Sultan", "gender"=>"F", "level"=>"3", "whitelist"=>"Zineb", "noise"=>"1"}, "5"=>{"name"=>"Zineb", "gender"=>"F", "level"=>"3", "whitelist"=>"Hindz", "noise"=>"3"}, "6"=>{"name"=>"Jess", "gender"=>"F", "level"=>"3", "whitelist"=>"Kony", "noise"=>"1"}}
-# s_list_dup = s_list.dup
-
-# seats.algorithm(seat_layout_dup, s_list_dup)
-
-main_loop = true
-while main_loop
-	puts "Enter Data Manually or Automatic with smart algorithm (m/a)"
-	decision = gets.strip.upcase
-	if decision== 'M'
-		seats.manual_list(seat_layout, s_list)
-		main_loop = false
-	elsif decision == "A"
-		seats.algorithm(seat_layout_dup, s_list_dup)
-		main_loop = false
-	else
-		puts "Did not understand, Do again."
-	end
-end
-
-
-seat_layout = [["○", "○", "○", "○", "○", "○"], ["○", "◉", "◉", "◉", "◉", "○"], ["○", "◉", "○", "○", "◉", "○"], ["○", "◉", "○", "○", "◉", "○"], ["○", "◉", "◉", "◉", "◉", "○"], ["○", "○", "○", "○", "○", "○"]]
-s_list = {"1"=>{"name"=>"Matthew", "gender"=>"M", "level"=>"3", "whitelist"=>"Oliver", "noise"=>"3"}, "2"=>{"name"=>"Oliver", "gender"=>"M", "level"=>"2", "whitelist"=>"Ishak", "noise"=>"2"}, "3"=>{"name"=>"Ishak", "gender"=>"M", "level"=>"1", "whitelist"=>"Zak", "noise"=>"3"}, "4"=>{"name"=>"Sultan", "gender"=>"F", "level"=>"3", "whitelist"=>"Zineb", "noise"=>"1"}, "5"=>{"name"=>"Zineb", "gender"=>"F", "level"=>"3", "whitelist"=>"Hindz", "noise"=>"3"}, "6"=>{"name"=>"Jess", "gender"=>"F", "level"=>"3", "whitelist"=>"Kony", "noise"=>"1"}}
-
-
-
-
-
-
-
-
-
-
-
-

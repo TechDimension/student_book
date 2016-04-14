@@ -1,0 +1,107 @@
+
+<div class "col-xs-12">
+<%= form_tag  do %>
+    <%=label_tag 'Seats x' %>
+    <%=text_field_tag 'seats_x'%>
+
+    <%=label_tag 'Seats y' %>
+    <%=text_field_tag 'seats_y'%>
+     
+    <%=label_tag 'Available seats' %>
+    <%=text_field_tag 'available_seats'%>
+
+    <div><%= submit_tag 'Save', name: 'seat_dimension' %></div>
+<% end %>
+<%= "seat x #{params["seats_x"].nil?} #{params[:seats_x].to_i}"  %>
+<%= params.inspect %>
+<% if not(params["seats_x"].nil? && params["seats_y"].nil?) &&  params["seats_x"].to_i > 0 && params["seats_y"].to_i > 0 %>
+	<div class = "container col-xs-6 ">
+	<table class = "table table-bordered" style= "background-color: #D9E0E8;" align="center">
+	    <thead>
+	    	<tr>
+		        <th>Row</th>
+		      	<% for i in 1..@seats_x %>
+		      		<th><%=i%></th>
+		      	<% end %>
+		      	<th align="right">Row</th>
+	        
+	      	</tr>
+	   </thead>
+	   
+	   <tbody>
+	   	<% for row in 1..@seats_y %>
+	   	<tr>
+	        <td><%= row %></td>
+	        <% for i in 1..@seats_x %>
+	        	<td><%=@no_seat%></td>
+	        <% end %>
+	        <td><%=	row %></td>
+	    </tr>
+	    <% end %>
+	 	
+	   </tbody>
+	   
+	</table>
+	</div>
+
+<% end%>
+</div>
+
+
+
+<div class "col-xs-6">
+	<%= form_tag  do %>
+		<% for i in 1..@available_seats%>
+			<%=label_tag "#{i}: Enter Seat Location i.e B3" %>
+		    <%=text_field_tag "seat#{i}"%>
+
+		    
+		<% end %>
+		<%=hidden_field_tag "seats_x", @seats_x-2%>
+	    <%=hidden_field_tag "seats_y", @seats_y-2%>
+	    <%=hidden_field_tag "available_seats", @available_seats%>
+		<div><%= submit_tag 'Submit Seats', name: 'seat_location' %></div>
+	<% end %>
+	
+</div>
+
+<% if not(@printed_layout.nil?) %>
+	<%= params.inspect %>
+	<%= @printed_layout %>
+	<%  @printed_layout.each do |row| %>
+	<div><%= row%></div>
+	<% end %>
+
+<% end %>
+
+
+
+<%
+# @seats.new
+# seat_layout = @seats.seat_layout(@seats.class_layout)
+# seat_layout_dup = seat_layout.dup
+# s_list_dup = @seats.student_list_data.dup
+
+
+# # seat_layout = [["○", "○", "○", "○", "○", "○"], ["○", "◉", "◉", "◉", "◉", "○"], ["○", "◉", "○", "○", "◉", "○"], ["○", "◉", "○", "○", "◉", "○"], ["○", "◉", "◉", "◉", "◉", "○"], ["○", "○", "○", "○", "○", "○"]]
+# # seat_layout_dup = seat_layout.dup
+# # s_list = {"1"=>{"name"=>"Matthew", "gender"=>"M", "level"=>"3", "whitelist"=>"Oliver", "noise"=>"3"}, "2"=>{"name"=>"Oliver", "gender"=>"M", "level"=>"2", "whitelist"=>"Ishak", "noise"=>"2"}, "3"=>{"name"=>"Ishak", "gender"=>"M", "level"=>"1", "whitelist"=>"Zak", "noise"=>"3"}, "4"=>{"name"=>"Sultan", "gender"=>"F", "level"=>"3", "whitelist"=>"Zineb", "noise"=>"1"}, "5"=>{"name"=>"Zineb", "gender"=>"F", "level"=>"3", "whitelist"=>"Hindz", "noise"=>"3"}, "6"=>{"name"=>"Jess", "gender"=>"F", "level"=>"3", "whitelist"=>"Kony", "noise"=>"1"}}
+# # s_list_dup = s_list.dup
+
+# # seats.algorithm(seat_layout_dup, s_list_dup)
+
+# main_loop = true
+# while main_loop
+# 	puts "Enter Data Manually or Automatic with smart algorithm (m/a)"
+# 	decision = gets.strip.upcase
+# 	if decision== 'M'
+# 		seats.manual_list(seat_layout, s_list)
+# 		main_loop = false
+# 	elsif decision == "A"
+# 		seats.algorithm(seat_layout_dup, s_list_dup)
+# 		main_loop = false
+# 	else
+# 		puts "Did not understand, Do again."
+# 	end
+# end
+%>

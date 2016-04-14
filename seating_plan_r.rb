@@ -93,7 +93,7 @@ class Seating
 		male_female = gets.strip.upcase
 
 		if male_female == "Y"
-			boy_girl_sort(s_list_copy)
+			new_s_list= boy_girl_sort(s_list_copy)
 		else
 			new_s_list = s_list_copy
 		end
@@ -129,20 +129,7 @@ class Seating
 		
 			x_pos = @coord[0][0]
 			y_pos = @coord[0][1]
-			
-
-			#make it so that to the right, to the left, to the up, to the down are all checked, and are in 1 space.
-			#diagonal counts as 2 grid spaces
-			#sort so that level is #1 priority
-			#then arranges that into gender
-			# then arranges that into whitelists
-			#then arranges by noise
-			#continue this for the level 2 
-			# then with 4
-			#any spaces left over, allows for a level 2 to go then a level 3
-			# row from A is where priority should go
-			#then all the way to Z
-		
+					
 
 			#positional data for array
 			pos_right =new_layout[y_pos][x_pos+1].to_s
@@ -436,6 +423,7 @@ def boy_girl_sort(s_list_copy)
 	
 	loopy = true
 	gender_loop = "M"
+	s_list_copy = s_list_copy.to_a
 	new_s_list = []
 
 	while loopy == true
@@ -481,15 +469,15 @@ def boy_girl_sort(s_list_copy)
 end
 
 seats = Seating.new
-# seat_layout = seats.seat_layout(seats.class_layout)
-# seat_layout_dup = seat_layout.dup
-# s_list_dup = seats.student_list_data.dup
-
-
-seat_layout = [["○", "○", "○", "○", "○", "○"], ["○", "◉", "◉", "◉", "◉", "○"], ["○", "◉", "○", "○", "◉", "○"], ["○", "◉", "○", "○", "◉", "○"], ["○", "◉", "◉", "◉", "◉", "○"], ["○", "○", "○", "○", "○", "○"]]
+seat_layout = seats.seat_layout(seats.class_layout)
 seat_layout_dup = seat_layout.dup
-s_list = {"1"=>{"name"=>"Matthew", "gender"=>"M", "level"=>"3", "whitelist"=>"Oliver", "noise"=>"3"}, "2"=>{"name"=>"Oliver", "gender"=>"M", "level"=>"2", "whitelist"=>"Ishak", "noise"=>"2"}, "3"=>{"name"=>"Ishak", "gender"=>"M", "level"=>"1", "whitelist"=>"Zak", "noise"=>"3"}, "4"=>{"name"=>"Sultan", "gender"=>"F", "level"=>"3", "whitelist"=>"Zineb", "noise"=>"1"}, "5"=>{"name"=>"Zineb", "gender"=>"F", "level"=>"3", "whitelist"=>"Hindz", "noise"=>"3"}, "6"=>{"name"=>"Jess", "gender"=>"F", "level"=>"3", "whitelist"=>"Kony", "noise"=>"1"}}
-s_list_dup = s_list.dup
+s_list_dup = seats.student_list_data.dup
+
+
+# seat_layout = [["○", "○", "○", "○", "○", "○"], ["○", "◉", "◉", "◉", "◉", "○"], ["○", "◉", "○", "○", "◉", "○"], ["○", "◉", "○", "○", "◉", "○"], ["○", "◉", "◉", "◉", "◉", "○"], ["○", "○", "○", "○", "○", "○"]]
+# seat_layout_dup = seat_layout.dup
+# s_list = {"1"=>{"name"=>"Matthew", "gender"=>"M", "level"=>"3", "whitelist"=>"Oliver", "noise"=>"3"}, "2"=>{"name"=>"Oliver", "gender"=>"M", "level"=>"2", "whitelist"=>"Ishak", "noise"=>"2"}, "3"=>{"name"=>"Ishak", "gender"=>"M", "level"=>"1", "whitelist"=>"Zak", "noise"=>"3"}, "4"=>{"name"=>"Sultan", "gender"=>"F", "level"=>"3", "whitelist"=>"Zineb", "noise"=>"1"}, "5"=>{"name"=>"Zineb", "gender"=>"F", "level"=>"3", "whitelist"=>"Hindz", "noise"=>"3"}, "6"=>{"name"=>"Jess", "gender"=>"F", "level"=>"3", "whitelist"=>"Kony", "noise"=>"1"}}
+# s_list_dup = s_list.dup
 
 # seats.algorithm(seat_layout_dup, s_list_dup)
 
