@@ -16,5 +16,5 @@
  *= require skin-blue
  */
 
-@import "bootstrap-sprockets"
-@import "bootstrap"
+@import "bootstrap-sprockets";
+@import "bootstrap";
