@@ -37,7 +37,7 @@
 </div>
 <div class = "container">
 <div class = "row">
-<%= params.inspect %>
+
 
 <% if params["complete_seat_dimensions"] != "true"%>
 	<%= form_tag  do %>
@@ -130,15 +130,7 @@
 	<% end %>
 <% end %>
 
-<% complete_s_list_merge = false %>
 
-<% if params["complete_s_list"] == "true" && complete_s_list_merge != "true"%>
-	<% for i in 1..@student_num%>
-		<% student_list_params(i)%>
-	<% end %>
-	<%=	s_list = (student_list_params.dup).map{|k,v|[k,v]} %>
-	<% complete_s_list_merge = true %>
-<% end %>
 
 <% if params["complete_s_list"] == "true" && params["complete_gender_selection"] != "true"%>
 	<%= form_tag do %>
@@ -161,9 +153,9 @@
 			<%=hidden_field_tag "seat#{i}", seat_position_params(i)%>
 		<% for i in 1..@student_num %>
 			<%= hidden_field_tag "student_name#{i}", params["student_name#{i}"]%>
-			<%= hidden_field_tag "student_gender#{i}", params["student_name#{i}"]%>
-			<%= hidden_field_tag "student_level#{i}", params["student_name#{i}"]%>
-			<%= hidden_field_tag "student_whitelist#{i}", params["student_name#{i}"]%>
+			<%= hidden_field_tag "student_gender#{i}", params["student_gender#{i}"]%>
+			<%= hidden_field_tag "student_level#{i}", params["student_level#{i}"]%>
+			<%= hidden_field_tag "student_whitelist#{i}", params["student_whitelist#{i}"]%>
 		<% end %>
 
 		<% end %>
@@ -198,11 +190,11 @@
 		<% end %>
 			<% for i in 1..@student_num %>
 			<%= hidden_field_tag "student_name#{i}", params["student_name#{i}"]%>
-			<%= hidden_field_tag "student_gender#{i}", params["student_name#{i}"]%>
-			<%= hidden_field_tag "student_level#{i}", params["student_name#{i}"]%>
-			<%= hidden_field_tag "student_whitelist#{i}", params["student_name#{i}"]%>
+			<%= hidden_field_tag "student_gender#{i}", params["student_gender#{i}"]%>
+			<%= hidden_field_tag "student_level#{i}", params["student_level#{i}"]%>
+			<%= hidden_field_tag "student_whitelist#{i}", params["student_whitelist#{i}"]%>
 		<% end %>
-		
+
 		<%=hidden_field_tag "student_num", @student_num%>
 		<%=hidden_field_tag "class_name", @class_name%>
 		<div><%= submit_tag 'Submit', name: 'student_num_form' %></div>

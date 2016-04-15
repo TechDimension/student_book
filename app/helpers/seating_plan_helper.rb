@@ -230,7 +230,7 @@ module SeatingPlanHelper
 
 			if to_place == true
 				puts "Placed"
-				new_layout[y_pos][x_pos] = id
+				new_layout[y_pos][x_pos] = name
 				@coord.shift
 				new_array_s_list.shift
 				@coord = @coord.sort{|a,b|b[1]<=>a[1]}.reverse
