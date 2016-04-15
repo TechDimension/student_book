@@ -16,8 +16,8 @@ class SeatingPlanController < ApplicationController
 		@seats_y = @seats_y.to_i + 2
 		@available_seats = @available_seats.to_i
 
-		@no_seat = "\u25CB"
-		@yes_seat = "\u25C9"
+		@yes_seat = "\u25CB"
+		@no_seat = "\u25C9"
 		if @available_seats >= (@seats_x-2) * (@seats_y-2)
 			"error"
 		else
