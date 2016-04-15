@@ -25,13 +25,19 @@ module SeatingPlanHelper
 		seat_array
 	end
 
+	def seat_position_params(num)
+		params["seat#{num}"]
+	end
+
+	
+
 	def seat_layout(new_layout)
 	
 		seat_layout_loop = true
 		puts "Enter seat layout"
 		for i in 1..(@available_seats)
 			puts "#{i}: Enter Position for an available seat Example: B5"
-			position = params["seat#{i}"]
+			position = seat_position_params(i)
 			if not(position.nil?) == true
 				if position.length == 2 
 					x_pos = position[1].to_i
@@ -290,33 +296,17 @@ module SeatingPlanHelper
 		print_layout(new_layout) 
 	end
 
-	def student_list_data
-		puts 'Enter Class name'
-		classname = gets.strip
+	def student_list_params(num)
 		student_list = Hash.new
-		id = 1
-		loopy = true 
+		name = params["name#{num}"]
+		gender = params["gender#{num}"]
+		level = params["level#{num}"]
+		whitelist = params["whitelist#{num}"]
+		student_list.merge!("#{num}"  => {"name" => "#{name}", "gender" => "#{gender}", "level" => "#{level}", "whitelist" => "#{whitelist}"})
+	end
 
 
-		# warn user if student list > available seats
-		while loopy == true
-			puts 'Enter Student Name'
-			name = gets.strip
-			puts "Student male or female m/f"
-			gender = gets.strip.upcase
-			puts 'Enter name of student/s to not sit next to'
-			whitelist = gets.strip
-			puts 'Enter priority of learning (if whether needs to be close to front)'
-			level_learning = gets.strip
-			puts 'Input another student? y/n'
-			if gets.strip.upcase! == 'N'
-				loopy = false
-			else
-				puts 'Continuing..'
-			end
-			student_list.merge!("#{id}"  => {"name" => "#{name}", "gender" => "#{gender}", "level" => "#{level_learning}", "whitelist" => "#{whitelist}"})
-			id +=1
-		end
+	def student_list_data
 		student_list
 	end
 
@@ -347,63 +337,61 @@ module SeatingPlanHelper
 		printed
 	end
 
-	private 
+	def num_to_letter(x)
+		x
+	    if x == 1
+	        l = "A"
+	    elsif x == 2
+	        l = "B"
+	    elsif x == 3
+	        l = "C"
+	    elsif x == 4
+	        l = "D"
+	    elsif x == 5
+	        l = "E"
+	    elsif x == 6
+	        l = "F"
+	    elsif x == 7
+	        l = "G"
+	    elsif x == 8
+	        l = "H"
+	    elsif x == 9
+	        l = "I"
+	    elsif x == 10
+	        l = "J"
+	    end
+	    l
+	end
 
-		def num_to_letter(x)
-			x
-		    if x == 1
-		        l = "A"
-		    elsif x == 2
-		        l = "B"
-		    elsif x == 3
-		        l = "C"
-		    elsif x == 4
-		        l = "D"
-		    elsif x == 5
-		        l = "E"
-		    elsif x == 6
-		        l = "F"
-		    elsif x == 7
-		        l = "G"
-		    elsif x == 8
-		        l = "H"
-		    elsif x == 9
-		        l = "I"
-		    elsif x == 10
-		        l = "J"
-		    end
-		    l
-		end
-
-		def letter_to_num(x)
-		    if x == "A"
-		        l = 1
-		    elsif x == "B"
-		        l = 2
-		    elsif x == "C"
-		        l = 3
-		    elsif x == "D"
-		        l = 4
-		    elsif x == "E"
-		        l = 5
-		    elsif x == "F"
-		        l = 6
-		    elsif x == "G"
-		        l = 7
-		    elsif x == "H"
-		        l = 8
-		    elsif x == "I"
-		        l = 9
-		    elsif x == "J"
-		        l = 10
-		    end
-		    l
-		end
+	def letter_to_num(x)
+	    if x == "A"
+	        l = 1
+	    elsif x == "B"
+	        l = 2
+	    elsif x == "C"
+	        l = 3
+	    elsif x == "D"
+	        l = 4
+	    elsif x == "E"
+	        l = 5
+	    elsif x == "F"
+	        l = 6
+	    elsif x == "G"
+	        l = 7
+	    elsif x == "H"
+	        l = 8
+	    elsif x == "I"
+	        l = 9
+	    elsif x == "J"
+	        l = 10
+	    end
+	    l
+	end
 
 
-		def is_number?
-		  self.to_f == self
-		end
+	def is_number?
+	  self.to_f == self
+	end
 end
 
 def boy_girl_sort(s_list_copy)

@@ -1,34 +1,10 @@
 
 <div class "col-xs-12">
-<%= form_tag  do %>
-    <%=label_tag 'Seats x' %>
-    <%=text_field_tag 'seats_x'%>
 
-    <%=label_tag 'Seats y' %>
-    <%=text_field_tag 'seats_y'%>
-     
-    <%=label_tag 'Available seats' %>
-    <%=text_field_tag 'available_seats'%>
 
-    <div><%= submit_tag 'Save', name: 'seat_dimension' %></div>
-<% end %>
-<%= "seat x #{params["seats_x"].nil?} #{params[:seats_x].to_i}"  %>
-<%= params.inspect %>
 <% if not(params["seats_x"].nil? && params["seats_y"].nil?) &&  params["seats_x"].to_i > 0 && params["seats_y"].to_i > 0 %>
-	<div class = "container col-xs-6 ">
-	<table class = "table table-bordered" style= "background-color: #D9E0E8;" align="center">
-	    <thead>
-	    	<tr>
-		        <th>Row</th>
-		      	<% for i in 1..@seats_x %>
-		      		<th><%=i%></th>
-		      	<% end %>
-		      	<th align="right">Row</th>
-	        
-	      	</tr>
-	    </thead>
-	   
-	   
+	<div class = "container col-xs-12 ">
+	<table class = "table table-bordered" style= "background-color: #D9E0E8;">
 
    		<thread>
 			<tr>
@@ -37,70 +13,129 @@
 						
 						<th>Row</th>
 						<%for i in 0..(@seat_layout[row].length-3)	%>
-							<th><% i + 1 %> </th>
+							<th><%= i + 1 %> </th>
 						<%end%>
 						<th>Row</th>
-			
 					<%end%>
 			</tr>
 		</thread>
+
 		<tbody>
-			<td>num_to_letter(row)</td>
+			<td><%=num_to_letter(row)%></td>
 			<% row_array = @seat_layout[row].dup %>
 			<% row_array.pop; row_array.shift; %>
 			<% row_array.each do |col|%>
 				<td><%= col %> </td>
 			<% end %>
-			<th>num_to_letter(row)</th>
+			<th><%=num_to_letter(row)%></th>
 				<% end %>
-
-
-	   
-
-
-	   	<% for row in 1..@seats_y %>
-	   	<tr>
-	        <td><%= row %></td>
-	        <% for i in 1..@seats_x %>
-	        	<td><%=@no_seat%></td>
-	        <% end %>
-	        <td><%=	row %></td>
-	    </tr>
-	    <% end %>
-	 	
-	   </tbody>
-	   
+		</tbody>
 	</table>
 	</div>
 
 <% end%>
 </div>
+<div class = "container">
+<div class = "row">
+<%= params.inspect %>
 
+<% if params["complete_seat_dimensions"] != "true"%>
+	<%= form_tag  do %>
+	    <%=label_tag 'Seats x' %>
+	    <%=text_field_tag 'seats_x'%>
 
+	    <%=label_tag 'Seats y' %>
+	    <%=text_field_tag 'seats_y'%>
 
-<div class "col-xs-6">
+	    <%=label_tag 'Available seats' %>
+	    <%=text_field_tag 'available_seats'%>
+
+	    <%= hidden_field_tag "complete_seat_dimensions", "true" %>
+	    <div><%= submit_tag 'Save', name: 'seat_dimension' %></div>
+	<% end %>
+<% end %>
+
+<% if params["complete_seat_dimensions"] == "true" && params["complete_seat_placement"] != "true" %>
 	<%= form_tag  do %>
 		<% for i in 1..@available_seats%>
-			<%=label_tag "#{i}: Enter Seat Location i.e B3" %>
-		    <%=text_field_tag "seat#{i}"%>
-
-		    
+		
+			<div class "col-6">
+				<%=label_tag "#{i}: Enter Seat Location i.e B3" %>
+			    <%=text_field_tag "seat#{i}"%>
+			</div> 
 		<% end %>
+		<%= hidden_field_tag "complete_seat_dimensions", "true" %>
+		<%= hidden_field_tag "complete_seat_placement", "true" %>
 		<%=hidden_field_tag "seats_x", @seats_x-2%>
 	    <%=hidden_field_tag "seats_y", @seats_y-2%>
 	    <%=hidden_field_tag "available_seats", @available_seats%>
 		<div><%= submit_tag 'Submit Seats', name: 'seat_location' %></div>
 	<% end %>
+<% end %>
+
+<% if params["complete_seat_placement"] == "true" && params["complete_class_details"] != "true"%>
+	<%= form_tag do %>
+		<%=label_tag "Enter Class Name" %>
+		<%=text_field_tag "class_name"%>
+
+		<%=label_tag "Enter amount of Students i.e 5" %>
+		<%=text_field_tag "student_num"%>
+
+		<%= hidden_field_tag "complete_seat_dimensions", "true" %>
+		<%= hidden_field_tag "complete_seat_placement", "true" %>
+		<%= hidden_field_tag "complete_class_details", "true" %>
+		<%=hidden_field_tag "seats_x", @seats_x-2%>
+	    <%=hidden_field_tag "seats_y", @seats_y-2%>
+	    <%=hidden_field_tag "available_seats", @available_seats %>
+	    <% for i in 1..@available_seats%>
+			<%=hidden_field_tag "seat#{i}", seat_position_params(i)%>
+		<% end %>
+
+		<div><%= submit_tag 'Submit', name: 'student_num_form' %></div>
+	<% end %>
+<% end %>
 	
+<% if @student_num > 0 && params["complete_s_list"] != "true"%>
+	<%= form_tag do %>
+		<% for i in 1..@student_num%>
+			<div class "col-6">
+				<div class = "row">
+				<%=label_tag "#{i}: Enter Student Name:" %>
+				</div>
+				<%=text_field_tag "student_name#{i}"%>
+				<%=label_tag "#{i}: Enter Gender m/f:" %>
+				<%=text_field_tag "student_gender#{i}"%>
+				<%=label_tag "#{i}: Enter priority of learning:" %>
+				<%=text_field_tag "student_level#{i}"%>
+				<%=label_tag "#{i}: Enter students to not sit with:" %>
+				<%=text_field_tag "student_whitelist#{i}"%>
+				<% student_list_params(i)%>
+
+			</div>
+		<% end %>
+
+		<%= hidden_field_tag "complete_seat_dimensions", "true" %>
+		<%= hidden_field_tag "complete_seat_placement", "true" %>
+		<%= hidden_field_tag "complete_class_details", "true" %>
+		<%= hidden_field_tag "complete_s_list", "true" %>
+		<%=hidden_field_tag "seats_x", @seats_x-2%>
+	    <%=hidden_field_tag "seats_y", @seats_y-2%>
+	    <%=hidden_field_tag "available_seats", @available_seats %>
+	    <% for i in 1..@available_seats%>
+			<%=hidden_field_tag "seat#{i}", seat_position_params(i)%>
+		<% end %>
+		<%=hidden_field_tag "student_num", @student_num%>
+		<%=hidden_field_tag "class_name", @class_name%>
+
+		<div><%= submit_tag 'Submit', name: 'student_num_form' %></div>
+		
+	<% end %>
+<% end %>
+
+</div>
+		
 </div>
 
-
-	<%= @printed_layout %>
-	<%  @printed_layout.each do |row| %>
-	<div><%= row%></div>
-
-
-	<% end %>
 
 
 

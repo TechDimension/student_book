@@ -4,6 +4,8 @@ class SeatingPlanController < ApplicationController
 		@seats_x = params[:seats_x]
 		@seats_y = params[:seats_y]
 		@available_seats = params[:available_seats]
+		@class_name = params[:class_name]
+		@student_num = params[:student_num].to_i
 		# 0 are available seats.
 		@seats_x = @seats_x.to_i + 2
 		@seats_y = @seats_y.to_i + 2
@@ -18,6 +20,12 @@ class SeatingPlanController < ApplicationController
 		end
 
 		@seat_layout = seat_layout(class_layout)
-		@printed_layout = print_layout(seat_layout)
+		seat_layout_dup = @seat_layout.dup
+		@printed_layout = print_layout(@seat_layout)
+
+		for i in 1..@student_num
+			@s_list_dup = student_list_params(i).dup
+		end
+
 	end
 end
