@@ -14,7 +14,8 @@
 		        <div class="modal-footer">
 		        <div class="modal-title">
 		        </div> 
-		            <span><%=  link_to "Close", "#" , :class => 'btn btn-default' %></span>
+		        <%= f.hidden_field :user_id, cols: 10, rows: 1 , :value => current_user.id ,:readonly => true %>
+		            <span><%=  link_to "Close", "javascript:history.back()" , :class => 'btn btn-default' %></span>
 		            <span><%= f.submit "Upload", :class => "btn btn-success" %></span> 
 	            </div>
 	            <% end %>

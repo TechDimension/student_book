@@ -9,16 +9,11 @@
                     
 
                         <%= form_tag(login_path) do %>
-                        
-                            <p>
-                                <%= label_tag(:email) %>
-                            </p>
+                    
                             <div class="form-group">
                                 <%= text_field_tag(:email ,nil, class: "form-control", placeholder:"E-mail", name:"email", type:"email" ) %>
                             </div>
-                            <p>
-                                <%= label_tag(:password) %>
-                            </p>
+                         
                             <div class="form-group">
                                 <%= password_field_tag("pass",nil, class: "form-control",placeholder:"Password",name:"password",type:"password",value:"") %>
                             </div>
@@ -31,13 +26,14 @@
                                 <%= submit_tag nil,class:"btn btn-lg btn-success btn-block", value:"Log In" %>
                             </div>
                         <% end %>
-                       
+                        <span><%=  link_to "Back", "javascript:history.back()" , :class => 'btn btn-default' %></span>
+                   <span> <%= link_to "Sign Up",new_user_path,:class=>"btn btn-md btn-primary "%></span>
                     </div>
 
                 </div>
-                <div>
-                    <%= link_to "Sign Up",new_user_path,:class=>"btn btn-lg btn-primary btn-block"%>
-                </div>
+               
+               
+              
            
             </div>
         </div>

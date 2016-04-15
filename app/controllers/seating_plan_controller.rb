@@ -11,9 +11,6 @@ class SeatingPlanController < ApplicationController
 		@gender_sort = params[:gender_option]
 		@decision = params[:process_option]
 
-
-
-
 		# 0 are available seats.
 		@seats_x = @seats_x.to_i + 2
 		@seats_y = @seats_y.to_i + 2
@@ -26,22 +23,12 @@ class SeatingPlanController < ApplicationController
 		else
 			"continue"
 		end
-
 		@seat_layout = seat_layout(class_layout)
 
-		puts "lalalala"
-		puts @student_num
-		puts @decision
-
-
-		if (@student_num > 0)
-
+		if (@student_num > 0)&& params["complete_s_list"]
 			for i in 1..@student_num
 				@s_list = student_list_params(i)
 			end
-
-			puts @s_list
-			puts 'hope'
 			@s_list_dup = @s_list.dup
 			if not(@decision.nil?)
 			
@@ -50,8 +37,6 @@ class SeatingPlanController < ApplicationController
 					for i in 1..@student_num
 						@positions << params["student_seat#{i}"]
 						print @positions
-						puts
-						puts 'taht'
 					end
 					if not(@positions.include?(nil))
 						@seat_layout = manual_list(@seat_layout, @s_list_dup)
@@ -62,9 +47,6 @@ class SeatingPlanController < ApplicationController
 				end
 			end
 		end
-	
-
-
 	end
 	private 
 	def ensure_log_in

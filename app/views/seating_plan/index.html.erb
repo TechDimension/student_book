@@ -27,7 +27,11 @@
 			<% row_array = @seat_layout[row].dup %>
 			<% row_array.pop; row_array.shift; %>
 			<% row_array.each do |col|%>
-				<td><%= col %> </td>
+				<% if col != @yes_seat && col != @no_seat%>
+					<td><%= @s_list[col]["name"] %> </td>
+				<% else %>
+					<td><%= col %> </td>
+				<% end %>
 			<% end %>
 			<th><%=num_to_letter(row)%></th>
 				<% end %>
@@ -38,7 +42,7 @@
 <% end%>
 </div>
 <div class = "container">
-<div class = "row">
+
 
 
 <% if params["complete_seat_dimensions"] != "true"%>
@@ -76,7 +80,7 @@
 <% end %>
 
 <% if params["complete_seat_placement"] == "true" && params["complete_class_details"] != "true"%>
-	<%= form_tag do %>
+	<%= form_tag "index.html.erb" , method: :post, :class => "form-inline" do %>
 		<%=label_tag "Enter Class Name" %>
 		<%=text_field_tag "class_name"%>
 
@@ -99,18 +103,28 @@
 	
 <% if @student_num > 0 && params["complete_s_list"] != "true"%>
 	<%= form_tag do %>
+	<style>
+		form > div { float:left: display:inline-block;}
+		form > span { float:right: display:inline-block;}
+
+
+	</style>
 		<% for i in 1..@student_num%>
-			<div class "col-6">
-				<div class = "row">
-				<%=label_tag "#{i}: Enter Student Name:" %>
-				</div>
-				<%=text_field_tag "student_name#{i}"%>
-				<%=label_tag "#{i}: Enter Gender m/f:" %>
-				<%=text_field_tag "student_gender#{i}"%>
-				<%=label_tag "#{i}: Enter priority of learning:" %>
-				<%=text_field_tag "student_level#{i}"%>
-				<%=label_tag "#{i}: Enter students to not sit with:" %>
-				<%=text_field_tag "student_whitelist#{i}"%>
+			<div class = "row">
+				<span><%=label_tag "#{i}: Enter Student Name:" %> </span>
+				<span><%=text_field_tag "student_name#{i}"%></span>
+			</div>
+			<div class = "row">
+				<span><%=label_tag "#{i}: Enter Gender m/f:" %></span>
+				<span><%=text_field_tag "student_gender#{i}"%></span>
+			</div>
+			<div class = "row">
+				<span><%=label_tag "#{i}: Enter priority of learning:" %></span>
+				<span><%=text_field_tag "student_level#{i}"%></span>
+			</div>
+			<div class = "row">
+				<span><%=label_tag "#{i}: Enter students to not sit with:" %></span>
+				<span><%=text_field_tag "student_whitelist#{i}"%></span>
 			</div>
 		<% end %>
 
@@ -203,7 +217,7 @@
 	<% end %>
 <% end %>
 
-	<% if params["complete_process_selection"] == "true" && params["complete_manual_student_placement"] != "true"%>
+	<% if params["complete_process_selection"] == "true" && params["complete_manual_student_placement"] != "true" && params["process_option"].strip.upcase == "M"%> 
 		<%= form_tag do %>
 
 			<% for i in 0..@student_num-1%>
@@ -256,4 +270,4 @@
 <span><%=  link_to "Go Forward", "javascript:history.forward()" , :class => 'btn btn-success' %></span>
 
 </div>		
-</div>
+

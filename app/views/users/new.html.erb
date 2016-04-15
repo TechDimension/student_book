@@ -42,10 +42,12 @@
                             </label>
                         </div>
                         <div>
-                            <%= f.submit 'Sign Up' , class: "btn btn-lg btn-success btn-block" %>
+                        
+                            <span><%= f.submit 'Sign Up' , class: "btn btn-lg btn-success btn-block" %></span>
                         </div>
                     <% end %>
-                   
+                    <span><%=  link_to "Close", "javascript:history.back()" , :class => 'btn btn-default' %></span>
+                   <span> <%= link_to "Log in",login_path,:class=>"btn btn-md btn-primary "%></span>
                 </div>
 
             </div>

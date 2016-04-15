@@ -2,13 +2,10 @@ class UsersController < ApplicationController
     before_filter :ensure_log_in, only: [:show]
     layout 'ready', except: [:show]
     def new
-       
         @user = User.new
     end 
-
     def create
         @user = User.new(user_params)
-
         if(@user.save)
             flash[:success] = "Welcome to StudentBook!"
             redirect_to user_path(@user)
