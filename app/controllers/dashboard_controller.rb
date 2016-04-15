@@ -1,4 +1,9 @@
 class DashboardController < ApplicationController
+	layout nil
+	layout 'application', :except => :login
+	before_filter :ensure_log_in, only: [:create, :destroy, :show, :index]
+	
+  	
 	def new
 			@classes = Group.new
 		end
@@ -8,6 +13,14 @@ class DashboardController < ApplicationController
 	end
 	def index
 		@classes = Group.new
+	end
+	def login
+		if logged_in? == false
+			render :layout => "ready"
+		else
+			redirect_to dashboard_index_path
+		end
+		
 	end
 
 	  def create
@@ -25,8 +38,13 @@ class DashboardController < ApplicationController
 	    redirect_to "/dashboard"
 	  end
 
-	 private
-	   def student_params
-	    params.require(:groups).permit(:title)
-	  end
+	private
+	    def student_params
+	  	    params.require(:groups).permit(:title)
+	    end
+	def ensure_log_in
+        if logged_in? == false
+            redirect_to login_path
+        end
+   	end
 end

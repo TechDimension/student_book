@@ -1,5 +1,5 @@
 class StudentsController < ApplicationController
-	before_action :ensure_log_in, only: [:create, :new]
+	before_action :ensure_log_in, only: [:create, :new, :destroy]
 		def new
 			@student = Student.new
 		end
@@ -34,9 +34,9 @@ class StudentsController < ApplicationController
 	    params.require(:student).permit(:id,:forename, :surname, :grade_predicted, :group_id)
 	  end
 
-	  def ensure_log_in
+	def ensure_log_in
         if logged_in? == false
             redirect_to login_path
         end
-   end
+   	end
 end

@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+    layout 'ready', except: [:destroy]
+
     def new
     end
 

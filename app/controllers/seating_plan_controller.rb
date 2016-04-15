@@ -1,4 +1,5 @@
 class SeatingPlanController < ApplicationController
+	before_filter :ensure_log_in, only: [:index]
 	include SeatingPlanHelper
 	def index()
 		@student_list = Hash.new
@@ -65,4 +66,10 @@ class SeatingPlanController < ApplicationController
 
 
 	end
+	private 
+	def ensure_log_in
+        if logged_in? == false
+            redirect_to login_path
+        end
+   	end
 end
