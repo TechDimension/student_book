@@ -245,7 +245,12 @@ module SeatingPlanHelper
 			puts new_array_s_list
 		
 		end
+		puts "FINAL LAYOUT"
 		print_layout(new_layout)
+		print new_layout
+		puts
+		puts "uili"
+		new_layout 
 	end
 
 	def manual_list(new_layout,s_list)
@@ -291,19 +296,24 @@ module SeatingPlanHelper
 		
 		puts "FINAL LAYOUT"
 		print_layout(new_layout)
+		print new_layout
+		puts
+		puts "uili"
 		new_layout 
 	end
 
-	def student_list_params(num)
-		student_list = Hash.new
-		name = params["name#{num}"]
-		gender = params["gender#{num}"]
-		level = params["level#{num}"]
-		whitelist = params["whitelist#{num}"]
-		student_list.merge!("#{num}"  => {"name" => "#{name}", "gender" => "#{gender}", "level" => "#{level}", "whitelist" => "#{whitelist}"})
-		puts student_list
-		puts 'hhhahha'
-		@student_list
+	def student_list_params(num=false)
+		if num == false
+			@student_list
+		else
+			name = params["student_name#{num}"]
+			gender = params["student_gender#{num}"]
+			level = params["student_level#{num}"]
+			whitelist = params["student_whitelist#{num}"]
+			@student_list.merge!("#{num}"  => {"name" => "#{name}", "gender" => "#{gender}", "level" => "#{level}", "whitelist" => "#{whitelist}"})
+	
+			@student_list
+		end
 	end
 
 
