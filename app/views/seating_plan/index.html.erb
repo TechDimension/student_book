@@ -132,6 +132,63 @@
 	<% end %>
 <% end %>
 
+<% if params["complete_s_list"] == "true" && params["complete_gender_selection"] != "true"%>
+	<%= form_tag do %>
+
+		<%= radio_button_tag("radio_option", "y") %>
+		<%= label_tag("gender_option_y", "Sort By Gender") %>
+		<%= radio_button_tag("radio_option", "n") %>
+		<%= label_tag("gender_option_n", "Do not") %>
+
+
+		<%= hidden_field_tag "complete_seat_dimensions", "true" %>
+		<%= hidden_field_tag "complete_seat_placement", "true" %>
+		<%= hidden_field_tag "complete_class_details", "true" %>
+		<%= hidden_field_tag "complete_s_list", "true" %>
+		<%= hidden_field_tag "complete_gender_selection", "true" %>		
+		<%=hidden_field_tag "seats_x", @seats_x-2%>
+	    <%=hidden_field_tag "seats_y", @seats_y-2%>
+	    <%=hidden_field_tag "available_seats", @available_seats %>
+	    <% for i in 1..@available_seats%>
+			<%=hidden_field_tag "seat#{i}", seat_position_params(i)%>
+		<% end %>
+		<%=hidden_field_tag "student_num", @student_num%>
+		<%=hidden_field_tag "class_name", @class_name%>
+		<div><%= submit_tag 'Submit', name: 'student_num_form' %></div>
+	<% end %>
+<% end %>
+
+<% if params["complete_gender_selection"] == "true" && params["complete_process_selection"] != "true"%>
+	<%= form_tag do %>
+
+		<%= radio_button_tag("process_option", "m") %>
+		<%= label_tag("process_option_m", "Manually") %>
+		<%= radio_button_tag("process_option", "a") %>
+		<%= label_tag("process_option_a", "Automatically") %>
+
+
+		<%= hidden_field_tag "complete_seat_dimensions", "true" %>
+		<%= hidden_field_tag "complete_seat_placement", "true" %>
+		<%= hidden_field_tag "complete_class_details", "true" %>
+		<%= hidden_field_tag "complete_s_list", "true" %>
+		<%= hidden_field_tag "complete_gender_selection", "true" %>	
+		<%= hidden_field_tag "complete_process_selection", "true" %>		
+		<%=hidden_field_tag "seats_x", @seats_x-2%>
+	    <%=hidden_field_tag "seats_y", @seats_y-2%>
+	    <%=hidden_field_tag "available_seats", @available_seats %>
+	    <% for i in 1..@available_seats%>
+			<%=hidden_field_tag "seat#{i}", seat_position_params(i)%>
+		<% end %>
+		<%=hidden_field_tag "student_num", @student_num%>
+		<%=hidden_field_tag "class_name", @class_name%>
+		<div><%= submit_tag 'Submit', name: 'student_num_form' %></div>
+	<% end %>
+<% end %>
+
+
+
+
+
 </div>
 		
 </div>

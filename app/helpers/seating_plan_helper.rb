@@ -74,7 +74,7 @@ module SeatingPlanHelper
 		# Alternating to boy girl
 		#pre requesite questions 
 		puts "Do you want the seating plan to have boy girl layout?  y/n"
-		male_female = gets.strip.upcase
+		male_female = @gender_sort.to_s.strip.upcase
 
 		if male_female == "Y"
 			new_s_list= boy_girl_sort(s_list_copy)
@@ -255,7 +255,7 @@ module SeatingPlanHelper
 		puts
 
 		puts "Do you want the seating plan to have boy girl layout?  y/n"
-		male_female = gets.strip.upcase
+		male_female = @gender_sort.to_s.strip.upcase
 
 		if male_female == "Y"
 			boy_girl_sort(s_list)
@@ -265,35 +265,33 @@ module SeatingPlanHelper
 		
 		print_layout(new_layout)
 		s_list.each do  |key, value|
-			print key
-			puts
-			manual_loop = true
-			while manual_loop
-				puts "Enter Position for Name: #{value["name"]}: Must be Available seat (Black) Example: B5"
-				position = gets.strip
-				if position.length == 2 
-					x_pos = ( position[1].to_i)
-					puts x_pos
-					y_pos = letter_to_num(position[0].upcase)
-					puts y_pos
-					if new_layout[y_pos][x_pos] == @yes_seat
+		
+			puts "Enter Position for Name: #{value["name"]}: Must be Available seat (Black) Example: B5"
+			position = gets.strip
+			if position.length == 2 
+				x_pos = ( position[1].to_i)
+				puts x_pos
+				y_pos = letter_to_num(position[0].upcase)
+				puts y_pos
+				if new_layout[y_pos][x_pos] == @yes_seat
 
-						new_layout[y_pos][x_pos] = key
-						print new_layout
-						puts
-						print_layout(new_layout)
-						manual_loop = false
-					else
-						puts "Already taken, or Unavailable Seat."
+					new_layout[y_pos][x_pos] = key
+					print new_layout
+					puts
+					print_layout(new_layout)
+					
+				else
+					puts "Already taken, or Unavailable Seat."
 
-					end
-				else 
-					puts "Must be 2 characters"
 				end
+			else 
+				puts "Must be 2 characters"
 			end
 		end
+		
 		puts "FINAL LAYOUT"
-		print_layout(new_layout) 
+		print_layout(new_layout)
+		new_layout 
 	end
 
 	def student_list_params(num)
@@ -303,6 +301,9 @@ module SeatingPlanHelper
 		level = params["level#{num}"]
 		whitelist = params["whitelist#{num}"]
 		student_list.merge!("#{num}"  => {"name" => "#{name}", "gender" => "#{gender}", "level" => "#{level}", "whitelist" => "#{whitelist}"})
+		puts student_list
+		puts 'hhhahha'
+		@student_list
 	end
 
 
