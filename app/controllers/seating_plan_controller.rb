@@ -8,7 +8,9 @@ class SeatingPlanController < ApplicationController
 		@class_name = params[:class_name]
 		@student_num = params[:student_num].to_i
 		@gender_sort = params[:gender_option]
-		decision = params[:process_option]
+		@decision = params[:process_option]
+
+
 
 
 		# 0 are available seats.
@@ -25,31 +27,37 @@ class SeatingPlanController < ApplicationController
 		end
 
 		@seat_layout = seat_layout(class_layout)
-		@printed_layout = print_layout(@seat_layout)
 
 		puts "lalalala"
 		puts @student_num
-		puts decision
+		puts @decision
 
 
-		if not(@student_num.nil?)
+		if (@student_num > 0)
 
 			for i in 1..@student_num
 				@s_list = student_list_params(i)
 			end
+
 			puts @s_list
 			puts 'hope'
 			@s_list_dup = @s_list.dup
-			if not(decision.nil?)
+			if not(@decision.nil?)
 			
-				if decision.strip.upcase== 'M'
-					@seat_layout = manual_list(@seat_layout, @s_list_dup)
-					main_loop = false
-				elsif decision.strip.upcase == "A"
+				if @decision.strip.upcase== 'M'
+					@positions = []
+					for i in 1..@student_num
+						@positions << params["student_seat#{i}"]
+						print @positions
+						puts
+						puts 'taht'
+					end
+					if not(@positions.include?(nil))
+						@seat_layout = manual_list(@seat_layout, @s_list_dup)
+					end
+				elsif @decision.strip.upcase == "A"
 					@seat_layout = algorithm(@seat_layout, @s_list_dup)
-					main_loop = false
-				else
-					puts "Did not understand, Do again."
+
 				end
 			end
 		end

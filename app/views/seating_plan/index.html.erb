@@ -1,4 +1,6 @@
-
+<div class = "container">
+	<h1 align="center"> <%=@class_name%> Seating Plan </h1>
+</div>
 <div class "col-xs-12">
 
 
@@ -21,7 +23,7 @@
 		</thread>
 
 		<tbody>
-			<td><%=num_to_letter(row)%></td>
+			<th><%=num_to_letter(row)%></th>
 			<% row_array = @seat_layout[row].dup %>
 			<% row_array.pop; row_array.shift; %>
 			<% row_array.each do |col|%>
@@ -201,6 +203,54 @@
 	<% end %>
 <% end %>
 
+	<% if params["complete_process_selection"] == "true" && params["complete_manual_student_placement"] != "true"%>
+		<%= form_tag do %>
+
+			<% for i in 0..@student_num-1%>
+		
+			<div class "row">
+				<%=label_tag "#{i+1}: Enter Student Location for #{(@s_list.to_a)[i][1]["name"]}" %>
+			    <%=text_field_tag "student_seat#{i+1}"%>
+			</div>
+
+			<% end %>
+
+
+			<%= hidden_field_tag "complete_seat_dimensions", "true" %>
+			<%= hidden_field_tag "complete_seat_placement", "true" %>
+			<%= hidden_field_tag "complete_class_details", "true" %>
+			<%= hidden_field_tag "complete_s_list", "true" %>
+			<%= hidden_field_tag "complete_gender_selection", "true" %>	
+			<%= hidden_field_tag "complete_process_selection", "true" %>	
+			<%= hidden_field_tag "complete_manual_student_placement", "true" %>		
+			<%=hidden_field_tag "seats_x", @seats_x-2%>
+		    <%=hidden_field_tag "seats_y", @seats_y-2%>
+		    <%=hidden_field_tag "available_seats", @available_seats %>
+		    <% for i in 1..@available_seats%>
+				<%=hidden_field_tag "seat#{i}", seat_position_params(i)%>
+			<% end %>
+			<% for i in 1..@student_num %>
+				<%= hidden_field_tag "student_name#{i}", params["student_name#{i}"]%>
+				<%= hidden_field_tag "student_gender#{i}", params["student_gender#{i}"]%>
+				<%= hidden_field_tag "student_level#{i}", params["student_level#{i}"]%>
+				<%= hidden_field_tag "student_whitelist#{i}", params["student_whitelist#{i}"]%>
+			<% end %>
+
+			<%=hidden_field_tag "student_num", @student_num%>
+			<%=hidden_field_tag "class_name", @class_name%>
+
+			<%= hidden_field_tag "process_option", params["process_option"] %>
+
+			<div><%= submit_tag 'Submit', name: 'student_num_form' %></div> 
+		<% end %>
+	<% end %>
+
+<h3>
+<%= @yes_seat%> = Available seat
+</h3>
+<h3>
+<%= @no_seat%> = Unavailable seat
+</h3>
 
 
 

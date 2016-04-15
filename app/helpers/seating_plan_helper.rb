@@ -263,16 +263,19 @@ module SeatingPlanHelper
 		male_female = @gender_sort.to_s.strip.upcase
 
 		if male_female == "Y"
-			boy_girl_sort(s_list)
+			s_list = boy_girl_sort(s_list)
 		else
 			s_list = s_list
 		end
 		
 		print_layout(new_layout)
+		
 		s_list.each do  |key, value|
 		
 			puts "Enter Position for Name: #{value["name"]}: Must be Available seat (Black) Example: B5"
-			position = gets.strip
+			position = @positions.shift
+			puts position 
+			puts 'blab'
 			if position.length == 2 
 				x_pos = ( position[1].to_i)
 				puts x_pos
@@ -280,7 +283,7 @@ module SeatingPlanHelper
 				puts y_pos
 				if new_layout[y_pos][x_pos] == @yes_seat
 
-					new_layout[y_pos][x_pos] = key
+					new_layout[y_pos][x_pos] = value["name"]
 					print new_layout
 					puts
 					print_layout(new_layout)
@@ -306,10 +309,10 @@ module SeatingPlanHelper
 		if num == false
 			@student_list
 		else
-			name = params["student_name#{num}"]
+			name = params["student_name#{num}"].titlecase
 			gender = params["student_gender#{num}"]
 			level = params["student_level#{num}"]
-			whitelist = params["student_whitelist#{num}"]
+			whitelist = params["student_whitelist#{num}"].titlecase
 			@student_list.merge!("#{num}"  => {"name" => "#{name}", "gender" => "#{gender}", "level" => "#{level}", "whitelist" => "#{whitelist}"})
 	
 			@student_list
