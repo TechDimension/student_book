@@ -4,3 +4,37 @@
     <tr><td>Name:</td><td><%= @user.name %></td></tr>
     <tr><td>Email:</td><td><%= @user.email %></td></tr>
 </table>
+
+   <div class = "modal-dialog" >
+        <div class = 'modal-content'>
+            <div class="modal-header">
+                <h4 class="modal-title">
+                        <h3>Change Password</h3>
+                                <%= form_for(@user) do |f| %>
+                                    <% if @user.errors.any? %>
+                                        <p>The form contains <%= pluralize(@user.errors.count, "error") %> </p>
+                                        <ul>
+                                        <% @user.errors.full_messages.each do | message | %>
+                                            <li><%= message %></li>
+                                        <% end %>
+                                        </ul>
+                                    <% end %>
+
+                                    <p>
+                                        <%= f.label :password %>
+                                    </p>
+                                    <p>
+                                        <%= f.password_field :password %>
+                                    </p>
+                                    <p>
+                                        <%= f.label :password_confirmation, "Confirmation" %>
+                                    </p>
+                                    <p>
+                                        <%= f.password_field :password_confirmation %>
+                                    </p>
+                                    <p><%= f.submit nil, :class => "btn btn-success" %></p>
+                        <% end %>
+                </h4>
+            </div>
+        </div>
+    </div>
