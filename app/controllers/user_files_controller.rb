@@ -1,5 +1,5 @@
 class UserFilesController < ApplicationController
-   before_filter :ensure_log_in, only: [:create, :destroy, :new, :index]
+   before_filter :ensure_log_in
    def index
       @user_files = UserFile.all
       @user_file = UserFile.new
@@ -27,7 +27,7 @@ class UserFilesController < ApplicationController
    end
    
    private
-      def user_file_params
+   def user_file_params
       params.require(:user_file).permit(:name, :attachment , :student_name)
    end
 

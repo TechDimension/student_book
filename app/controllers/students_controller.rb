@@ -1,5 +1,5 @@
 class StudentsController < ApplicationController
-	before_action :ensure_log_in, only: [:create, :new, :destroy]
+	before_action :ensure_log_in, only: [:create, :new, :destroy,:show]
 		def new
 			@student = Student.new
 		end
