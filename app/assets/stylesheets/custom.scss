@@ -31,6 +31,8 @@
 td, th{ text-align: center; }
 
 
+html, body { min-height: 100%; }
+html { height: 100%; }
 
 
 @mixin make-grid($class) {
