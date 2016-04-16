@@ -352,32 +352,21 @@ module SeatingPlanHelper
 	end
 
 	def num_to_letter(x)
-		x
-	    if x == 1
-	        l = "A"
-	    elsif x == 2
-	        l = "B"
-	    elsif x == 3
-	        l = "C"
-	    elsif x == 4
-	        l = "D"
-	    elsif x == 5
-	        l = "E"
-	    elsif x == 6
-	        l = "F"
-	    elsif x == 7
-	        l = "G"
-	    elsif x == 8
-	        l = "H"
-	    elsif x == 9
-	        l = "I"
-	    elsif x == 10
-	        l = "J"
-	    end
-	    l
+		alph = ("a".."z").to_a
+		s , q = "", x
+		(q, r = (q - 1).divmod(26); s.prepend(alph[r])) until q.zero?
+		s.upcase
 	end
 
+
+	# def letter_to_num(x)
+	# 	x.downcase
+
+		
+	# 	alph = ("a".."z").to_a
+	# end
 	def letter_to_num(x)
+		x
 	    if x == "A"
 	        l = 1
 	    elsif x == "B"
@@ -401,6 +390,7 @@ module SeatingPlanHelper
 	    end
 	    l
 	end
+
 
 
 	def is_number?

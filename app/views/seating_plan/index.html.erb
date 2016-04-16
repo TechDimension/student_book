@@ -1,57 +1,63 @@
 <div class = "container">
 	<h1 align="center"> <%=@class_name%> Seating Plan </h1>
 </div>
+
 <div class "col-xs-12">
-
-
 <% if not(params["seats_x"].nil? && params["seats_y"].nil?) &&  params["seats_x"].to_i > 0 && params["seats_y"].to_i > 0 %>
 	<div class = "container col-xs-12 ">
-	<table class = "table table-bordered" style= "background-color: #D9E0E8;">
-
+	<table class = "table table-bordered" style= "background-color: #D9E0E8; width:100%;">
    		<thread>
-			<tr>
+			<tr >
 			   <%for row in 1..(@seats_y-2) %>
 					<%if row == 1 %>
 						
-						<th>Row</th>
+						<th style="text-align:center">Row</th>
 						<%for i in 0..(@seat_layout[row].length-3)	%>
-							<th><%= i + 1 %> </th>
+							<th style="text-align:center"><%= i + 1 %> </th>
 						<%end%>
-						<th>Row</th>
+						<th style="text-align:center">Row</th>
 					<%end%>
+
 			</tr>
 		</thread>
-
 		<tbody>
-			<th><%=num_to_letter(row)%></th>
-			<% row_array = @seat_layout[row].dup %>
-			<% row_array.pop; row_array.shift; %>
-			<% row_array.each do |col|%>
-				<% if col != @yes_seat && col != @no_seat%>
-					<td><%= @s_list[col]["name"] %> </td>
-				<% else %>
-					<td><%= col %> </td>
-				<% end %>
-			<% end %>
-			<th><%=num_to_letter(row)%></th>
+						<th style="text-align:right"><%=num_to_letter(row)%></th>
+						<% row_array = @seat_layout[row].dup %>
+						<% row_array.pop; row_array.shift; %>
+						<% row_array.each do |col|%>
+							<% if col != @yes_seat%>
+								<td style="background-color:black;"></td>
+							<% elsif %>
+								<td style="background-color:white;"></td>
+							<% else %>
+								<% if col != @yes_seat && col != @no_seat%>
+									<td><%= @s_list[col]["name"] %> </td>
+								<% else %>
+									<td><%= col %> </td>
+								<% end %>
+							<% end %>
+						<% end %>
+						<th style="text-align:left"><%=num_to_letter(row)%></th>
 				<% end %>
 		</tbody>
 	</table>
 	</div>
-
 <% end%>
 </div>
+
 <div class = "container">
+<span><h3><%= 'Black' %> = Unavailable seat</h3> </span>
+<span><h3><%= 'White'%> = Available seat</h3></span>
 
 
 
 <% if params["complete_seat_dimensions"] != "true"%>
 	<%= form_tag  do %>
-	    <%=label_tag 'Seats x' %>
-	    <%=text_field_tag 'seats_x'%>
-
-	    <%=label_tag 'Seats y' %>
+	    <%=label_tag 'Seat Rows' %>
 	    <%=text_field_tag 'seats_y'%>
+
+	    <%=label_tag 'Seat Columns' %>
+	    <%=text_field_tag 'seats_x'%>
 
 	    <%=label_tag 'Available seats' %>
 	    <%=text_field_tag 'available_seats'%>
@@ -80,7 +86,7 @@
 <% end %>
 
 <% if params["complete_seat_placement"] == "true" && params["complete_class_details"] != "true"%>
-	<%= form_tag "index.html.erb" , method: :post, :class => "form-inline" do %>
+	<%= form_tag seating_plan_path , method: :post, :class => "form-inline" do %>
 		<%=label_tag "Enter Class Name" %>
 		<%=text_field_tag "class_name"%>
 
@@ -102,31 +108,32 @@
 <% end %>
 	
 <% if @student_num > 0 && params["complete_s_list"] != "true"%>
-	<%= form_tag do %>
-	<style>
-		form > div { float:left: display:inline-block;}
-		form > span { float:right: display:inline-block;}
+	<%= form_tag seating_plan_path, method: :post, :class=> "form-inline", :style => 'display :inline-block' do %>
 
-
-	</style>
+	<div class='row'>
 		<% for i in 1..@student_num%>
-			<div class = "row">
-				<span><%=label_tag "#{i}: Enter Student Name:" %> </span>
-				<span><%=text_field_tag "student_name#{i}"%></span>
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+			<div class="panel panel-default">
+			<div class="panel-heading">
+			<div><%=label_tag "Student #{i}:" %> </div>
 			</div>
-			<div class = "row">
-				<span><%=label_tag "#{i}: Enter Gender m/f:" %></span>
-				<span><%=text_field_tag "student_gender#{i}"%></span>
+			<div class="panel-body">
+				<div><%=text_field_tag("student_name#{i}",nil, class: 'form-control', placeholder: 'Student Name:', style: "width:100%")%></div>
+		
+	
+				<div><%=text_field_tag "student_gender#{i}",nil, class: 'form-control', placeholder: 'Student Gender m/f:', style: "width:100%"%></div>
+		
+				<div><%=text_field_tag "student_level#{i}",nil, class: 'form-control', placeholder: 'Priority Learning level 1-3', style: "width:100%"%></div>
+
+				<div><%=text_field_tag "student_whitelist#{i}",nil, class: 'form-control', placeholder: 'Student to not pair:', style: "width:100%"%></div>
+	
+		
 			</div>
-			<div class = "row">
-				<span><%=label_tag "#{i}: Enter priority of learning:" %></span>
-				<span><%=text_field_tag "student_level#{i}"%></span>
 			</div>
-			<div class = "row">
-				<span><%=label_tag "#{i}: Enter students to not sit with:" %></span>
-				<span><%=text_field_tag "student_whitelist#{i}"%></span>
 			</div>
 		<% end %>
+	</div>
+
 
 		<%= hidden_field_tag "complete_seat_dimensions", "true" %>
 		<%= hidden_field_tag "complete_seat_placement", "true" %>
@@ -259,16 +266,12 @@
 		<% end %>
 	<% end %>
 
-<h3>
-<%= @no_seat%> = Unavailable seat
-</h3>
-<h3>
-<%= @yes_seat%> = Available seat
-</h3>
+
 
 
 <span><%=  link_to "Go Back", "javascript:history.back()" , :class => 'btn btn-danger' %></span>
 <span><%=  link_to "Go Forward", "javascript:history.forward()" , :class => 'btn btn-success' %></span>
 
-</div>		
+
+		
 
