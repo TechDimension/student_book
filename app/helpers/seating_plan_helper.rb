@@ -359,36 +359,10 @@ module SeatingPlanHelper
 	end
 
 
-	# def letter_to_num(x)
-	# 	x.downcase
-
-		
-	# 	alph = ("a".."z").to_a
-	# end
 	def letter_to_num(x)
-		x
-	    if x == "A"
-	        l = 1
-	    elsif x == "B"
-	        l = 2
-	    elsif x == "C"
-	        l = 3
-	    elsif x == "D"
-	        l = 4
-	    elsif x == "E"
-	        l = 5
-	    elsif x == "F"
-	        l = 6
-	    elsif x == "G"
-	        l = 7
-	    elsif x == "H"
-	        l = 8
-	    elsif x == "I"
-	        l = 9
-	    elsif x == "J"
-	        l = 10
-	    end
-	    l
+		h = {}
+		('A'..'ZZZ').each_with_index{|w, i| h[i+1] = w }
+		h[x]
 	end
 
 
