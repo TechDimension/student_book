@@ -41,6 +41,10 @@ source 'https://rails-assets.org/' do
   gem 'rails-assets-adminlte'
 end
 
+
+gem 'adminlte'
+
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
