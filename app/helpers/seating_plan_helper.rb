@@ -32,27 +32,31 @@ module SeatingPlanHelper
 	
 
 	def seat_layout(new_layout)
-	
-		seat_layout_loop = true
-		puts "Enter seat layout"
+		flash[:alert] = [] 
+		success = []
 		for i in 1..(@available_seats)
-			puts "#{i}: Enter Position for an available seat Example: B5"
 			position = seat_position_params(i)
 			if not(position.nil?) == true
 				if position.length == 2 
 					x_pos = position[1].to_i
 					y_pos = letter_to_num(position[0].upcase)
 					if y_pos <= 0 || y_pos >= @seats_y-1 || x_pos <= 0 || x_pos >= @seats_x-1
-						puts "Outside boundaries, please do again"
+						flash[:alert] << "#{position} Outside Boundaries" 
+						success << false
 					elsif new_layout[y_pos][x_pos] == @yes_seat
-						puts "Already used please do again"	
+						flash[:alert] << "#{position} Already Entered" 
+						success << false
 					else
 						new_layout[y_pos][x_pos] = @yes_seat
-						seat_layout_loop = false
+						success << true
 					end
 				else
-					"incorrect Info"
+					flash[:alert] << "#{position} Must be 2 Characters" 
+					success << false
 				end
+			end
+			if success.include?(false) 
+				params["complete_seat_placement"] = "false"
 			end
 			
 			print_layout(new_layout)
@@ -269,7 +273,7 @@ module SeatingPlanHelper
 		end
 		
 		print_layout(new_layout)
-		
+		flash[:alert] = [] 
 		s_list.each do  |key, value|
 		
 			puts "Enter Position for Name: #{value["name"]}: Must be Available seat (Black) Example: B5"
@@ -289,11 +293,13 @@ module SeatingPlanHelper
 					print_layout(new_layout)
 					
 				else
-					puts "Already taken, or Unavailable Seat."
+					flash.now[:alert] << "#{position} Is already Taken, or it is an Unavailable Seat" 
+	
 
 				end
 			else 
-				puts "Must be 2 characters"
+				flash.now[:alert] << "#{position} Must be 2 characters" 
+
 			end
 		end
 		
@@ -352,17 +358,15 @@ module SeatingPlanHelper
 	end
 
 	def num_to_letter(x)
-		alph = ("a".."z").to_a
-		s , q = "", x
-		(q, r = (q - 1).divmod(26); s.prepend(alph[r])) until q.zero?
-		s.upcase
+		h = {}
+		('A'..'ZZZ').each_with_index{|w, i| h[i+1] = w }
+		h[x]
 	end
-
 
 	def letter_to_num(x)
 		h = {}
 		('A'..'ZZZ').each_with_index{|w, i| h[i+1] = w }
-		h[x]
+		h.invert[x]
 	end
 
 

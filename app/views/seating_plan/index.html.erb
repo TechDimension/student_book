@@ -3,7 +3,11 @@
 	<h1 align="center"> <%=@class_name%> Seating Plan </h1>
 </div>
 
-
+<span ><%=  link_to "Go Back", "javascript:history.back()" , :class => 'btn btn-danger' %></span>
+<% if @seating_plan_done == false%>
+	<span id="to_here"></span> 
+<% end %>
+<span align="right"><%=  link_to "Go Forward", "javascript:history.forward()" , :class => 'btn btn-success' %></span>
 
 
 <div class "col-xs-12">
@@ -29,13 +33,13 @@
 						<% row_array = @seat_layout[row].dup %>
 						<% row_array.pop; row_array.shift; %>
 						<% row_array.each do |col|%>
-							<% if col != @yes_seat%>
+							<% if col == @no_seat%>
 								<td style="background-color:black;"></td>
-							<% elsif %>
+							<% elsif col == @yes_seat%>
 								<td style="background-color:white;"></td>
 							<% else %>
 								<% if col != @yes_seat && col != @no_seat%>
-									<td><%= @s_list[col]["name"] %> </td>
+									<td style="background-color:white;"><%= @s_list[col]["name"] %> </td>
 								<% else %>
 									<td><%= col %> </td>
 								<% end %>
@@ -51,27 +55,18 @@
 
 
 
-<% if params["complete_seat_dimensions"] == "true" %>
-	<div class = "container">
-	<span><h3><%= 'Black' %> = Unavailable seat</h3> </span>
-	<span><h3><%= 'White'%> = Available seat</h3></span>
-<% end %>
-
-
+<div class = 'row'>
+<div class = "col-sm-4 col-xs-12 col-sm-offset-4">
 <% if params["complete_seat_dimensions"] != "true"%>
+
 	<%= form_tag  do %>
-	    <%=label_tag 'Seat Rows' %>
-	    <%=text_field_tag 'seats_y'%>
-
-	    <%=label_tag 'Seat Columns' %>
-	    <%=text_field_tag 'seats_x'%>
-
-	    <%=label_tag 'Available seats' %>
-	    <%=text_field_tag 'available_seats'%>
+		
+	    <%=text_field_tag 'seats_y',nil, class: 'form-control', placeholder: 'Seat Row:', style: "width:100%"%>
+	    <%=text_field_tag 'seats_x',nil, class: 'form-control', placeholder: 'Seat Column:', style: "width:100%"%>
+	    <%=text_field_tag 'available_seats',nil, class: 'form-control', placeholder: 'Available Seats:', style: "width:100%"%>
 
 	    <%= hidden_field_tag "complete_seat_dimensions", "true" %>
-	    <div></div>
-	    <span id="NodesToMove"><%= submit_tag 'Submit', class:"btn btn-primary", value:"Submit" %></span>
+	    <span id="from_here"><%= submit_tag 'Submit', class:"btn btn-primary", value:"Submit", style: "width:100%" %></span>
 	<% end %>
 <% end %>
 
@@ -95,11 +90,8 @@
 
 <% if params["complete_seat_placement"] == "true" && params["complete_class_details"] != "true"%>
 	<%= form_tag seating_plan_path , method: :post, :class => "form-inline" do %>
-		<%=label_tag "Enter Class Name" %>
-		<%=text_field_tag "class_name"%>
-
-		<%=label_tag "Enter amount of Students i.e 5" %>
-		<%=text_field_tag "student_num"%>
+		<%=text_field_tag "class_name",nil, class: 'form-control', placeholder: 'Class Name:', style: "width:100%"%>
+		<%=text_field_tag "student_num",nil, class: 'form-control', placeholder: 'Number Of Students:', style: "width:100%"%>
 
 		<%= hidden_field_tag "complete_seat_dimensions", "true" %>
 		<%= hidden_field_tag "complete_seat_placement", "true" %>
@@ -111,14 +103,13 @@
 			<%=hidden_field_tag "seat#{i}", seat_position_params(i)%>
 		<% end %>
 
-		<div><%= submit_tag 'Submit' %></div>
+		<span id="from_here"><%= submit_tag 'Submit', class:"btn btn-primary", value:"Submit", style: "width:100%" %></span>
 	<% end %>
 <% end %>
 	
 <% if @student_num > 0 && params["complete_s_list"] != "true"%>
 	<%= form_tag seating_plan_path, method: :post, :class=> "form-inline", :style => 'display :inline-block' do %>
 
-	<div class='row'>
 		<% for i in 1..@student_num%>
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
 			<div class="panel panel-default">
@@ -140,7 +131,7 @@
 			</div>
 			</div>
 		<% end %>
-	</div>
+
 
 
 		<%= hidden_field_tag "complete_seat_dimensions", "true" %>
@@ -274,17 +265,10 @@
 		<% end %>
 	<% end %>
 
+</div>
 
 
 
-<span ><%=  link_to "Go Back", "javascript:history.back()" , :class => 'btn btn-danger' %></span>
-
-
-<% if @seating_plan_done == false%>
-	<span id="DestinationContainerNode"></span> 
-<% end %>
-
-<span><%=  link_to "Go Forward", "javascript:history.forward()" , :class => 'btn btn-success' %></span>
 </div>
 
 
