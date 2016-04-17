@@ -5,7 +5,7 @@
          <th>Task Name</th>
          <th>Student Name</th>
          <th>Download Link</th>
-         <th> Image Preview <th>
+         <th> Image Preview </th>
       </tr>
    </thead>
    
@@ -25,7 +25,9 @@
    
 </table>
 </div>
+<div class = "btn btn-primary" id="button">Upload New File</div>
 
+<div id="toggleDiv">
 <div class="container">
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
@@ -42,12 +44,12 @@
             <div class="modal-footer">
             <div class="modal-title">
             </div> 
-                <span><%=  link_to "Close", "#" , :class => 'btn btn-default' %></span>
+                <span class = "btn btn-default "id="buttoon">Close</span>
                 <span><%= f.submit "Upload", :class => "btn btn-success" %></span> 
               </div>
               <% end %>
         </div>
     </div>
   </div>
-</div
-
+</div>
+</div>
