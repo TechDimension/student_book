@@ -159,9 +159,11 @@
 
           <!-- Your Page Content Here -->
            <ul class= "nav nav-tabs">
+
             <% flash.each do |name, msg| -%>
-             <%msg.each do |msgi| %>
-              <%= content_tag :div, msgi, class: "success" %>
+            <% msg = msg.split%>
+            <%msg.each do |msgi| %>
+              <%= content_tag :div, raw("#{raw(msgi.join('<br>'))}"), class: "success" %>
             <% end -%>
             <% end %>
           </ul>

@@ -12,6 +12,8 @@ class SeatingPlanController < ApplicationController
 		@gender_sort = params[:gender_option]
 		@decision = params[:process_option]
 
+		flash[:alert] = []
+
 		# 0 are available seats.
 		@seats_x = @seats_x.to_i + 2
 		@seats_y = @seats_y.to_i + 2
@@ -19,12 +21,14 @@ class SeatingPlanController < ApplicationController
 
 		@yes_seat = "\u25CB"
 		@no_seat = "\u25C9"
-		if @available_seats >= (@seats_x-2) * (@seats_y-2)
-			"error"
-		else
-			"continue"
+		if @available_seats > (@seats_x-2) * (@seats_y-2)
+			flash[:alert] = []
+			flash[:alert] << "Number of seats is greater than possible seat placements"
+			params["complete_seat_dimensions"] = "false"
+		else 
+			@seat_layout = seat_layout(class_layout)
 		end
-		@seat_layout = seat_layout(class_layout)
+		
 
 		if (@student_num > 0)&& params["complete_s_list"]
 			for i in 1..@student_num

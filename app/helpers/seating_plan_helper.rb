@@ -59,10 +59,8 @@ module SeatingPlanHelper
 				params["complete_seat_placement"] = "false"
 			end
 			
-			print_layout(new_layout)
+			
 		end
-		print(new_layout)
-		puts
 		new_layout
 	end
 
@@ -315,13 +313,19 @@ module SeatingPlanHelper
 		if num == false
 			@student_list
 		else
-			name = params["student_name#{num}"].titlecase
-			gender = params["student_gender#{num}"]
-			level = params["student_level#{num}"]
-			whitelist = params["student_whitelist#{num}"].titlecase
-			@student_list.merge!("#{num}"  => {"name" => "#{name}", "gender" => "#{gender}", "level" => "#{level}", "whitelist" => "#{whitelist}"})
-	
-			@student_list
+			if params["student_gender#{num}"].upcase != "M" && params["student_gender#{num}"].upcase != "F"
+				name = params["student_name#{num}"].titlecase
+				flash[:alert] << "#{name}'s Gender is not M or F"
+				params["complete_s_list"] = "false"
+			else
+				name = params["student_name#{num}"].titlecase
+				gender = params["student_gender#{num}"]
+				level = params["student_level#{num}"]
+				whitelist = params["student_whitelist#{num}"].titlecase
+				@student_list.merge!("#{num}"  => {"name" => "#{name}", "gender" => "#{gender}", "level" => "#{level}", "whitelist" => "#{whitelist}"})
+		
+				@student_list
+			end
 		end
 	end
 
