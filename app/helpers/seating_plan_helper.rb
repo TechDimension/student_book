@@ -34,31 +34,35 @@ module SeatingPlanHelper
 		flash[:alert] = [] 
 		success = []
 		for i in 1..(@available_seats)
-			position = seat_position_params(i)
-			if not(position.nil?) == true
-				if position.length == 2 
-					x_pos = position[1].to_i
-					y_pos = letter_to_num(position[0].upcase)
-					if y_pos <= 0 || y_pos >= @seats_y-1 || x_pos <= 0 || x_pos >= @seats_x-1
-						flash[:alert] << "#{position} Outside Boundaries" 
-						success << false
-					elsif new_layout[y_pos][x_pos] == @yes_seat
-						flash[:alert] << "#{position} Already Entered" 
-						success << false
+			position_params = seat_position_params(i)
+			if params["complete_seat_placement"] == "true"
+				if not(position_params.empty?) == true
+					position = position_params.scan(/\d+|\D+/)
+					if position[1].to_i != 0 # Checks that the value input is in formal AA11 if == A0 or AA then will not pass
+						x_pos = position[1].to_i
+						y_pos = letter_to_num(position[0].upcase)
+						if y_pos <= 0 || y_pos >= @seats_y-1 || x_pos <= 0 || x_pos >= @seats_x-1
+							flash[:alert] << "Seat #{i}: #{position_params} Outside Boundaries" 
+							success << false
+						elsif new_layout[y_pos][x_pos] == @yes_seat
+							flash[:alert] << "Seat #{i}: #{position_params} Already Entered" 
+							success << false
+						else
+							new_layout[y_pos][x_pos] = @yes_seat
+							success << true
+						end
 					else
-						new_layout[y_pos][x_pos] = @yes_seat
-						success << true
+						flash[:alert] << "Seat #{i}: #{position_params} Must be in format AA00 (Letter first, then Number)" 
+						success << false
 					end
 				else
-					flash[:alert] << "#{position} Must be 2 Characters" 
+					flash[:alert] << "Seat #{i}: Cannot be blank" 
 					success << false
 				end
 			end
-			if success.include?(false) 
-				params["complete_seat_placement"] = "false"
-			end
-			
-			
+		end
+		if success.include?(false) 
+			params["complete_seat_placement"] = "false"
 		end
 		new_layout
 	end

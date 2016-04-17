@@ -26,6 +26,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'bcrypt', '~> 3.1.7'
 gem 'bcrypt', '~> 3.1.7'
 
+gem 'jquery-minicolors-rails'
 
 gem 'autoprefixer-rails'
 gem 'less-rails-bootstrap'

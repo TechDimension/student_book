@@ -22,13 +22,19 @@ class SeatingPlanController < ApplicationController
 		@yes_seat = "\u25CB"
 		@no_seat = "\u25C9"
 
-
-
-		if @available_seats > (@seats_x-2) * (@seats_y-2)
-			flash[:alert] << "Number of seats is greater than possible seat placements"
-			params["complete_seat_dimensions"] = "false"
-		else 
-			@seat_layout = seat_layout(class_layout)
+		if params["complete_seat_dimensions"] == "true" 
+			if @seats_x == 2|| @seats_y == 2|| @available_seats == 2
+				flash[:alert] << "Cannot be blank"
+				params["complete_seat_dimensions"] = "false"
+			else
+			
+				if @available_seats > (@seats_x-2) * (@seats_y-2)
+					flash[:alert] << "Number of seats is greater than possible seat placements"
+					params["complete_seat_dimensions"] = "false"
+				else 
+					@seat_layout = seat_layout(class_layout)
+				end
+			end
 		end
 
 		if params["complete_gender_selection"] == "true"
