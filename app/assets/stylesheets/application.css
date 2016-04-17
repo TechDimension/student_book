@@ -15,6 +15,6 @@
  *= require adminlte
  *= require skin-blue
  */
-
+@import "font-awesome";
 @import "bootstrap-sprockets";
 @import "bootstrap";
