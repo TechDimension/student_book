@@ -53,6 +53,10 @@ gem "font-awesome-rails"
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+group :assets do
+  gem 'bootstrap-colorpicker-rails'
+end
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
