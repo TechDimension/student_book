@@ -3,21 +3,21 @@
 <head>
 <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
 
-<style media="all"> 
-html, body{height:100%;} 
-#outer{
-min-height:100%;
-}
 
-* html #outer{height:100%;} /* for IE 6, if you care */
-
-body, p { margin:0; padding:0}
-
-</style>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   
   <%= csrf_meta_tags %>
 
+
+<style type="text/css">
+      .js #flash {display: none;}
+    </style>
+    <script type="text/javascript">
+      $('html').addClass('js');
+      $(document).ready(function() {
+        // Stuff to do as soon as the DOM is ready
+      });  
+</script>
           <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Student Book</title>
@@ -70,7 +70,7 @@ body, p { margin:0; padding:0}
           <!-- Navbar Right Menu -->
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-              <!-- Messages: style can be found in dropdown.less-->
+         
     
               <!-- User Account Menu -->
               <li class="dropdown user user-menu">
@@ -79,7 +79,7 @@ body, p { margin:0; padding:0}
                   <!-- The user image in the navbar-->
                   <img src="/assets/user" class="user-image" alt="User Image">
                   <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                  <span class="hidden-xs hidden-lg"><%=current_user.name%></span>
+                  <span class="hidden-xs"><%=current_user.name%></span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- The user image in the menu -->
@@ -98,15 +98,7 @@ body, p { margin:0; padding:0}
                       <a href="/users/<%=current_user.id%>" class="btn btn-default btn-flat"><i class="fa fa-user fa-fw"></i>Profile</a>
                     </div>
                     <div class="pull-right">
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"> User Profile</a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="login.html"> Logout</a>
-                        </li>
-                    </ul>
+
                       <a rel="nofollow" data-method="delete" href="/logout" class="btn btn-default btn-flat" ><i class="fa fa-sign-out fa-fw"> </i> Log out</a>
                     
                     </div>
@@ -145,8 +137,8 @@ body, p { margin:0; padding:0}
           <ul class="sidebar-menu">
 
             <!-- Optionally, you can add icons to the links -->
-            <li><a href="/dashboard"><i class="fa fa-link"></i> <span>Dashboard</span></a></li>
-            <li><a href="/students"><i class="fa fa-link"></i> <span>Student List</span></a></li>
+            <li><a href="/dashboard"><i class="fa fa-link"></i> <span>Dashboard</span></a><i class="fa fa-angle-left pull-right"></i></a></li></li>
+            <li><a href="/students"><i class="fa fa-link"></i> <span>Student List</span></a><i class="fa fa-angle-left pull-right"></i></a></li></li>
             <li><a href="<%=user_files_path %>"><i class="fa fa-link"></i> <span>View Files</span> <i class="fa fa-angle-left pull-right"></i></a></li>
             <li><a href="<%=new_user_file_path %>"><i class="fa fa-link"></i> <span>Upload File</span> <i class="fa fa-angle-left pull-right"></i></a></li>
             <li><a href="<%=seating_plan_path %>"><i class="fa fa-link"></i> <span>Seating Plan</span> <i class="fa fa-angle-left pull-right"></i></a></li>
@@ -178,10 +170,10 @@ body, p { margin:0; padding:0}
 
 
       <!-- Main Footer -->
-      <div class="navbar navbar-fixed-bottom">
+      <div class="navbar navbar-fixed-bottom hidden " style="background-color:#367fa9; height:20px;">
         <!-- To the right -->
-        <div class="pull-right hidden-xs visible-xl">
-          <strong>Copyright &copy; 2016 <a href="#">StudentBook Inc.</a>.</strong> All rights reserved.
+        <div class="pull-right">
+          <strong>Copyright &copy; 2016 <span style="color:white">StudentBook Inc.</span>.</strong> All rights reserved.
 
         </div>
         <!-- Default to the left -->

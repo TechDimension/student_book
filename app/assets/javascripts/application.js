@@ -14,12 +14,12 @@
 //= require jquery_ujs 
 //= require bootstrap-sprockets
 //= require adminlte
+//= require jquery_mods
 //= require_tree .
 
 
 
 $(document).ready(function(){
-    
     //Check to see if the window is top if not then display button
     $(window).scroll(function(){
         if ($(this).scrollTop() > 100) {
@@ -35,4 +35,33 @@ $(document).ready(function(){
         return false;
     });
     
+});
+
+
+$(document).ready(function(){
+    $("#toggleDiv").toggle(10);
+    $("#buttoon").toggle(10);
+    $("#button").click(function(){
+        $("#toggleDiv").toggle(200);
+        $("#button").toggle(10);
+        $("#buttoon").toggle(10);
+        $('html, body').animate({
+            scrollTop: $("#toggleDiv").offset().top
+        }, 1000);
+
+
+    });
+});
+
+$(document).ready(function(){
+    $("#buttoon").click(function(){
+        $("#toggleDiv").toggle(200);
+        $("#buttoon").toggle(10);
+        $("#button").toggle(10);
+        $('html, body').animate({
+            scrollTop: $("#toggleDiv").offset().top
+        }, 1000);
+
+
+    });
 });

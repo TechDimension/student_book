@@ -34,15 +34,13 @@ gem 'therubyracer'
 gem 'carrierwave', '~> 0.9'
 
 gem 'bootstrap-sass',       '3.2.0.0'
-gem 'jquery-rails',         '4.0.3'
 gem 'font-awesome-sass'
 
 source 'https://rails-assets.org/' do 
   gem 'rails-assets-adminlte'
 end
 
-
-gem 'adminlte'
+gem 'jquery-rails', '~> 4.1', '>= 4.1.1'
 
 
 # Use Unicorn as the app server

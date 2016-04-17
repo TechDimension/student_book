@@ -27,10 +27,8 @@
     </div>       
 <% end %>
 </div>
-<div id="item" visibility="hidden"><%= render "new_class" %></div>
 
-<script>
-$( "#button" ).click(function() {
-$( "#item" ).toggle();
-});
-</script>
+<div class = "btn btn-primary" id="button"> Add New Class</div>
+<div id="toggleDiv" visibility="hidden" display= "none"><%= render "new_class" %></div>
+
+

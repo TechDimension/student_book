@@ -3,6 +3,7 @@ class SeatingPlanController < ApplicationController
 	include SeatingPlanHelper
 	def index()
 		@student_list = Hash.new
+		@seating_plan_done = false
 		@seats_x = params[:seats_x]
 		@seats_y = params[:seats_y]
 		@available_seats = params[:available_seats]
@@ -40,10 +41,11 @@ class SeatingPlanController < ApplicationController
 					end
 					if not(@positions.include?(nil))
 						@seat_layout = manual_list(@seat_layout, @s_list_dup)
+						@seating_plan_done = true
 					end
 				elsif @decision.strip.upcase == "A"
 					@seat_layout = algorithm(@seat_layout, @s_list_dup)
-
+					@seating_plan_done = true
 				end
 			end
 		end
