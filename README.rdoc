@@ -31,7 +31,7 @@ Ruby version manager , or just install ruby versions manually
 	mkdir 'repositores'
 	cd repositores
 	git clone "paste-url"
-	gem install rails
+	gem install rails --no-ri --no-rdoc
 	bundle install
 	rails server
 
