@@ -4,7 +4,7 @@
 
 <% classes = Group.where(user_id: current_user.id)%>
 <% classes.each do |class_of|%>
-    <% @students.where(group_id: class_of.id).reverse_each do |student| %>
+    <% @students.where(group_id: class_of.id).order(:surname).each do |student| %>
         <div class="panel panel-default">
             <div class="panel-heading">Class: <%= Group.find(student.group_id).title %></div>
             <div class="panel-body">Firstname: <%= student.forename %></div>

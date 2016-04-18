@@ -41,7 +41,7 @@ end
 
 gem 'jquery-rails', '~> 4.1', '>= 4.1.1'
 gem "font-awesome-rails"
-  gem 'bootstrap-colorpicker-rails'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

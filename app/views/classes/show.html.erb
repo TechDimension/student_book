@@ -2,7 +2,7 @@
 <h3>Current Students: </h3>
 <% students = Student.where(group_id: "#{params[:id]}") %>
 
-<% students.reverse_each do |student| %>
+<% students.order(:surname).each do |student| %>
         <div class="panel panel-default">
             <div class="panel-heading">Firstname: <%= student.forename %></div>
             <div class="panel-body">Surname: <%= student.surname%></div>
