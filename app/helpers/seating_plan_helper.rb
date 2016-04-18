@@ -1,14 +1,5 @@
 module SeatingPlanHelper
 
-	#implementation in the website
-	# All inputs would be done by forms
-	# This page would be a helper
-	# all functions can be called by the view
-	#implement a saving strategy
-	# backup student details to a file 
-	# Create a flow chart of this program before implementing to website
-
-
 	def class_layout
 		row_array = []
 		seat_array =  []
@@ -27,8 +18,6 @@ module SeatingPlanHelper
 	def seat_position_params(num)
 		params["seat#{num}"]
 	end
-
-	
 
 	def seat_layout(new_layout)
 		flash[:alert] = [] 
@@ -112,7 +101,10 @@ module SeatingPlanHelper
 			to_place = [true]
 
 			if (x_pos != 0 && x_pos != @seats_x && y_pos != 0 && y_pos != @seats_y)
-				if new_s_list[pos_left] == nil && new_s_list[pos_right] == nil && new_s_list[pos_down] == nil && new_s_list[pos_up] == nil && new_s_list[pos_nw] == nil && new_s_list[pos_ne] == nil && new_s_list[pos_se] == nil && new_s_list[pos_sw] == nil 
+				if (new_s_list[pos_left] == nil && new_s_list[pos_right] == nil && 
+					new_s_list[pos_down] == nil && new_s_list[pos_up] == nil && 
+					new_s_list[pos_nw] == nil && new_s_list[pos_ne] == nil && 
+					new_s_list[pos_se] == nil && new_s_list[pos_sw] == nil )
 					to_place = true
 				else
 					if new_s_list[pos_right] != nil
