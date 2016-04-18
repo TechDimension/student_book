@@ -12,9 +12,10 @@
  *
  *= require_tree .
  *= require_self
+ *= require bootstrap_and_overrides
  *= require adminlte
- *= require skin-blue
  *= require bootstrap-colorpicker
+ *= require skin-blue
  */
 
 @import "bootstrap-sprockets";

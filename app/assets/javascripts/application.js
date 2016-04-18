@@ -12,9 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs 
-//= require bootstrap-colorpicker
 //= require bootstrap-sprockets
 //= require adminlte
+//= require bootstrap-colorpicker
 //= require jquery_mods
 //= require_tree .
 

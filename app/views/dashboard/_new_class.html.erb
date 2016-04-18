@@ -7,15 +7,53 @@
         </div>
         <div class="panel-body">
           <p><%= f.text_field (:title) , class: "form-control", placeholder:"Enter Class Name: "  %></p>
-          <p class = "colorpicker"><%= f.text_field (:color_t) , class: "form-control", placeholder:"Enter Color of group "  %></p>
+          <p><%= f.text_field(:color_t , class: "form-control", type:"text", value:"pink" , id:"colorpicker")  %></p>
         </div>
         <div class="modal-footer">
           <div class="modal-title">
         </div>    
         <%= f.hidden_field :user_id, :value => current_user.id.to_s %>
         <div  class="btn btn-default" id="buttoon"> Close</div>
+
         <span><%= f.submit nil, :class => "btn btn-success" %></span>
       </div>
     </div>
   </div>
 <% end %>
+
+<style>
+    .colorpicker-2x .colorpicker-saturation {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .colorpicker-2x .colorpicker-hue,
+    .colorpicker-2x .colorpicker-alpha {
+        width: 30px;
+        height: 200px;
+    }
+    
+    .colorpicker-2x .colorpicker-color,
+    .colorpicker-2x .colorpicker-color div {
+        height: 30px;
+    }
+</style>
+<script>
+    $(function() {
+        $('#colorpicker').colorpicker({
+            customClass: 'colorpicker-2x',
+            sliders: {
+                saturation: {
+                    maxLeft: 200,
+                    maxTop: 200
+                },
+                hue: {
+                    maxTop: 200
+                },
+                alpha: {
+                    maxTop: 200
+                }
+            }
+        });
+    });
+</script>

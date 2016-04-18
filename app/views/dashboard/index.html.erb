@@ -4,7 +4,30 @@
 
 <% classes.each do |classes| %>
     <div class="col-lg-4 col-sm-6 col-xs-12 " >
-        <div class="panel panel-<%=classes.color_t%>">
+    <style>
+        .panel-dynamic {
+            border-color: <%=classes.color_t%>;
+        }
+
+        .panel-dynamic .panel-heading {
+            border-color: <%=classes.color_t%>;
+            color: #fff;
+            background-color: <%=classes.color_t%>;
+        }
+
+        .panel-dynamic a {
+            color: <%=classes.color_t%>;
+        }
+
+        .panel-dynamic a:hover {
+            color: <%=classes.color_t%>;
+        }
+
+        .content{
+            height: 100%;
+        }
+    </style>
+        <div class="panel panel-dynamic">
             <div class="panel-heading" onclick="location.href='/groups/<%=classes.id%>';" style="cursor: pointer;">
                 <div class="row">
                     <div class="col-xs-3">

@@ -26,8 +26,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'bcrypt', '~> 3.1.7'
 gem 'bcrypt', '~> 3.1.7'
 
-gem 'jquery-minicolors-rails'
-
 gem 'autoprefixer-rails'
 gem 'less-rails-bootstrap'
 gem 'therubyracer'
@@ -43,7 +41,7 @@ end
 
 gem 'jquery-rails', '~> 4.1', '>= 4.1.1'
 gem "font-awesome-rails"
-
+  gem 'bootstrap-colorpicker-rails'
 # Use Unicorn as the app server
 # gem 'unicorn'
 
@@ -53,9 +51,9 @@ gem "font-awesome-rails"
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-group :assets do
-  gem 'bootstrap-colorpicker-rails'
-end
+
+
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
