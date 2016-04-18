@@ -5,7 +5,91 @@
 
 
 
+.panel-pink {
+    border-color: #ff00e6;
+}
 
+.panel-pink .panel-heading {
+    border-color: #ff00e6;
+    color: #fff;
+    background-color: #ff00e6;
+}
+
+.panel-pink a {
+    color: #CC33FF;
+}
+
+.panel-pink a:hover {
+    color: #ff00e6;
+}
+
+.content{
+	height: 100%;
+}
+
+.panel-purple {
+    border-color: #9516b5;
+}
+
+.panel-purple .panel-heading {
+    border-color: #9516b5;
+    color: #fff;
+    background-color: #9516b5;
+}
+
+.panel-purple a {
+    color: #CC33FF;
+}
+
+.panel-purple a:hover {
+    color: #9516b5;
+}
+
+.content{
+  height: 100%;
+}
+.panel-blue {
+    border-color: #4456f7;
+}
+
+.panel-blue .panel-heading {
+    border-color: #4456f7;
+    color: #fff;
+    background-color: #4456f7;
+}
+
+.panel-blue a {
+    color: #CC33FF;
+}
+
+.panel-blue a:hover {
+    color: #4456f7;
+}
+
+.content{
+  height: 100%;
+}
+.panel-orange {
+    border-color: #fc9700;
+}
+
+.panel-orange .panel-heading {
+    border-color:#fc9700;
+    color: #fff;
+    background-color: #fc9700;
+}
+
+.panel-orange a {
+    color: #CC33FF;
+}
+
+.panel-orange a:hover {
+    color: #fc9700;
+}
+
+.content{
+  height: 100%;
+}
 
 
 td, th{ text-align: center; }

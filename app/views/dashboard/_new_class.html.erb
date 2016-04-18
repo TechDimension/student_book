@@ -7,7 +7,7 @@
         </div>
         <div class="panel-body">
           <p><%= f.text_field (:title) , class: "form-control", placeholder:"Enter Class Name: "  %></p>
-          <p><%= f.text_field(:color_t , class: "form-control", type:"text", value:"pink" , id:"colorpicker")  %></p>
+          <p><%= f.text_field(:color_t , class: "form-control", type:"text", value:"pink" , id:"colorpicker", )  %></p>
         </div>
         <div class="modal-footer">
           <div class="modal-title">
@@ -38,22 +38,5 @@
         height: 30px;
     }
 </style>
-<script>
-    $(function() {
-        $('#colorpicker').colorpicker({
-            customClass: 'colorpicker-2x',
-            sliders: {
-                saturation: {
-                    maxLeft: 200,
-                    maxTop: 200
-                },
-                hue: {
-                    maxTop: 200
-                },
-                alpha: {
-                    maxTop: 200
-                }
-            }
-        });
-    });
-</script>
+
+<input type="text" data-format="hex" id="cp8" value="primary"/>

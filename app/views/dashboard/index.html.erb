@@ -4,7 +4,11 @@
 
 <% classes.each do |classes| %>
     <div class="col-lg-4 col-sm-6 col-xs-12 " >
-    <style>
+
+    <% if classes.color_t == "green" || classes.color_t == "red" || classes.color_t == "yellow" || classes.color_t == "pink" || classes.color_t == "blue"|| classes.color_t.strip.downcase == "orange" %>
+        <div class = "panel panel-<%=classes.color_t.strip%>">
+    <% else%>
+        <style>
         .panel-dynamic {
             border-color: <%=classes.color_t%>;
         }
@@ -26,8 +30,9 @@
         .content{
             height: 100%;
         }
-    </style>
+        </style>
         <div class="panel panel-dynamic">
+    <% end %>
             <div class="panel-heading" onclick="location.href='/groups/<%=classes.id%>';" style="cursor: pointer;">
                 <div class="row">
                     <div class="col-xs-3">
@@ -35,6 +40,7 @@
                     </div>
                     <div class="col-xs-9 text-left">
                         <div class="panel-heading"><%= classes.title %></div>
+                        <div class="panel-heading"><%= classes.color_t %></div>
                     </div>
                 </div>
             </div>
