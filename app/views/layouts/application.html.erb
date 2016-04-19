@@ -64,8 +64,8 @@
                   <li class="user-header">
                     <img src="/assets/user" class="img-circle" alt="User Image">
                     <p>
-                      <%=current_user.name%> - CEO
-                      <small>Member since DEC. 2012</small>
+                      <%=current_user.name%>
+                      <small>Member since <%=current_user.created_at%></small>
                     </p>
                   </li>
                   <!-- Menu Footer-->
@@ -177,8 +177,9 @@
                 <a href="javascript::;">
                   <i class="menu-icon fa fa-birthday-cake bg-red"></i>
                   <div class="menu-info">
-                    <h4 class="control-sidebar-subheading">Matthew Coursework</h4>
-                    <p>Submitted 2 hours ago.</p>
+                  <% user_file_last = UserFile.order(:created_at).last %>
+                    <h4 class="control-sidebar-subheading"><%=user_file_last.name%></h4>
+                    <p><%= user_file_last.created_at%></p>
                   </div>
                 </a>
               </li>
