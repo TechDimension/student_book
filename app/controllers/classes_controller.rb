@@ -24,19 +24,19 @@ class ClassesController < ApplicationController
 	    redirect_to "/dashboard"
 	  end
 
-	 private
-	   def class_params
-	    params.require(:group).permit(:title, :color_t, :user_id)
-	  end
-	  def ensure_correct_user
-        arr = []
-        Group.where(user_id: current_user.id.to_s).each do |classes|
-        	arr << classes.id
+	private
+		def class_params
+	    	params.require(:group).permit(:title, :color_t, :user_id)
+	  	end
+	  	def ensure_correct_user
+	        arr = []
+	        Group.where(user_id: current_user.id.to_s).each do |classes|
+	        arr << classes.id
         end
         if arr.include?(params[:id].to_i) == true
         else
         	flash[:success]= []
-             flash[:success] <<  'That was not your class.'
+            flash[:success] <<  'That was not your class.'
             redirect_to dashboard_index_path
         end
 	  end

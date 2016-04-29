@@ -1,3 +1,4 @@
+
 module SeatingPlanHelper
 
 	def class_layout
