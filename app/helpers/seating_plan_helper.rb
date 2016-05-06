@@ -168,6 +168,7 @@ module SeatingPlanHelper
 	end
 
 	def manual_list(new_layout,s_list)
+
 		male_female = @gender_sort
 
 		if male_female == "Y"
@@ -177,18 +178,28 @@ module SeatingPlanHelper
 		end
 		flash[:alert] = [] 
 		s_list.each do  |key, value|
-			position = @positions.shift
-			if position.length == 2 
-				x_pos = ( position[1].to_i)
-				y_pos = letter_to_num(position[0].upcase)
-				if new_layout[y_pos][x_pos] == @yes_seat
-					new_layout[y_pos][x_pos] = key
-				else
-					flash.now[:alert] << "#{position} Is already Taken, or it is an Unavailable Seat" 
-				end
-			else 
-				flash.now[:alert] << "#{position} Must be 2 characters" 
+			position_orig = @positions.shift
+			if not(position_orig.empty?) == true
+				position = position_orig.scan(/\d+|\D+/)
+				if position[1].to_i != 0  
+					x_pos = ( position[1].to_i)
+					y_pos = letter_to_num(position[0].upcase)
+					if x_pos <= @seats_x-2 && y_pos <= @seats_y -2
 
+						if new_layout[y_pos][x_pos] == @yes_seat
+							new_layout[y_pos][x_pos] = key
+						else
+							flash.now[:alert] << "#{position_orig} Is already Taken, or it is an Unavailable Seat" 
+						end
+					else 
+						flash[:alert] << "#{position_orig}: Value outside of the grid" 
+					end
+				else 
+					flash.now[:alert] << "#{position_orig} Must be in format AA00 (Letter first, then Number)" 
+
+				end
+			else
+				flash[:alert] << "Seat #{key}: Cannot be blank" 
 			end
 		end
 		new_layout 

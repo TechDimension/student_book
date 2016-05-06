@@ -8,6 +8,9 @@ class ClassesController < ApplicationController
 		@student = Student.new
 		@group = Group.find(params[:id])
 	end
+		def index
+		@classes = Group.new
+	end
 
 	  def create
 	    @classes = Group.new(class_params)

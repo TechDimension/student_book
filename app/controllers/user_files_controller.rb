@@ -17,7 +17,9 @@ class UserFilesController < ApplicationController
          flash[:notice]<< "The file #{@user_file.name} has been uploaded."
          redirect_to user_files_path
       else
-         render "new"
+         redirect_to user_files_path
+         flash[:notice] = []
+         flash[:notice]<< "The file cannot be uploaded"
       end
       
    end
