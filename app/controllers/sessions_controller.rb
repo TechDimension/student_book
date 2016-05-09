@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
         flash[:alert] = []
         user = User.find_by(email: params[:email].downcase)
         if user && user.authenticate(params[:password])
-            flash[:success] << "Click on the Home Icon, then Click on Question Mark Icon, to find Help."
+            flash[:success] << "Click on the Home Icon access the Help Menu."
             log_in(user)
             redirect_to dashboard_index_path
         else

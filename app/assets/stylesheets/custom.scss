@@ -80,13 +80,13 @@ td, th{ text-align: center; }
   padding-bottom: 2
 }
 
-@mixin make-grid($class) {
-  @include float-grid-columns($class);
-  @include loop-grid-columns($grid-columns, $class, width);
-  @include loop-grid-columns($grid-columns, $class, pull);
-  @include loop-grid-columns($grid-columns, $class, push);
-  @include loop-grid-columns($grid-columns, $class, offset);
-  @include loop-grid-columns($grid-columns, $class, offset-right);
+.control-sidebar {
+  top: 0;
+  right: -700px;
+  width: 700px;
+  -webkit-transition: right 0.3s ease-in-out;
+  -o-transition: right 0.3s ease-in-out;
+  transition: right 0.3s ease-in-out;
 }
 
 

@@ -6,8 +6,8 @@ class DashboardController < ApplicationController
   	
 	def new
 			@classes = Group.new
-		end
-	 	def show
+	end
+	def show
 		@classes = Group.new
 		@group = Group.find(params[:id])
 	end
@@ -24,7 +24,7 @@ class DashboardController < ApplicationController
 	end
 
 	  def create
-	    @classes = Group.new(student_params)
+	    @classes = Group.new(group_params)
 	
 	      if (@classes.save)
 	        redirect_to "/dashboard"
@@ -39,7 +39,7 @@ class DashboardController < ApplicationController
 	  end
 
 	private
-	    def student_params
+	    def group_params
 	  	    params.require(:groups).permit(:title)
 	    end
 	def ensure_log_in

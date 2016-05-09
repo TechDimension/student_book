@@ -159,45 +159,59 @@
       <aside class="control-sidebar control-sidebar-dark" >
         <!-- Create the tabs -->
         <ul class="nav nav-tabs nav-justified control-sidebar-tabs" >
-          <li class="active" ><a href="#control-sidebar-home-tab" data-toggle="tab">
-          <i class="fa fa-home"></i></a></li>
-          <li><a href="#control-sidebar-settings-tab" data-toggle="tab">
-          <i class="glyphicon glyphicon-question-sign"></i></a></li>
+          <li class="active" ><a href="#control-sidebar-settings-tab" data-toggle="tab">
+          <i class="glyphicon glyphicon-question-sign"></i><p> Help Menu </p></a></li>
         </ul>
         <!-- Tab panes -->
         <div class="tab-content"  >
           <!-- Home tab content -->
-          <div class="tab-pane active" id="control-sidebar-home-tab">
-            <h3 class="control-sidebar-heading">Recent Activity</h3>
-            <ul class="control-sidebar-menu">
-              <li>
-                <% if UserFile.last != nil%>
-                <a href="javascript::;">
-                  <i class="menu-icon fa fa-birthday-cake bg-red"></i>
-                  <div class="menu-info">
-                  <% user_file_last = UserFile.order(:created_at).last %>
-                    <h4 class="control-sidebar-subheading"><%=user_file_last.name%></h4>
-                    <p><%= user_file_last.created_at%></p>       
-                  </div>
-                </a>
-                <% end %>
-              </li>
-            </ul><!-- /.control-sidebar-menu -->
-          </div><!-- /.tab-pane -->
-          <!-- Stats tab content -->
-          <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div><!-- /.tab-pane -->
           <!-- Settings tab content -->
-          <div class="tab-pane" id="control-sidebar-settings-tab">
-            <h3> Help </h3>
-            <h4>Seating Plan</h4>
-            <p>Seat Row = max seat row length</p>
-            <p>Seat Row = max column length</p>
+          <div class="tab-pane active" id="control-sidebar-settings-tab">
 
-            <img src = "/assets/seating_class" width="200px"/>
+            <div class = "container">
+              <h4><u>Dashboard</u></h4>
+              <div class = "row">
+                <p>Click on Add new Class button to open the new class form.</p>
+                <p>Colours available for Class: red, blue, yellow, orange, green, purple, pink, white </p>
+                <p>Press the green submit button to Create a new class</p>
+                </div>
+                <h4><u>Class Details</u></h4>
+                 <div class = "row">
+                <p>Click on a class to go to the class details page of the class clicked on</p>
+                <p>Press the green submit button to Add a new Student</p>    
+              </div>
 
-            <img src = "/assets/seating_plan_maths" width="200px"/>
-            <p><%= 'Black' %> = Unavailable seat<p> 
-            <p><%= 'White'%> = Available seat</p>        
+            <h4><u>View Files</u></h4>
+              <div class = "row">
+                <p>Click on Upload New File button to open the new file form</p>
+                <p>Enter whatever you want for file name</p> 
+                <p>Enter the student name associated with file, or leave blank</p> 
+                <p>Select a file from your device to upload</p> 
+                <p>Press the green upload button</p>    
+              </div>
+
+            <h4><u>Seating Plan</u></h4>
+            
+       
+            <div class = "row">
+              <p>An Example of the seating plan generator being used for a class shown below:</p>
+            <div><img src = "/assets/seating_class" width="300px"/></div>
+  
+            <div><img src = "/assets/seating_plan_maths" width="600px"/></div>
+              <div class = "col-xs-4"> 
+              <p>Seat Row = max seat row length</p>
+              <p>Seat Row = max column length</p>
+              </div>
+              <div class = "col-xs-6">
+              <p><%= 'Black' %> = Unavailable seat</p>
+              <p><%= 'White'%> = Available seat </p>  
+              </div>  
+              <p>Click Submit after completing each form</p>   
+            </div>
+          
+            </div>
+
+
           </div><!-- /.tab-pane -->
         </div>
       </aside><!-- /.control-sidebar -->
